@@ -70,6 +70,7 @@ class AccountDetails extends Component {
         const { firstName, lastName, email, sdt, city, country, isLoadingButton, showErrors } = this.state;
         return (
                 <Card className={clsx(classes.root, className)}>
+
                     <form autoComplete="off" noValidate>
                         <CardHeader
                             subheader="The information can be edited"

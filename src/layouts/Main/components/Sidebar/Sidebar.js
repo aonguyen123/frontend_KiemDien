@@ -10,13 +10,22 @@ import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
+import jwt_decode from 'jwt-decode';
+import { connect } from 'react-redux';
 
+import { getInfoUser } from './../../../../actions/authentication';
 import { Profile, SidebarNav } from './components';
 import styles from './styles';
 
 const Sidebar = props => {
-    const { open, variant, onClose, className, logout, user, classes } = props;
-
+    const { open, variant, onClose, className, logout, user, classes, getInfoUser } = props;
+    React.useEffect(() => {
+        if(localStorage.jwtToken)
+        {
+            const decode = jwt_decode(localStorage.jwtToken);
+            getInfoUser(decode._id);
+        }
+    },[getInfoUser]);
     const pages = [
         {
             title: 'Dashboard',
@@ -80,5 +89,7 @@ Sidebar.propTypes = {
     open: PropTypes.bool.isRequired,
     variant: PropTypes.string.isRequired
 };
-
-export default withStyles(styles)(Sidebar);
+const mapStateToProps = state => ({
+    user: state.auth.user
+});
+export default connect(mapStateToProps, { getInfoUser })(withStyles(styles)(Sidebar));

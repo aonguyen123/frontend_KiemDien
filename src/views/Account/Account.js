@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import jwt_decode from 'jwt-decode';
 
 import { AccountProfile, AccountDetails } from './components';
 import { LoadingCenter } from './../../components';
@@ -25,7 +26,14 @@ class Account extends Component {
         });
     }
     componentDidMount() {
-        this.props.getCity();
+        if(localStorage.jwtToken)
+        {
+            if(Object.entries(this.props.user).length === 0)
+            {                
+                const decode = jwt_decode(localStorage.jwtToken);
+                this.props.getInfoUser(decode._id);
+            }
+        }
     }
     componentDidUpdate(preProps)
     {
