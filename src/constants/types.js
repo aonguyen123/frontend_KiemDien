@@ -1,4 +1,4 @@
-export const URI = 'http://localhost:4000/api/admin';
+export const URI = 'https://kiemdien.herokuapp.com/api/admin';
 
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEARN_ERRORS = 'CLEARN_ERRORS';
