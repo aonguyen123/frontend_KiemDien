@@ -24,7 +24,7 @@ import { ToolbarTable } from './components';
 import styles from './styles';
 
 const UsersTable = props => {
-    const { className, users, classes } = props;
+    const { className, users, classes, deleteUsers } = props;
 
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(1);
@@ -38,7 +38,6 @@ const UsersTable = props => {
         } else {
             selectedUsers = [];
         }
-        console.log(selectedUsers);
         setSelectedUsers(selectedUsers);
     };
 
@@ -60,7 +59,6 @@ const UsersTable = props => {
                 selectedUsers.slice(selectedIndex + 1)
             );
         }
-        console.log(newSelectedUsers);
         setSelectedUsers(newSelectedUsers);
     };
 
@@ -69,14 +67,19 @@ const UsersTable = props => {
     };
 
     const handleRowsPerPageChange = event => {
-        setRowsPerPage(event.target.value);
+        setRowsPerPage(+event.target.value);
+        setPage(0);
     };
-    let all = [1, 2, users.length];
+    let all = [1, users.length];
     return (
         <Card className={clsx(classes.root, className)}>
             <CardContent className={classes.content}>
                 <PerfectScrollbar>
-                    <ToolbarTable numSelected={selectedUsers.length} />
+                    <ToolbarTable 
+                        numSelected={selectedUsers.length} 
+                        deleteUsers={deleteUsers}
+                        selectedUsers={selectedUsers}
+                    />
                     <div className={classes.inner}>
                         <Table>
                             <TableHead>
@@ -141,10 +144,10 @@ const UsersTable = props => {
                                                     className={classes.avatar}
                                                     src={user.avatar ? user.avatar : `//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`}
                                                 >
-                                                    {getInitials(`${user.firstName}${user.lastName}`)}
+                                                    {getInitials(user.name)}
                                                 </Avatar>
                                                 <Typography variant="body1">
-                                                    {`${user.firstName} ${user.lastName}`}
+                                                    {user.name}
                                                 </Typography>
                                             </div>
                                         </TableCell>
@@ -163,26 +166,29 @@ const UsersTable = props => {
                     </div>
                 </PerfectScrollbar>
             </CardContent>
-            <CardActions className={classes.actions}>
-                <div className={classes.mobile}>
-                    <TablePagination
-                        component="div"
-                        count={users.length}
-                        onChangePage={handlePageChange}
-                        onChangeRowsPerPage={handleRowsPerPageChange}
-                        page={page}
-                        rowsPerPage={rowsPerPage}
-                        rowsPerPageOptions={all}
-                        backIconButtonProps={{
-                            'aria-label': 'previous page'
-                        }}
-                        nextIconButtonProps={{
-                            'aria-label': 'next page'
-                        }}
-                        labelRowsPerPage=""
-                    />
-                </div>
-            </CardActions>
+            {
+                users.length === 0 
+                ? <Typography variant="subtitle2" style={{textAlign: 'center'}}>Chưa có danh sách user</Typography>
+                : 
+                    <CardActions className={classes.actions}>
+                        <TablePagination
+                            component="div"
+                            count={users.length}
+                            onChangePage={handlePageChange}
+                            onChangeRowsPerPage={handleRowsPerPageChange}
+                            page={page}
+                            rowsPerPage={rowsPerPage}
+                            rowsPerPageOptions={all}
+                            backIconButtonProps={{
+                                'aria-label': 'previous page'
+                            }}
+                            nextIconButtonProps={{
+                                'aria-label': 'next page'
+                            }}
+                            labelRowsPerPage=""
+                        />
+                </CardActions>
+            }
         </Card>
     );
 };

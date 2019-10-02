@@ -10,11 +10,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './styles';
 
 const ToolbarTable = props => {
-    const { numSelected, classes } = props;
+    const { numSelected, classes, deleteUsers, selectedUsers } = props;
     if(numSelected === 0)
     {
         return null;
     }
+    const handleClick = () => {
+        deleteUsers(selectedUsers);
+    };
     return (
       <Toolbar
         className={clsx(classes.root, {
@@ -32,7 +35,7 @@ const ToolbarTable = props => {
         <div className={classes.actions}>
           {numSelected > 0 && (
             <Tooltip title="Delete">
-              <IconButton aria-label="delete">
+              <IconButton aria-label="delete" onClick={handleClick}>
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
