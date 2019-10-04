@@ -66,7 +66,7 @@ const Notifies = props => {
                     horizontal: 'right'
                 }}
                 open={state.open}
-                autoHideDuration={3000}
+                autoHideDuration={4000}
                 onClose={handleClose}
                 TransitionComponent={state.Transition}
                 message={

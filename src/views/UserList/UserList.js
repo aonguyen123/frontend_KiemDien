@@ -1,37 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 
 import { UsersToolbar, UsersTable } from './components';
 import { getUsers, deleteUsers } from './../../actions/users';
-import { LoadingCenter, Notifies } from 'components';
+import { LoadingCenter } from 'components';
 import styles from './styles';
 
-const UserList = props => {
-    const { classes, users, getUsers, deleteUsers, statusUser } = props;
-    const [showStatus, setShowStatus] = useState(false);
-    useEffect(() => {
-        getUsers();
-    }, [getUsers]);
-    if(users.length === 0 && statusUser !== 'USERS_NOTFOUND')
-    { 
-        return <LoadingCenter />;
+class UserList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true
+        };
     }
-    return (
-        <div className={classes.root}>
-            <UsersToolbar />
-            <div className={classes.content}>
-                <UsersTable 
-                    users={users} 
-                    deleteUsers={deleteUsers}
-                />
-            </div>
-        </div>
-    );
+    componentDidMount() {
+        this.props.getUsers();
+    }
+    componentDidUpdate(preProps) {
+        if(preProps.users.length !== this.props.users.length )
+        {
+            this.setState({
+                isLoading: false,
+            })
+        }
+    }
+    render() {
+        const { classes, users, deleteUsers, statusUser } = this.props;
+        const { isLoading } = this.state;
+        if(isLoading && statusUser !== 'USERS_NOTFOUND' && statusUser !== 'USERS_EXITS')
+        { 
+            return <LoadingCenter />;
+        }
+        return (
+                <div className={classes.root}>
+                    <UsersToolbar />
+                    <div className={classes.content}>
+                        <UsersTable 
+                            users={users} 
+                            deleteUsers={deleteUsers}
+                        />
+                    </div>
+                </div>
+        );
+    }
 };
-
 const mapStateToProps = state => ({
     users: state.users.users,
-    statusUser: state.users.status
+    statusUser: state.users.status,
 });
 export default connect(mapStateToProps, { getUsers, deleteUsers })(withStyles(styles)(UserList));

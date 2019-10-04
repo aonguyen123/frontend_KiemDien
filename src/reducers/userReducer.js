@@ -14,12 +14,12 @@ export default function(state = initialState, action) {
                 users: action.payload.users,
                 status: action.payload.status
             }
-        case DELETE_USERS:
+        case DELETE_USERS: 
             return {
                 ...state,
                 users: action.payload.users,
                 status: action.payload.status
-            }    
+            }
         default:
             return state;
     }

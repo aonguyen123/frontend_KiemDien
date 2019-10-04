@@ -12,7 +12,7 @@ import { getCity } from './../../actions/city';
 import styles from './styles';
 
 const Main = props => {
-    const { children, user, logout, classes, history, citys, getCity, users } = props;
+    const { children, user, logout, classes, history, citys, getCity } = props;
     useEffect(() => {
         if(citys.length === 0)
         {
@@ -58,7 +58,7 @@ const Main = props => {
             />
             <main className={classes.content}>
                 {children}
-                { (Object.entries(user).length !== 0 && users.length !== 0) ? <Footer /> : null }
+                { (Object.entries(user).length !== 0) ? <Footer /> : null }
             </main>
         </div>
     );
@@ -71,8 +71,7 @@ Main.propTypes = {
 };
 const mapStateToProps = state => ({
     user: state.auth.user,
-    users: state.users.users,
     isAuth: state.auth.isAuthenticated,
-    citys: state.citys
+    citys: state.citys,
 })
 export default connect(mapStateToProps, { logout, getCity })(withRouter(withStyles(styles)(Main)));

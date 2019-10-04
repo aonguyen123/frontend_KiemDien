@@ -10,13 +10,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './styles';
 
 const ToolbarTable = props => {
-    const { numSelected, classes, deleteUsers, selectedUsers } = props;
+    const { numSelected, classes, deleteUsers, selectedUsers, loadingTable } = props;
     if(numSelected === 0)
     {
         return null;
     }
     const handleClick = () => {
         deleteUsers(selectedUsers);
+        loadingTable();
     };
     return (
       <Toolbar

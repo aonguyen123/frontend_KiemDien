@@ -86,7 +86,6 @@ class AccountDetails extends Component {
                                         margin="dense"
                                         name="firstName"
                                         onChange={this.handleChange}
-                                        required
                                         value={firstName}
                                         variant="outlined"
                                     />
@@ -98,7 +97,6 @@ class AccountDetails extends Component {
                                         margin="dense"
                                         name="lastName"
                                         onChange={this.handleChange}
-                                        required
                                         value={lastName}
                                         variant="outlined"
                                     />
@@ -122,6 +120,7 @@ class AccountDetails extends Component {
                                 <Grid item md={6} xs={12}>
                                     <TextField
                                         fullWidth
+                                        required
                                         label="Phone Number"
                                         margin="dense"
                                         name="sdt"
