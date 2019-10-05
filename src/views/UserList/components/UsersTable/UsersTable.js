@@ -22,6 +22,7 @@ import {
 import { getInitials } from 'helpers';
 import { ToolbarTable } from './components';
 import { LoadingCenter } from 'components';
+import { URI } from './../../../../constants/types';
 import styles from './styles';
 
 class UsersTable extends Component {
@@ -193,7 +194,7 @@ class UsersTable extends Component {
                                                             }
                                                             src={
                                                                 user.avatar
-                                                                    ? user.avatar
+                                                                    ? `${URI}/getAvatar/${user.avatar}`
                                                                     : `//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`
                                                             }
                                                         >
@@ -213,7 +214,7 @@ class UsersTable extends Component {
                                                     {user.sdt}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {user.gioitinh}
+                                                    {user.gioitinh ? `Nam` : `Nữ`}
                                                 </TableCell>
                                                 <TableCell>
                                                     {moment(user.ngaydangki).format("DD/MM/YYYY")}

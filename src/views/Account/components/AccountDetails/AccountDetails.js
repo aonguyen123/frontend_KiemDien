@@ -37,7 +37,6 @@ class AccountDetails extends Component {
         });
     }
     handleClick = () => {
-        this.props.setShowNotifies(false);
         this.setState({
             isLoadingButton: true
         });
@@ -177,6 +176,7 @@ class AccountDetails extends Component {
                         <Divider />
                         <CardActions>
                             <Button 
+                                type="submit"
                                 color="primary" 
                                 variant="contained" 
                                 onClick={this.handleClick}

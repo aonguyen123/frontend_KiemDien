@@ -1,4 +1,4 @@
-import { GET_USERS, DELETE_USERS } from './../constants/types';
+import { GET_USERS, DELETE_USERS, CREATE_USER, GET_ERRORS, CLEARN_ERRORS } from './../constants/types';
 import callAPI from './../common/callApi';
 
 export const getUsers = () => dispatch => {
@@ -18,4 +18,23 @@ export const deleteUsers = ids => dispatch => {
                 payload: res.data
             });
         })  
+};
+export const createUser = user => dispatch => {
+    callAPI('/createUser', 'POST', user)
+        .then(res => {
+            dispatch({
+                type: CREATE_USER,
+                payload: res.data
+            });
+            dispatch({
+                type: CLEARN_ERRORS,
+                payload: {}
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
 };

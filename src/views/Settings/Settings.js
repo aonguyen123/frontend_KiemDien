@@ -12,12 +12,12 @@ class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showNotifies: false
+            openNotify: false
         };
     }
-    setShowNotifies = params => {
+    setCloseNotify = params => {
         this.setState({
-            showNotifies: params
+            openNotify: params
         });
     }
     componentDidUpdate(preProps)
@@ -25,7 +25,7 @@ class Settings extends Component {
         if(preProps.info !== this.props.info)
         {
             this.setState({
-                showNotifies: true
+                openNotify: true
             })
         }
     }
@@ -38,12 +38,15 @@ class Settings extends Component {
             errors,
             info
         } = this.props;
-        const { showNotifies } = this.state;
+        const { openNotify } = this.state;
         return (
             <div className={classes.root}>
-                {showNotifies ? (
-                    <Notifies variant="success" message={statusUpdateInfo} />
-                ) : null}
+                <Notifies 
+                    openNotify={openNotify}
+                    setCloseNotify={params => this.setCloseNotify(params)}
+                    variant="success" 
+                    message={statusUpdateInfo} 
+                />
                 <Grid container spacing={4}>
                     <Grid item md={7} xs={12}>
                         <Notifications />
@@ -54,8 +57,6 @@ class Settings extends Component {
                             updatePassword={updatePassword}
                             errors={errors}
                             info={info}
-                            statusUpdateInfo={statusUpdateInfo}
-                            setShowNotifies={(params) => this.setShowNotifies(params)}
                         />
                     </Grid>
                 </Grid>

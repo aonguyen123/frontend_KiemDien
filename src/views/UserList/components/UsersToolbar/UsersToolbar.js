@@ -9,7 +9,7 @@ import DialogAddUser from './../DialogAddUser/DialogAddUser';
 import styles from './styles';
 
 const UsersToolbar = props => {
-    const { className, classes } = props;  
+    const { className, classes, createUser, errors, addUser } = props;  
     const [open, setOpen] = React.useState(false);
 
     const handleOpenDialog = () => {
@@ -20,7 +20,13 @@ const UsersToolbar = props => {
     }
     return (
         <div className={clsx(classes.root, className)}>
-            <DialogAddUser open={open} handleCloseDialog={handleCloseDialog} />
+            <DialogAddUser 
+                open={open} 
+                handleCloseDialog={handleCloseDialog} 
+                createUser={createUser}
+                errors={errors}
+                addUser={addUser}
+            />
             <div className={classes.row}>
                 <span className={classes.spacer} />
                 <Button color="primary" variant="contained" onClick={handleOpenDialog}>

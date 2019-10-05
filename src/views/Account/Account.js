@@ -17,12 +17,12 @@ class Account extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showNotifies: false
+            openNotify: false
         };
     }
-    setShowNotifies = params => {
+    setCloseNotify = params => {
         this.setState({
-            showNotifies: params
+            openNotify: params
         });
     }
     componentDidMount() {
@@ -40,7 +40,7 @@ class Account extends Component {
         if(preProps.info !== this.props.info)
         {
             this.setState({
-                showNotifies: true
+                openNotify: true
             });
         }
     }
@@ -59,15 +59,18 @@ class Account extends Component {
             statusUpdateInfo,
             removePicture
         } = this.props;
-        const { showNotifies } = this.state;
+        const { openNotify } = this.state;
         if (Object.entries(user).length === 0) {
             return <LoadingCenter />;
         }
         return (
             <div className={classes.root}>
-                {
-                    (showNotifies) ? <Notifies variant="success" message={statusUpdateInfo} /> : null
-                }                    
+                <Notifies 
+                    openNotify={openNotify}
+                    setCloseNotify={params => this.setCloseNotify(params)}
+                    variant="success" 
+                    message={statusUpdateInfo} 
+                />
                 <Grid container spacing={4}>
                     <Grid item lg={4} md={6} xl={4} xs={12}>
                         <AccountProfile
@@ -88,7 +91,6 @@ class Account extends Component {
                             updateInfo={updateInfo}
                             errors={errors}
                             getInfoUser={getInfoUser}
-                            setShowNotifies={params => this.setShowNotifies(params)}
                         />
                     </Grid>
                 </Grid>

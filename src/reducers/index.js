@@ -5,6 +5,7 @@ import cityReducer from './cityReducer';
 import uploadFileReducer from './uploadFileReducer';
 import updateInfoReducer from './updateInfoReducer';
 import userReducer from './userReducer';
+import addUserReducer from './addUserReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     citys: cityReducer,
     file: uploadFileReducer,
     info: updateInfoReducer,
-    users: userReducer
+    users: userReducer,
+    userAdd: addUserReducer
 });

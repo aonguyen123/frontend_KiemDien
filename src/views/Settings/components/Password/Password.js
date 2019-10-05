@@ -15,7 +15,7 @@ import { LoadingButton } from 'components';
 import styles from './styles';
 
 const Password = props => {
-    const { className, classes, user, updatePassword, errors, info, setShowNotifies } = props;
+    const { className, classes, user, updatePassword, errors, info } = props;
 
     const [values, setValues] = useState({
         password: '',
@@ -51,7 +51,6 @@ const Password = props => {
             ...values,
             isLoadingButton: true
         })
-        setShowNotifies(false);
         const user = {};
         user.password = values.password;
         user.password_confirm = values.confirm;
@@ -95,6 +94,7 @@ const Password = props => {
                 <Divider />
                 <CardActions>
                     <Button 
+                        type="submit"
                         color="primary" 
                         variant="outlined"
                         onClick={() => handleClick(user)}

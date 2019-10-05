@@ -43,9 +43,8 @@ function SlideTransition(props) {
 }
 
 const Notifies = props => {
-    const { message, variant, classes } = props;
-    const [state, setState] = React.useState({
-        open: true,
+    const { message, variant, classes, openNotify, setCloseNotify } = props;
+    const [state] = React.useState({
         Transition: SlideTransition
     });
     const Icon = variantIcon[variant];
@@ -53,10 +52,7 @@ const Notifies = props => {
         if (reason === 'clickaway') {
             return;
         }
-        setState({
-            ...state,
-            open: false
-        });
+        setCloseNotify(false);
     }
     return (
         <div>
@@ -65,7 +61,7 @@ const Notifies = props => {
                     vertical: 'top',
                     horizontal: 'right'
                 }}
-                open={state.open}
+                open={openNotify}
                 autoHideDuration={4000}
                 onClose={handleClose}
                 TransitionComponent={state.Transition}
