@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LatestProducts = props => {
-    const { className, ...rest } = props;
+    const { className } = props;
 
     const classes = useStyles();
 
@@ -56,11 +56,9 @@ const LatestProducts = props => {
     function handleClose() {
         setAnchorEl(null);
     }
-    const menuId = 'primary-search-account-menu';
     return (
-        <Card {...rest} className={clsx(classes.root, className)}>
+        <Card className={clsx(classes.root, className)}>
             <CardHeader
-                subtitle={`${products.length} in total`}
                 title="Latest classes"
             />
             <Divider />
@@ -95,7 +93,6 @@ const LatestProducts = props => {
                                     vertical: 'top',
                                     horizontal: 'right'
                                 }}
-                                id={menuId}
                                 keepMounted
                                 transformOrigin={{
                                     vertical: 'top',

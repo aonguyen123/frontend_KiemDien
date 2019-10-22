@@ -26,33 +26,30 @@ const useStyles1 = makeStyles(theme => ({
       backgroundColor: amber[700],
     }
 }));
+function SlideTransitionSuccess(props) {
+    const classes = useStyles1();
+    return <Slide className={classes.success} {...props} direction="left" />;
+};
+function SlideTransitionError(props) {
+    const classes = useStyles1();
+    return <Slide className={classes.error} {...props} direction="left" />
+}
+
 const variantIcon = {
     success: CheckCircleIcon,
     warning: WarningIcon,
     error: ErrorIcon,
     info: InfoIcon
 };
-function SlideTransition(props) {
-    const classes = useStyles1();
-    return <Slide 
-                className={classes.success}
-                {...props} 
-                direction="left" 
-                
-            />;
-}
-
 const Notifies = props => {
     const { message, variant, classes, openNotify, setCloseNotify } = props;
-    const [state] = React.useState({
-        Transition: SlideTransition
-    });
+    
     const Icon = variantIcon[variant];
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return;
         }
-        setCloseNotify(false);
+        setCloseNotify();
     }
     return (
         <div>
@@ -64,7 +61,7 @@ const Notifies = props => {
                 open={openNotify}
                 autoHideDuration={4000}
                 onClose={handleClose}
-                TransitionComponent={state.Transition}
+                TransitionComponent={(variant === 'success') ? SlideTransitionSuccess : SlideTransitionError }
                 message={
                     <span id="client-snackbar" className={classes.message}>
                         <Icon className={clsx(classes.icon, classes.iconVariant)} />

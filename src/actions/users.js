@@ -1,4 +1,4 @@
-import { GET_USERS, DELETE_USERS, CREATE_USER, GET_ERRORS, CLEARN_ERRORS } from './../constants/types';
+import { GET_USERS, DELETE_USERS, CREATE_USER, GET_ERRORS, CLEARN_ERRORS, CLEAR_STATUS_DELETE } from './../constants/types';
 import callAPI from './../common/callApi';
 
 export const getUsers = () => dispatch => {
@@ -7,6 +7,10 @@ export const getUsers = () => dispatch => {
             dispatch({
                 type: GET_USERS,
                 payload: res.data
+            });
+            dispatch({
+                type: CLEAR_STATUS_DELETE,
+                payload: '' 
             });
         })
 };
@@ -37,4 +41,10 @@ export const createUser = user => dispatch => {
                 payload: err.response.data
             });
         });
+};
+export const clearErrors = () => dispatch => {
+    dispatch({
+        type: CLEARN_ERRORS,
+        payload: {}
+    });
 };

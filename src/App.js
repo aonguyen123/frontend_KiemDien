@@ -21,15 +21,13 @@ Chart.helpers.extend(Chart.elements.Rectangle.prototype, {
     draw: chartjs.draw
 });
 
-if(localStorage.jwtToken)
-{
+if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
     const decode = jwt_decode(localStorage.jwtToken);
     const currentTime = Date.now() / 1000;
-    if(decode.exp < currentTime)
-    {
+    if (decode.exp < currentTime) {
         store.dispatch(logoutSystem());
-        window.location.href='/sign-in';
+        window.location.href = '/sign-in';
     }
 }
 

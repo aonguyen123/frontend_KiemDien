@@ -1,2 +1,3 @@
-export { default as ProductCard } from './ProductCard';
-export { default as ProductsToolbar } from './ProductsToolbar';
+export { default as ClassCard } from './ClassCard';
+export { default as ClassesToolbar } from './ClassesToolbar';
+export { default as DialogAddClass } from './DialogAddClass';

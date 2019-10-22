@@ -1,32 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
 import { Typography, Link } from '@material-ui/core';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        padding: theme.spacing(4)
-    }
-}));
+import styles from './styles';
 
 const Footer = props => {
-    const { className, ...rest } = props;
-
-    const classes = useStyles();
+    const { className, classes } = props;
 
     return (
-        <div {...rest} className={clsx(classes.root, className)}>
+        <div className={clsx(classes.root, className)}>
             <Typography variant="body1">
                 &copy;{' '}
-                <Link component="a" href="https://aonguyen.io/" target="_blank">
+                <Link component="a" href="https://aonguyen.now.sh/" target="_blank">
                     Ao Nguyen
                 </Link>
                 . {new Date().getFullYear()}
-            </Typography>
-            <Typography variant="caption">
-                Created with love for the environment. By designers and
-                developers who love to work together in offices!
             </Typography>
         </div>
     );
@@ -36,4 +25,4 @@ Footer.propTypes = {
     className: PropTypes.string
 };
 
-export default Footer;
+export default withStyles(styles)(Footer);

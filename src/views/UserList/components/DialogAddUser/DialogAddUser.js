@@ -15,7 +15,7 @@ import { LoadingButton } from 'components';
 import styles from './styles';
 
 const DialogAddUser = props => {
-    const { open, handleCloseDialog, classes, createUser, errors, addUser } = props;
+    const { open, handleCloseDialog, classes, createUser, errors, addUser, clearErrors } = props;
     const [value, setValue] = useState({
         email: '',
         password: ''
@@ -33,6 +33,7 @@ const DialogAddUser = props => {
     },[SetLoadingButton, errors, addUser, handleCloseDialog]);
     const handleClose = () => {
         handleCloseDialog(false);
+        clearErrors();
     };
     const handleChange = event => {
         setValue({

@@ -6,6 +6,11 @@ import uploadFileReducer from './uploadFileReducer';
 import updateInfoReducer from './updateInfoReducer';
 import userReducer from './userReducer';
 import addUserReducer from './addUserReducer';
+import classesReducer from './classesReducer';
+import actionClassReducer from './actionClassReducer';
+import getClassByIdReducer from './getClassByIdReducer';
+import loadingReducer from './loadingReducer';
+import notifyReducer from './notifyReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -14,5 +19,10 @@ export default combineReducers({
     file: uploadFileReducer,
     info: updateInfoReducer,
     users: userReducer,
-    userAdd: addUserReducer
+    userAdd: addUserReducer,
+    classes: classesReducer,
+    actionClass: actionClassReducer,
+    classById: getClassByIdReducer,
+    isLoading: loadingReducer,
+    showNotify: notifyReducer
 });

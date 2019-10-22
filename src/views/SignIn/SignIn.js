@@ -117,7 +117,7 @@ const SignIn = props => {
                                 color="primary"
                                 component={RouterLink}
                                 to="#"
-                                underline="always"
+                                underline="none"
                                 variant="h6"
                             >
                                 {'Forgot password?'}

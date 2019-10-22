@@ -5,3 +5,4 @@ export { default as LoadingButton } from './LoadingButton';
 export { default as LoadingCenter } from './LoadingCenter';
 export { default as Notifies } from './Notifies';
 export { default as LoadingProfileSideBar } from './LoadingProfileSideBar';
+export { default as ConfirmDialog } from './ConfirmDialog';

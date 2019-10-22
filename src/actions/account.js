@@ -1,6 +1,6 @@
 import { 
     UPLOAD_PICTURE, GET_ERRORS, UPDATE_INFO, REMOVE_PICTURE, UPDATE_PASSWORD,
-    CLEARN_ERRORS 
+    CLEARN_ERRORS
 } from './../constants/types';
 import callAPI from './../common/callApi';
 

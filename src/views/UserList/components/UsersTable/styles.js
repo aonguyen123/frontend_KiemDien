@@ -15,6 +15,13 @@ const styles = theme => ({
     },
     actions: {
         justifyContent: 'flex-end'
+    },
+    status: {
+        marginRight: theme.spacing(1)
+    },
+    statusContainer: {
+        display: 'flex',
+        alignItems: 'center'
     }
 });
 export default styles;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { withStyles } from '@material-ui/styles';
 import {
@@ -21,10 +20,15 @@ import {
 
 import { getInitials } from 'helpers';
 import { ToolbarTable } from './components';
-import { LoadingCenter } from 'components';
+import { LoadingCenter, StatusBullet } from 'components';
 import { URI } from './../../../../constants/types';
 import styles from './styles';
 
+const statusColors = {
+    1: 'success',
+    2: 'info',
+    0: 'danger'
+};
 class UsersTable extends Component {
     constructor(props) {
         super(props);
@@ -77,20 +81,19 @@ class UsersTable extends Component {
     loadingTable = () => {
         this.setState({
             loadingTable: true
-        })
-    }
+        });
+    };
     handlePageChange = (event, page) => {
         this.setState({
             page: page
         });
     };
     componentDidUpdate(preProps) {
-        if(preProps.users.length !== this.props.users.length)
-        {
+        if (preProps.users.length !== this.props.users.length) {
             this.setState({
                 selectedUsers: [],
                 loadingTable: false
-            })
+            });
         }
     }
     handleRowsPerPageChange = event => {
@@ -100,17 +103,10 @@ class UsersTable extends Component {
         });
     };
     render() {
-        const {
-            className,
-            users,
-            classes,
-            deleteUsers
-        } = this.props;
+        const { className, users, classes, deleteUsers } = this.props;
         const { selectedUsers, page, rowsPerPage, loadingTable } = this.state;
-        let all = [2, 5, 10];
-        if(loadingTable)
-        {
-            return <LoadingCenter />
+        if (loadingTable) {
+            return <LoadingCenter />;
         }
         return (
             <Card className={clsx(classes.root, className)}>
@@ -145,6 +141,7 @@ class UsersTable extends Component {
                                         <TableCell>Email</TableCell>
                                         <TableCell>Phone</TableCell>
                                         <TableCell>Gender</TableCell>
+                                        <TableCell>Status</TableCell>
                                         <TableCell>Registration date</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -214,10 +211,24 @@ class UsersTable extends Component {
                                                     {user.sdt}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {user.gioitinh ? `Nam` : `Nữ`}
+                                                    {user.gioitinh
+                                                        ? `Nam`
+                                                        : `Nữ`}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {moment(user.ngaydangki).format("DD/MM/YYYY")}
+                                                    <div
+                                                        className={classes.statusContainer}
+                                                    >
+                                                        <StatusBullet 
+                                                            className={classes.status}
+                                                            color={statusColors[user.status]}  
+                                                            size="sm"
+                                                        />
+                                                        {user.status === 1 ? 'Completed' : user.status === 2 ? 'Missing' : 'Incomplete'}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {user.ngaydangki}
                                                 </TableCell>
                                             </TableRow>
                                         ))}
@@ -231,7 +242,7 @@ class UsersTable extends Component {
                         variant="subtitle2"
                         style={{ textAlign: 'center' }}
                     >
-                        Chưa có danh sách user
+                        User not found
                     </Typography>
                 ) : (
                     <CardActions className={classes.actions}>
@@ -242,7 +253,7 @@ class UsersTable extends Component {
                             onChangeRowsPerPage={this.handleRowsPerPageChange}
                             page={page}
                             rowsPerPage={rowsPerPage}
-                            rowsPerPageOptions={all}
+                            rowsPerPageOptions={[]}
                             backIconButtonProps={{
                                 'aria-label': 'previous page'
                             }}
