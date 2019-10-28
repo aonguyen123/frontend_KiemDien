@@ -24,16 +24,50 @@ import {
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { LoadingButton } from 'components';
+import AddMemberDialog from './../AddMemberDialog/AddMemberDialog';
+import { TableToolBar } from './components';
 import styles from './styles';
 
+const getMember = (dssv, idMember) => {
+    const member = {};
+    dssv.forEach(sv => {
+        if(sv._id === idMember)
+        {
+            member.id = sv._id;
+            member.mssv = sv.maSV;
+            member.ten = sv.tenSV;
+            member.ngaysinh = sv.ngaysinh;
+            member.gioitinh = sv.gioitinh;
+            return false;
+        }
+    });
+    return member;
+};
+
 const CardClassMember = props => {
-    const { classes, className, classById } = props;
+    const {
+        classes,
+        className,
+        classById,
+        importDssvClassById,
+        addClassMemberById,
+        errors,
+        editClassMemberById,
+        clearErrors,
+        deleteClassMemberById
+    } = props;
+
     const [anchorEl, setAnchorEl] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
     const [selectedMember, setSelectedMember] = useState([]);
+    const [loadingButton, setLoadingButton] = useState(false);
+    const [open, setOpen] = useState(false);
+    let [fileDssv] = useState('');
+    let [member, setMember] = useState({});
 
-    const { dssv } = classById;
+    const { dssv, _id } = classById;
     function handleClick(event) {
         setAnchorEl(event.currentTarget);
     }
@@ -61,10 +95,7 @@ const CardClassMember = props => {
         let newSelectedMember = [];
 
         if (selectedIndex === -1) {
-            newSelectedMember = newSelectedMember.concat(
-                selectedMember,
-                id
-            );
+            newSelectedMember = newSelectedMember.concat(selectedMember, id);
         } else if (selectedIndex === 0) {
             newSelectedMember = newSelectedMember.concat(
                 selectedMember.slice(1)
@@ -80,17 +111,52 @@ const CardClassMember = props => {
             );
         }
         setSelectedMember(newSelectedMember);
+
+        setMember(getMember(dssv, newSelectedMember[0]));
+    };
+    const handleChange = e => {
+        setLoadingButton(true);
+        fileDssv = e.target.files[0];
+        if (fileDssv) {
+            importDssvClassById(fileDssv, classById._id);
+        }
+    };
+    const handleOpenDialog = () => {
+        setOpen(true);
+    };
+    const handleCloseDialog = params => {
+        setOpen(params);
     };
     return (
         <Card className={clsx(classes.root, className)}>
-            <CardHeader
-                title="Class members"
-                action={
-                    <IconButton aria-label="settings" onClick={handleClick}>
-                        <MoreVertIcon />
-                    </IconButton>
-                }
+            <AddMemberDialog
+                open={open}
+                handleCloseDialog={handleCloseDialog}
+                classById={classById}
+                addClassMemberById={addClassMemberById}
+                errors={errors}
+                clearErrors={clearErrors}
             />
+            {(selectedMember.length > 0) 
+                ? <TableToolBar 
+                    selectedMember={selectedMember} 
+                    member={member}
+                    idClass={_id}
+                    errors={errors}
+                    editClassMemberById={editClassMemberById}
+                    clearErrors={clearErrors}
+                    deleteClassMemberById={deleteClassMemberById}
+                /> 
+                :
+                <CardHeader
+                    title="Class members"
+                    action={
+                        <IconButton aria-label="settings" onClick={handleClick}>
+                            <MoreVertIcon />
+                        </IconButton>
+                    }
+                />
+            }
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -98,11 +164,26 @@ const CardClassMember = props => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem>
-                    <GetAppIcon className={classes.iconCardMember} />
-                    <Typography variant="button">Import</Typography>
-                </MenuItem>
-                <MenuItem>
+                <input
+                    accept=".xlsx, .xls, .csv, .xml"
+                    className={classes.input}
+                    id="text-button-file-dssv"
+                    multiple
+                    type="file"
+                    onChange={handleChange}
+                    value=""
+                    disabled={loadingButton}
+                />
+                <label htmlFor="text-button-file-dssv">
+                    <MenuItem>
+                        <GetAppIcon className={classes.iconCardMember} />
+                        <Typography variant="button">
+                            {loadingButton ? <LoadingButton /> : null}
+                            Import
+                        </Typography>
+                    </MenuItem>
+                </label>
+                <MenuItem onClick={handleOpenDialog}>
                     <PersonAddIcon className={classes.iconCardMember} />
                     <Typography variant="button">Add member</Typography>
                 </MenuItem>
@@ -115,86 +196,103 @@ const CardClassMember = props => {
                             Member not found
                         </Typography>
                     ) : (
-                        <Table styles={{ border: '1px solid red' }}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            checked={
-                                                dssv
-                                                    ? selectedMember.length ===
-                                                      dssv.length
-                                                    : null
-                                            }
-                                            color="primary"
-                                            indeterminate={
-                                                selectedMember.length > 0 &&
-                                                selectedMember.length <
-                                                    dssv.length
-                                            }
-                                            onChange={handleSelectAll}
-                                        />
-                                    </TableCell>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>MSSV</TableCell>
-                                    <TableCell>Gender</TableCell>
-                                    <TableCell>BirthDay</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {dssv ? 
-                                    dssv
-                                    .slice(
-                                        page * rowsPerPage,
-                                        page * rowsPerPage + rowsPerPage
-                                    )
-                                    .map(sv => (
-                                        <TableRow
-                                            className={classes.tableRow}
-                                            hover
-                                            key={1}
-                                            selected={
-                                                selectedMember.indexOf(
-                                                    sv._id
-                                                ) !== -1
-                                            }
-                                        >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    checked={
-                                                        selectedMember.indexOf(
-                                                            sv._id
-                                                        ) !== -1
-                                                    }
-                                                    color="primary"
-                                                    onChange={handleSelectOne}
-                                                    value="true"
-                                                />
-                                            </TableCell>
-                                            <TableCell>
-                                                <div
-                                                    className={
-                                                        classes.nameContainer
-                                                    }
-                                                >
-                                                    <Avatar
-                                                        className={
-                                                            classes.avatar
-                                                        }
-                                                        src={`//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`}
-                                                    ></Avatar>
-                                                    <Typography variant="body1">
-                                                        aonguyen
-                                                    </Typography>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>31151410004</TableCell>
-                                            <TableCell>Nam</TableCell>
-                                            <TableCell>20/09/1092</TableCell>
-                                        </TableRow>
-                                    )): null}
-                            </TableBody>
-                        </Table>
+                        <React.Fragment>
+                            <Table size="small">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell padding="checkbox">
+                                            <Checkbox
+                                                checked={
+                                                    dssv
+                                                        ? selectedMember.length ===
+                                                          dssv.length
+                                                        : null
+                                                }
+                                                color="primary"
+                                                indeterminate={
+                                                    selectedMember.length > 0 &&
+                                                    selectedMember.length <
+                                                        dssv.length
+                                                }
+                                                onChange={handleSelectAll}
+                                            />
+                                        </TableCell>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>MSSV</TableCell>
+                                        <TableCell>Gender</TableCell>
+                                        <TableCell>BirthDay</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {dssv
+                                        ? dssv
+                                              .slice(
+                                                  page * rowsPerPage,
+                                                  page * rowsPerPage +
+                                                      rowsPerPage
+                                              )
+                                              .map(sv => (
+                                                  <TableRow
+                                                      className={
+                                                          classes.tableRow
+                                                      }
+                                                      hover
+                                                      key={sv._id}
+                                                      selected={
+                                                          selectedMember.indexOf(
+                                                              sv._id
+                                                          ) !== -1
+                                                      }
+                                                  >
+                                                      <TableCell padding="checkbox">
+                                                          <Checkbox
+                                                              checked={
+                                                                  selectedMember.indexOf(
+                                                                      sv._id
+                                                                  ) !== -1
+                                                              }
+                                                              color="primary"
+                                                              onChange={event =>
+                                                                  handleSelectOne(
+                                                                      event,
+                                                                      sv._id
+                                                                  )
+                                                              }
+                                                              value="true"
+                                                          />
+                                                      </TableCell>
+                                                      <TableCell>
+                                                          <div
+                                                              className={
+                                                                  classes.nameContainer
+                                                              }
+                                                          >
+                                                              <Avatar
+                                                                  className={
+                                                                      classes.avatar
+                                                                  }
+                                                                  src={`//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`}
+                                                              ></Avatar>
+                                                              <Typography variant="body1">
+                                                                  {sv.tenSV}
+                                                              </Typography>
+                                                          </div>
+                                                      </TableCell>
+                                                      <TableCell>
+                                                          {sv.maSV}
+                                                      </TableCell>
+                                                      <TableCell>
+                                                          {sv.gioitinh}
+                                                      </TableCell>
+                                                      <TableCell>
+                                                          {sv.ngaysinh}
+                                                      </TableCell>
+                                                  </TableRow>
+                                              ))
+                                        : null}
+                                </TableBody>
+                            </Table>
+                        </React.Fragment>
                     )}
                 </PerfectScrollbar>
             </CardContent>

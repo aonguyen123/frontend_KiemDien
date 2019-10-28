@@ -15,47 +15,26 @@ import { LoadingButton } from 'components';
 import styles from './styles';
 
 const Password = props => {
-    const { className, classes, user, updatePassword, errors, info } = props;
+    const { className, classes, updatePassword, errors, account, actionAccount } = props;
 
     const [values, setValues] = useState({
         password: '',
-        confirm: '',
-        isLoadingButton: false
+        password_confirm: ''
     });
+    const [loadingButton, setLoadingButton] = useState(false);
     useEffect(() => {
-        if(Object.entries(info).length > 0)
-        {
-            setValues({
-                password: values.password,
-                confirm: values.confirm,
-                isLoadingButton: false
-            });
-        }
-        if(Object.entries(errors).length > 0)
-        {
-            setValues({
-                password: values.password,
-                confirm: values.confirm,
-                isLoadingButton: false,
-            });
-        }
-    },[info, errors, values.password, values.confirm]);
+        setLoadingButton(false);
+    }, [errors, actionAccount]);
+
     const handleChange = event => {
         setValues({
             ...values,
             [event.target.name]: event.target.value
         });
     };
-    const handleClick = (User) => {
-        setValues({
-            ...values,
-            isLoadingButton: true
-        })
-        const user = {};
-        user.password = values.password;
-        user.password_confirm = values.confirm;
-        user.id = User._id;
-        updatePassword(user);
+    const handleClick = () => {
+        setLoadingButton(true);
+        updatePassword(account._id, values);
     }
     return (
         <Card className={clsx(classes.root, className)}>
@@ -69,25 +48,23 @@ const Password = props => {
                         name="password"
                         onChange={handleChange}
                         type="password"
-                        value={values.password}
                         variant="outlined"
                         error={errors.password ? true : false}
                         helperText = {
-                            errors.password ? `${errors.password}` : null
+                            errors.password ? errors.password : null
                         }
                     />
                     <TextField
                         fullWidth
                         label="Confirm password"
-                        name="confirm"
+                        name="password_confirm"
                         onChange={handleChange}
                         style={{ marginTop: '1rem' }}
                         type="password"
-                        value={values.confirm}
                         variant="outlined"
                         error={errors.password_confirm ? true : false}
                         helperText = {
-                            errors.password_confirm ? `${errors.password_confirm}` : null
+                            errors.password_confirm ? errors.password_confirm : null
                         }
                     />
                 </CardContent>
@@ -97,10 +74,10 @@ const Password = props => {
                         type="submit"
                         color="primary" 
                         variant="outlined"
-                        onClick={() => handleClick(user)}
-                        disabled={values.isLoadingButton ? true : false}
+                        onClick={handleClick}
+                        disabled={loadingButton}
                     >
-                        {values.isLoadingButton && <LoadingButton />}
+                        {loadingButton && <LoadingButton />}
                         Update
                     </Button>
                 </CardActions>

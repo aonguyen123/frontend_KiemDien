@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { withStyles } from '@material-ui/styles';
 import {
@@ -20,7 +19,7 @@ import {
 
 import { getInitials } from 'helpers';
 import { ToolbarTable } from './components';
-import { LoadingCenter, StatusBullet } from 'components';
+import { StatusBullet } from 'components';
 import { URI } from './../../../../constants/types';
 import styles from './styles';
 
@@ -29,96 +28,67 @@ const statusColors = {
     2: 'info',
     0: 'danger'
 };
-class UsersTable extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedUsers: [],
-            rowsPerPage: 5,
-            page: 0,
-            loadingTable: false
-        };
-    }
-    handleSelectAll = event => {
-        const { users } = this.props;
+
+const UsersTable = props => {
+    const { className, users, classes, deleteUsers, statusUsers } = props;
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState(0);
+
+    const handleSelectAll = event => {
         let selectedUsers;
         if (event.target.checked) {
             selectedUsers = users.map(user => user._id);
         } else {
             selectedUsers = [];
         }
-        this.setState({
-            selectedUsers: selectedUsers
-        });
+        setSelectedUsers(selectedUsers);
     };
-    handleSelectOne = (event, id) => {
-        const selectedIndex = this.state.selectedUsers.indexOf(id);
+    const handleSelectOne = (event, id) => {
+        const selectedIndex = selectedUsers.indexOf(id);
         let newSelectedUsers = [];
 
         if (selectedIndex === -1) {
-            newSelectedUsers = newSelectedUsers.concat(
-                this.state.selectedUsers,
-                id
-            );
+            newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
         } else if (selectedIndex === 0) {
+            newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
+        } else if (selectedIndex === selectedUsers.length - 1) {
             newSelectedUsers = newSelectedUsers.concat(
-                this.state.selectedUsers.slice(1)
-            );
-        } else if (selectedIndex === this.state.selectedUsers.length - 1) {
-            newSelectedUsers = newSelectedUsers.concat(
-                this.state.selectedUsers.slice(0, -1)
+                selectedUsers.slice(0, -1)
             );
         } else if (selectedIndex > 0) {
             newSelectedUsers = newSelectedUsers.concat(
-                this.state.selectedUsers.slice(0, selectedIndex),
-                this.state.selectedUsers.slice(selectedIndex + 1)
+                selectedUsers.slice(0, selectedIndex),
+                selectedUsers.slice(selectedIndex + 1)
             );
         }
-        this.setState({
-            selectedUsers: newSelectedUsers
-        });
+        setSelectedUsers(newSelectedUsers);
     };
-    loadingTable = () => {
-        this.setState({
-            loadingTable: true
-        });
+    const handlePageChange = (event, page) => {
+        setPage(page);
     };
-    handlePageChange = (event, page) => {
-        this.setState({
-            page: page
-        });
+    const handleRowsPerPageChange = event => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
     };
-    componentDidUpdate(preProps) {
-        if (preProps.users.length !== this.props.users.length) {
-            this.setState({
-                selectedUsers: [],
-                loadingTable: false
-            });
-        }
-    }
-    handleRowsPerPageChange = event => {
-        this.setState({
-            rowsPerPage: +event.target.value,
-            page: 0
-        });
-    };
-    render() {
-        const { className, users, classes, deleteUsers } = this.props;
-        const { selectedUsers, page, rowsPerPage, loadingTable } = this.state;
-        if (loadingTable) {
-            return <LoadingCenter />;
-        }
-        return (
-            <Card className={clsx(classes.root, className)}>
-                <CardContent className={classes.content}>
-                    <PerfectScrollbar>
-                        <ToolbarTable
-                            numSelected={selectedUsers.length}
-                            deleteUsers={deleteUsers}
-                            selectedUsers={selectedUsers}
-                            loadingTable={() => this.loadingTable()}
-                        />
-                        <div className={classes.inner}>
+
+    return (
+        <Card className={clsx(classes.root, className)}>
+            <ToolbarTable
+                selectedUsers={selectedUsers}
+                deleteUsers={deleteUsers}
+            />
+            <CardContent className={classes.content}>
+                <PerfectScrollbar>
+                    <div className={classes.inner}>
+                        {statusUsers === 'USERS_NOTFOUND' ? (
+                            <Typography
+                                variant="h5"
+                                style={{ textAlign: 'center' }}
+                            >
+                                User not found
+                            </Typography>
+                        ) : (
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -134,7 +104,7 @@ class UsersTable extends Component {
                                                     selectedUsers.length <
                                                         users.length
                                                 }
-                                                onChange={this.handleSelectAll}
+                                                onChange={handleSelectAll}
                                             />
                                         </TableCell>
                                         <TableCell>Name</TableCell>
@@ -171,7 +141,7 @@ class UsersTable extends Component {
                                                         }
                                                         color="primary"
                                                         onChange={event =>
-                                                            this.handleSelectOne(
+                                                            handleSelectOne(
                                                                 event,
                                                                 user._id
                                                             )
@@ -217,14 +187,26 @@ class UsersTable extends Component {
                                                 </TableCell>
                                                 <TableCell>
                                                     <div
-                                                        className={classes.statusContainer}
+                                                        className={
+                                                            classes.statusContainer
+                                                        }
                                                     >
-                                                        <StatusBullet 
-                                                            className={classes.status}
-                                                            color={statusColors[user.status]}  
+                                                        <StatusBullet
+                                                            className={
+                                                                classes.status
+                                                            }
+                                                            color={
+                                                                statusColors[
+                                                                    user.status
+                                                                ]
+                                                            }
                                                             size="sm"
                                                         />
-                                                        {user.status === 1 ? 'Completed' : user.status === 2 ? 'Missing' : 'Incomplete'}
+                                                        {user.status === 1
+                                                            ? 'Completed'
+                                                            : user.status === 2
+                                                            ? 'Missing'
+                                                            : 'Incomplete'}
                                                     </div>
                                                 </TableCell>
                                                 <TableCell>
@@ -234,44 +216,29 @@ class UsersTable extends Component {
                                         ))}
                                 </TableBody>
                             </Table>
-                        </div>
-                    </PerfectScrollbar>
-                </CardContent>
-                {users.length === 0 ? (
-                    <Typography
-                        variant="subtitle2"
-                        style={{ textAlign: 'center' }}
-                    >
-                        User not found
-                    </Typography>
-                ) : (
-                    <CardActions className={classes.actions}>
-                        <TablePagination
-                            component="div"
-                            count={users.length}
-                            onChangePage={this.handlePageChange}
-                            onChangeRowsPerPage={this.handleRowsPerPageChange}
-                            page={page}
-                            rowsPerPage={rowsPerPage}
-                            rowsPerPageOptions={[]}
-                            backIconButtonProps={{
-                                'aria-label': 'previous page'
-                            }}
-                            nextIconButtonProps={{
-                                'aria-label': 'next page'
-                            }}
-                            labelRowsPerPage=""
-                        />
-                    </CardActions>
-                )}
-            </Card>
-        );
-    }
-}
-
-UsersTable.propTypes = {
-    className: PropTypes.string,
-    users: PropTypes.array.isRequired
+                        )}
+                    </div>
+                </PerfectScrollbar>
+            </CardContent>
+            <CardActions className={classes.actions}>
+                <TablePagination
+                    component="div"
+                    count={users.length}
+                    onChangePage={handlePageChange}
+                    onChangeRowsPerPage={handleRowsPerPageChange}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    rowsPerPageOptions={[]}
+                    backIconButtonProps={{
+                        'aria-label': 'previous page'
+                    }}
+                    nextIconButtonProps={{
+                        'aria-label': 'next page'
+                    }}
+                    labelRowsPerPage=""
+                />
+            </CardActions>
+        </Card>
+    );
 };
-
 export default withStyles(styles)(UsersTable);

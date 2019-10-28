@@ -9,9 +9,9 @@ import DialogAddUser from './../DialogAddUser/DialogAddUser';
 import styles from './styles';
 
 const UsersToolbar = props => {
-    const { className, classes, createUser, errors, addUser, clearErrors, searchUser } = props;  
+    const { className, classes, createUser, errors, clearErrors } = props;  
     const [open, setOpen] = React.useState(false);
-    let [keyword] = React.useState('');
+    //let [keyword] = React.useState('');
 
     const handleOpenDialog = () => {
         setOpen(true);
@@ -19,10 +19,10 @@ const UsersToolbar = props => {
     const handleCloseDialog = params => {
         setOpen(params);
     }
-    const handleChange = event => {
-        keyword = event.target.value;
-        searchUser(keyword);
-    }
+    // const handleChange = event => {
+    //     keyword = event.target.value;
+    //     searchUser(keyword);
+    // }
     return (
         <div className={clsx(classes.root, className)}>
             <DialogAddUser 
@@ -30,7 +30,6 @@ const UsersToolbar = props => {
                 handleCloseDialog={handleCloseDialog} 
                 createUser={createUser}
                 errors={errors}
-                addUser={addUser}
                 clearErrors={clearErrors}
             />
             <div className={classes.row}>
@@ -43,7 +42,7 @@ const UsersToolbar = props => {
                 <SearchInput
                     className={classes.searchInput}
                     placeholder="Search email user"
-                    onChange={handleChange}
+                    //onChange={handleChange}
                 />
             </div>
         </div>

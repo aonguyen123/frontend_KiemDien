@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/styles';
 import { Typography, Chip, Fab } from '@material-ui/core';
@@ -7,7 +8,7 @@ import { ConfirmDialog } from 'components';
 import styles from './styles';
 
 const ToolBarClassDetail = props => {
-    const { classes, className, classById } = props;
+    const { classes, className, classById, deleteClass, history } = props;
     const [open, setOpen] = useState(false);
     const handleOpenDialog = () => {
         setOpen(true)
@@ -15,12 +16,16 @@ const ToolBarClassDetail = props => {
     const closeDialog = params => {
         setOpen(params);
     }
+    const handleDeleteClass = () => {
+        deleteClass(classById._id, history);
+    };
     return (
         <div className={clsx(classes.root, className)}>
             <ConfirmDialog 
                 open={open}
                 closeDialog={closeDialog}
                 title="Delete class"
+                deleteConfirm={handleDeleteClass}
             />
             <Typography variant="overline">class detail</Typography>
             <div className={classes.title}>
@@ -52,4 +57,4 @@ const ToolBarClassDetail = props => {
         </div>
     );
 };
-export default withStyles(styles)(ToolBarClassDetail);
+export default withRouter(withStyles(styles)(ToolBarClassDetail));

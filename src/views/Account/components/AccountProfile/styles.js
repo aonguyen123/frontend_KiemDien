@@ -18,9 +18,6 @@ const styles = theme => ({
     },
     input: {
         display: 'none'
-    },
-    showError: {
-        marginTop: theme.spacing(2)
     }
 });
 export default styles;

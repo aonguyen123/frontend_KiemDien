@@ -13,7 +13,7 @@ import {
     ListItemText,
     CardHeader
 } from '@material-ui/core';
-
+import { URI } from './../../../../constants/types';
 import styles from './styles';
 
 const CardManage = props => {
@@ -24,7 +24,11 @@ const CardManage = props => {
                 <CardHeader
                     avatar={
                         <Avatar
-                            src={`//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`}
+                            src={
+                                userOfClass.avatar 
+                                ? `${URI}/getAvatar/${userOfClass.avatar}` 
+                                : `//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`
+                            }
                         />
                     }
                     title={
@@ -33,7 +37,7 @@ const CardManage = props => {
                         </Typography>
                     }
                     subheader={
-                        <Typography variant="h5">Nguyen Duc Ao</Typography>
+                        <Typography variant="h5">{userOfClass.name}</Typography>
                     }
                 />
             ) : null}
@@ -51,10 +55,10 @@ const CardManage = props => {
                                 </Typography>
                                 <span className={classes.spacer} />
                                 <Typography
-                                    variant="subtitle1"
+                                    variant="subtitle2"
                                     color="textSecondary"
                                 >
-                                    0986346123
+                                    {userOfClass.sdt}
                                 </Typography>
                             </div>
                         </ListItemText>
@@ -71,10 +75,10 @@ const CardManage = props => {
                                 </Typography>
                                 <span className={classes.spacer} />
                                 <Typography
-                                    variant="subtitle1"
+                                    variant="subtitle2"
                                     color="textSecondary"
                                 >
-                                    20/01/2019
+                                    {userOfClass.ngaysinh}
                                 </Typography>
                             </div>
                         </ListItemText>
@@ -91,10 +95,10 @@ const CardManage = props => {
                                 </Typography>
                                 <span className={classes.spacer} />
                                 <Typography
-                                    variant="subtitle1"
+                                    variant="subtitle2"
                                     color="textSecondary"
                                 >
-                                    Male
+                                    {userOfClass.gioitinh ? 'Nam' : 'Nữ'}
                                 </Typography>
                             </div>
                         </ListItemText>
@@ -111,10 +115,10 @@ const CardManage = props => {
                                 </Typography>
                                 <span className={classes.spacer} />
                                 <Typography
-                                    variant="subtitle1"
+                                    variant="subtitle2"
                                     color="textSecondary"
                                 >
-                                    aonguyen@gmail.com
+                                    {userOfClass.email}
                                 </Typography>
                             </div>
                         </ListItemText>
@@ -131,10 +135,10 @@ const CardManage = props => {
                                 </Typography>
                                 <span className={classes.spacer} />
                                 <Typography
-                                    variant="subtitle1"
+                                    variant="subtitle2"
                                     color="textSecondary"
                                 >
-                                    20/01/2019
+                                    {userOfClass.ngaydangki}
                                 </Typography>
                             </div>
                         </ListItemText>

@@ -2,13 +2,18 @@ import {
     ADD_ClASS,
     UPDATE_INFO_CLASS_BY_ID,
     UPDATE_AVATAR_CLASS_BY_ID,
-    REMOVE_AVATAR_CLASS_BY_ID
+    REMOVE_AVATAR_CLASS_BY_ID,
+    IMPORT_DSSV_CLASS_BY_ID,
+    ADD_CLASS_MEMBER_BY_ID,
+    EDIT_CLASS_MEMBER_BY_ID,
+    DELETE_CLASS_MEMBER_BY_ID,
+    DELETE_CLASS
 } from './../constants/types';
 
 const initialState = {
     status: '',
     message: '',
-    isSuccess: false
+    isSuccess: null
 };
 
 export default function(state = initialState, action) {
@@ -40,7 +45,42 @@ export default function(state = initialState, action) {
                 status: action.payload.status,
                 message: action.payload.message,
                 isSuccess: action.payload.isSuccess
-            }    
+            } 
+        case IMPORT_DSSV_CLASS_BY_ID:
+            return {
+                ...state,
+                status: action.payload.status,
+                message: action.payload.message,
+                isSuccess: action.payload.isSuccess
+            }   
+        case ADD_CLASS_MEMBER_BY_ID:
+            return {
+                ...state,
+                status: action.payload.status,
+                message: action.payload.message,
+                isSuccess: action.payload.isSuccess
+            }
+        case EDIT_CLASS_MEMBER_BY_ID:
+            return {
+                ...state,
+                status: action.payload.status,
+                message: action.payload.message,
+                isSuccess: action.payload.isSuccess
+            }
+        case DELETE_CLASS_MEMBER_BY_ID:
+            return {
+                ...state,
+                status: action.payload.status,
+                message: action.payload.message,
+                isSuccess: action.payload.isSuccess
+            } 
+        case DELETE_CLASS:
+            return {
+                ...state,
+                status: action.payload.status,
+                message: action.payload.message,
+                isSuccess: action.payload.isSuccess
+            } 
         default:
             return state;
     }

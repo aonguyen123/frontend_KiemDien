@@ -1,65 +1,17 @@
-/* eslint-disable react/no-multi-comp */
-/* eslint-disable react/display-name */
 import React, { forwardRef } from 'react';
 import { NavLink as RouterLink, withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
 import {
     List,
     ListItem,
     Button,
-    colors,
     Hidden,
     Divider
 } from '@material-ui/core';
 import InputRoundedIcon from '@material-ui/icons/InputRounded';
-
-const useStyles = makeStyles(theme => ({
-    root: {},
-    item: {
-        display: 'flex',
-        paddingTop: 0,
-        paddingBottom: 0
-    },
-    button: {
-        color: colors.blueGrey[800],
-        padding: '10px 8px',
-        justifyContent: 'flex-start',
-        textTransform: 'none',
-        letterSpacing: 0,
-        width: '100%',
-        fontWeight: theme.typography.fontWeightMedium
-    },
-    buttonLogout: {
-        color: colors.blueGrey[800],
-        padding: '10px 8px',
-        justifyContent: 'flex-start',
-        textTransform: 'none',
-        letterSpacing: 0,
-        width: '100%',
-        fontWeight: theme.typography.fontWeightMedium,
-        margin: theme.spacing(3, 0)
-    },
-    icon: {
-        color: theme.palette.icon,
-        width: 24,
-        height: 24,
-        display: 'flex',
-        alignItems: 'center',
-        marginRight: theme.spacing(1)
-    },
-    active: {
-        color: theme.palette.primary.main,
-        fontWeight: theme.typography.fontWeightMedium,
-        '& $icon': {
-            color: theme.palette.primary.main
-        }
-    },
-    divider: {
-        margin: theme.spacing(11, 0)
-    }
-}));
+import styles from './styles';
 
 const CustomRouterLink = forwardRef((props, ref) => (
     <div ref={ref} style={{ flexGrow: 1 }}>
@@ -68,8 +20,8 @@ const CustomRouterLink = forwardRef((props, ref) => (
 ));
 
 const SidebarNav = props => {
-    const { pages, className, logout, history } = props;
-    const classes = useStyles();
+    const { pages, className, classes, logout, history } = props;
+
     const handleClick = () => {
         logout(history);
     };
@@ -113,4 +65,4 @@ SidebarNav.propTypes = {
     pages: PropTypes.array.isRequired
 };
 
-export default withRouter(SidebarNav);
+export default withRouter(withStyles(styles)(SidebarNav));

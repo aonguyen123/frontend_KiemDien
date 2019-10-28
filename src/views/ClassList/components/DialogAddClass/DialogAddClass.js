@@ -42,7 +42,6 @@ const DialogAddClass = props => {
     };
     const handleDateChangeDateStart = date => {
         setSelectedDateStart(date);
-        //setSelectedDateEnd(date + 1);
     };
     const handleDateChangeDateEnd = date => {
         setSelectedDateEnd(date);
@@ -102,7 +101,7 @@ const DialogAddClass = props => {
                         <CardHeader title="Add class" />
                         <Divider />
                         <CardContent>
-                            <Grid container spacing={2}>
+                            <Grid container spacing={1}>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <Grid item md={6} xs={12}>
                                         <TextField
@@ -140,6 +139,7 @@ const DialogAddClass = props => {
                                             fullWidth
                                             value={selectedDateStart}
                                             minDate={today}
+                                            margin="dense"
                                         />
                                     </Grid>
                                     <Grid item md={6} xs={12}>
@@ -149,6 +149,7 @@ const DialogAddClass = props => {
                                             format="dd/MM/yyyy"
                                             onChange={handleDateChangeDateEnd}
                                             fullWidth
+                                            margin="dense"
                                             value={selectedDateEnd}
                                             minDate={moment(selectedDateStart).add(1, 'days')}
                                             error={errDate}

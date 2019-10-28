@@ -2,27 +2,35 @@ import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import cityReducer from './cityReducer';
-import uploadFileReducer from './uploadFileReducer';
-import updateInfoReducer from './updateInfoReducer';
 import userReducer from './userReducer';
-import addUserReducer from './addUserReducer';
+import actionUserReducer from './actionUserReducer';
 import classesReducer from './classesReducer';
 import actionClassReducer from './actionClassReducer';
 import getClassByIdReducer from './getClassByIdReducer';
 import loadingReducer from './loadingReducer';
 import notifyReducer from './notifyReducer';
+import accountReducer from './accountReducer';
+import actionAccountReducer from './actionAccountReducer';
+import loadingLocalReducer from './loadingLocalReducer';
 
 export default combineReducers({
     auth: authReducer,
-    errors: errorReducer,
-    citys: cityReducer,
-    file: uploadFileReducer,
-    info: updateInfoReducer,
+    
+    errors: errorReducer,   
+
     users: userReducer,
-    userAdd: addUserReducer,
+    actionUser: actionUserReducer,
+
     classes: classesReducer,
     actionClass: actionClassReducer,
     classById: getClassByIdReducer,
+    
     isLoading: loadingReducer,
-    showNotify: notifyReducer
+    loadingLocal: loadingLocalReducer,
+    showNotify: notifyReducer,
+
+    account: accountReducer,
+    actionAccount: actionAccountReducer,
+
+    citys: cityReducer
 });

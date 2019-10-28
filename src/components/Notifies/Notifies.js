@@ -59,7 +59,7 @@ const Notifies = props => {
                     horizontal: 'right'
                 }}
                 open={openNotify}
-                autoHideDuration={4000}
+                autoHideDuration={2000}
                 onClose={handleClose}
                 TransitionComponent={(variant === 'success') ? SlideTransitionSuccess : SlideTransitionError }
                 message={

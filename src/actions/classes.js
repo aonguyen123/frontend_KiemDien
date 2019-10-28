@@ -1,14 +1,13 @@
 import {
     GET_CLASSES,
     GET_ERRORS,
-    CLEARN_ERRORS,
     GET_CLASS_BY_ID,
     FETCHING_DATA,
-    FETCH_DATA_SUCCESS,
+    FETCH_DATA_SUCCESS    
 } from './../constants/types';
 import callAPI from './../common/callApi';
 
-export const getClasses = () => dispatch => {
+export const getClasses = () => dispatch => {    
     dispatch({
         type: FETCHING_DATA
     });
@@ -19,10 +18,6 @@ export const getClasses = () => dispatch => {
         });
         dispatch({
             type: FETCH_DATA_SUCCESS
-        });
-        dispatch({
-            type: CLEARN_ERRORS,
-            payload: {}
         });
     });
 };

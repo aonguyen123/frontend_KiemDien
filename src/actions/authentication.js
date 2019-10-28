@@ -1,24 +1,20 @@
-import jwt_decode from 'jwt-decode';
-
-import { GET_ERRORS, CLEARN_ERRORS, SET_CURRENT_USER } from './../constants/types';
+import { GET_ERRORS, LOG_IN, LOG_OUT, OPEN_NOTIFY } from './../constants/types';
 import setAuthToken from './../common/setAuthToken';
 import callAPI from './../common/callApi';
 
-export const login = (user, history) => dispatch => {
-    callAPI('/login', 'POST', user)
+export const login = (account, history) => dispatch => {
+    callAPI('/login', 'POST', {account})
         .then(res => {
             const { token } = res.data;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
-            const decode = jwt_decode(token);            
             dispatch({
-                type: SET_CURRENT_USER,
-                payload: decode
+                type: LOG_IN,
+                payload: res.data
             });
             dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
-            })
+                type: OPEN_NOTIFY
+            });
             history.push('/');
         })
         .catch(err => {
@@ -32,29 +28,7 @@ export const logout = history => dispatch => {
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch({
-        type: CLEARN_ERRORS,
-        payload: {}
+        type: LOG_OUT
     });
-    dispatch(setCurrentUser({}));
     history.push('/sign-in');
 }
-export const logoutSystem = () => dispatch => {
-    localStorage.removeItem('jwtToken');
-    setAuthToken(false);
-    dispatch(setCurrentUser({}));
-}
-export const setCurrentUser = decoded => {
-    return {
-        type: SET_CURRENT_USER,
-        payload: decoded
-    }
-};
-export const getInfoUser = idUser => dispatch => {
-    callAPI(`/getInfoUser/?id=${idUser}`, 'GET', null)
-        .then(res => {
-            dispatch({
-                type: SET_CURRENT_USER,
-                payload: res.data
-            });
-        });
-};

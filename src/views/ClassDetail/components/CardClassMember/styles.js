@@ -15,6 +15,9 @@ const styles = theme => ({
     },
     iconCardMember: {
         marginRight: '10px'
+    },
+    input: {
+        display: 'none'
     }
 });
 export default styles;

@@ -7,7 +7,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { ClassCard, ClassesToolbar } from './components';
 import { getClasses } from './../../actions/classes';
 import { addClass } from './../../actions/actionClass';
-import { clearErrors } from './../../actions/users';
+import { clearErrors } from './../../actions/clearErrors';
 import { closeNotify } from './../../actions/notify';
 import styles from './styles';
 import { LoadingCenter, Notifies } from 'components';
@@ -51,7 +51,7 @@ const ClassList = props => {
             <Notifies
                 variant={actionClass.isSuccess ? 'success' : 'error'}
                 message={actionClass.message}
-                openNotify={showNotify}
+                openNotify={actionClass.isSuccess === null ? false : showNotify}
                 setCloseNotify={setCloseNotify}
             />
             <ClassesToolbar

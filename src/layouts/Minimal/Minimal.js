@@ -1,26 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
-
-const useStyles = makeStyles(() => ({
-    root: {
-        position:'fixed',
-        top:0,
-        left:0,
-        bottom:0,
-        right:0,
-        height: '100%',
-        backgroundImage: `url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg')`
-    },
-    content: {
-        height: '100%'
-    }
-}));
+import { withStyles } from '@material-ui/styles';
+import styles from './styles';
 
 const Minimal = props => {
-    const { children } = props;
-
-    const classes = useStyles();
+    const { children, classes } = props;
 
     return (
         <div className={classes.root}>
@@ -34,4 +18,4 @@ Minimal.propTypes = {
     className: PropTypes.string
 };
 
-export default Minimal;
+export default withStyles(styles)(Minimal);

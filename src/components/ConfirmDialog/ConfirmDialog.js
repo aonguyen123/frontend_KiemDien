@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
+import { LoadingButton } from 'components';
 
 function PaperComponent(props) {
     return (
@@ -17,12 +18,16 @@ function PaperComponent(props) {
 }
 
 const ConfirmDialog = props => {
-    const { open, closeDialog, title } = props;
+    const { open, closeDialog, title, deleteConfirm } = props;
+    const [loadingButton, setLoadingButton] = useState(false);
 
     const handleClose = () => {
         closeDialog(false);
     };
-
+    const handleClick = () => {
+        setLoadingButton(true);
+        deleteConfirm();
+    };
     return (
         <div>
             <Dialog
@@ -43,7 +48,12 @@ const ConfirmDialog = props => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="secondary">
+                    <Button 
+                        color="secondary" 
+                        disabled={loadingButton}
+                        onClick={handleClick}
+                    >
+                        {loadingButton ? <LoadingButton /> : null}
                         Delete
                     </Button>
                     <Button onClick={handleClose} color="primary">

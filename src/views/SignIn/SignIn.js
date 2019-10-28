@@ -16,16 +16,20 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { login } from './../../actions/authentication';
-import { LoadingButton } from './../../components';
+import { closeNotify } from './../../actions/notify';
+import { LoadingButton, Notifies } from 'components';
 import styles from './styles';
 
 const SignIn = props => {
-    const { errors, history, login, classes } = props;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoadingButton, setIsLoadingButton] = useState(false);
+    const { errors, history, login, classes, auth, showNotify, closeNotify } = props;
+    const [value, setValue] = useState({
+        email: '',
+        password: ''
+    });
+    const [loadingButton, setLoadingButton] = useState(false);
+
     useEffect(() => {
-        setIsLoadingButton(false);
+        setLoadingButton(false);
     }, [errors]);
     useEffect(() => {
         if(localStorage.jwtToken)
@@ -34,18 +38,29 @@ const SignIn = props => {
         }
     });
 
+    const handleChange = e => {
+        setValue({
+            ...value,
+            [e.target.name]: e.target.value
+        })
+    }
     const handleClick = e => {
         e.preventDefault();
-        setIsLoadingButton(true);
-        const user = {
-            email,
-            password
-        };
-        login(user, history);
+        setLoadingButton(true);
+        login(value, history);
     }
+    const setCloseNotify = () => {
+        closeNotify();
+    };
 
     return (
         <Container component="main" maxWidth="xs">
+            <Notifies
+                variant={auth.isSuccess ? 'success' : 'error'}
+                message={auth.message}
+                openNotify={auth.isSuccess === null ? false : showNotify}
+                setCloseNotify={setCloseNotify}
+            />
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -65,12 +80,10 @@ const SignIn = props => {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={handleChange}
                         error={errors.email ? true : false}
                         helperText={
-                            errors.email
-                                ? `${errors.email}`
-                                : null
+                            errors.email ? errors.email: null
                         }
                     />
                     <TextField
@@ -83,12 +96,10 @@ const SignIn = props => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={handleChange}
                         error={errors.password ? true : false}
                         helperText={
-                            errors.password
-                                ? `${errors.password}`
-                                : null
+                            errors.password ? errors.password : null
                         }
                     />
                     <FormControlLabel
@@ -101,13 +112,13 @@ const SignIn = props => {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            disabled={isLoadingButton}
+                            disabled={loadingButton}
                             className={classes.submit}
                             onClick={handleClick}
                         >
                             Sign In
                             {
-                                isLoadingButton && <LoadingButton />
+                                loadingButton && <LoadingButton />
                             }
                         </Button>
                     </div>
@@ -134,6 +145,8 @@ SignIn.propTypes = {
     login: PropTypes.func
 }
 const mapStateToProps = state => ({
-    errors: state.errors
+    auth: state.auth,
+    errors: state.errors,
+    showNotify: state.showNotify.isShow
 });
-export default connect(mapStateToProps, { login } )(withRouter(withStyles(styles)(SignIn)));
+export default connect(mapStateToProps, { login, closeNotify } )(withRouter(withStyles(styles)(SignIn)));

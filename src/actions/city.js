@@ -1,12 +1,18 @@
-import { GET_CITYS } from './../constants/types';
+import { GET_CITYS, LOADING_LOCAL_SUCCESS, LOADING_LOCAL } from './../constants/types';
 import callAPI from './../common/callApi';
 
 export const getCity = () => dispatch => {
-    callAPI('/getCity', 'GET', null)
+    dispatch({
+        type: LOADING_LOCAL
+    });
+    callAPI('/getCitys', 'GET', null)
         .then(res => {
             dispatch({
                 type: GET_CITYS,
                 payload: res.data
+            });
+            dispatch({
+                type: LOADING_LOCAL_SUCCESS
             });
         });
 };

@@ -13,7 +13,7 @@ import {
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
 import { StatusBullet } from 'components';
-import { URI } from './../../../../constants/types'
+import { URI } from './../../../../constants/types';
 import styles from './styles';
 
 const statusColors = {
@@ -29,9 +29,10 @@ const ProductCard = props => {
                     <img
                         alt="class"
                         className={classes.image}
-                        src={lop.hinhdaidien ? 
-                            `${URI}/getAvatar/${lop.hinhdaidien}` : 
-                            'http://www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=retro'
+                        src={
+                            lop.hinhdaidien
+                                ? `${URI}/getAvatar/${lop.hinhdaidien}`
+                                : 'http://www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=retro'
                         }
                     />
                 </div>
@@ -54,17 +55,35 @@ const ProductCard = props => {
                             {`Created ${moment(lop.thoigiantao).fromNow()}`}
                         </Typography>
                     </Grid>
-                    <Grid className={classes.statsItem} item>
-                        <div className={classes.statusContainer}>
-                            <Typography display="inline" variant="body2">
-                                <StatusBullet
-                                    className={classes.status}
-                                    color={statusColors[lop.managed]}
-                                    size="sm"
-                                />
-                                {lop.managed === true ? 'Completed' : 'Not yet managed'}
-                            </Typography>
-                        </div>
+                    <Grid>
+                        <Grid className={classes.statsItem} item>
+                            <div className={classes.statusContainer}>
+                                <Typography display="inline" variant="body2">
+                                    <StatusBullet
+                                        className={classes.status}
+                                        color={statusColors[lop.managed]}
+                                        size="sm"
+                                    />
+                                    {lop.managed === true
+                                        ? 'Managed'
+                                        : 'Not yet managed'}
+                                </Typography>
+                            </div>
+                        </Grid>
+                        <Grid className={classes.statsItem} item>
+                            <div className={classes.statusContainer}>
+                                <Typography display="inline" variant="body2">
+                                    <StatusBullet
+                                        className={classes.status}
+                                        color={statusColors[lop.status]}
+                                        size="sm"
+                                    />
+                                    {lop.status === true
+                                        ? 'Active'
+                                        : 'Inactive'}
+                                </Typography>
+                            </div>
+                        </Grid>
                     </Grid>
                 </Grid>
             </CardActions>

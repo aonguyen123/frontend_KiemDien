@@ -15,22 +15,17 @@ import { LoadingButton } from 'components';
 import styles from './styles';
 
 const DialogAddUser = props => {
-    const { open, handleCloseDialog, classes, createUser, errors, addUser, clearErrors } = props;
+    const { open, handleCloseDialog, classes, createUser, errors, clearErrors } = props;
     const [value, setValue] = useState({
         email: '',
         password: ''
     });
     const [loadingButton, SetLoadingButton] = useState(false);
+    
     useEffect(() => {
-        if(Object.entries(errors).length > 0)
-        {
-            SetLoadingButton(false);
-        }
-        if(Object.entries(addUser).length > 0)
-        {
-            SetLoadingButton(false);
-        }
-    },[SetLoadingButton, errors, addUser, handleCloseDialog]);
+        SetLoadingButton(false);
+    }, [errors]);
+
     const handleClose = () => {
         handleCloseDialog(false);
         clearErrors();

@@ -1,4 +1,4 @@
-import { GET_USERS, DELETE_USERS, CLEAR_STATUS_DELETE } from './../constants/types';
+import { GET_USERS } from './../constants/types';
 
 const initialState = {
     users: [],
@@ -14,16 +14,6 @@ export default function(state = initialState, action) {
                 users: action.payload.users,
                 status: action.payload.status
             }
-            case DELETE_USERS: 
-            return {
-                ...state,
-                status: action.payload.status
-            }
-        case CLEAR_STATUS_DELETE: 
-            return {
-                ...state,
-                status: action.payload
-            }         
         default:
             return state;
     }

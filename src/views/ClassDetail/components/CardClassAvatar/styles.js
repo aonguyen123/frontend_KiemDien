@@ -2,7 +2,7 @@ const styles = theme => ({
     root: {},
     avatar: {
         marginLeft: 'auto',
-        height: '269px',
+        height: '265px',
         width: '100%',
         borderRadius: 0,
         flexShrink: 0,

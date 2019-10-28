@@ -3,9 +3,7 @@ import {
     CLEARN_ERRORS,
     ADD_ClASS,
     OPEN_NOTIFY,
-    UPDATE_INFO_CLASS_BY_ID,
-    UPDATE_AVATAR_CLASS_BY_ID,
-    REMOVE_AVATAR_CLASS_BY_ID
+    DELETE_CLASS
 } from './../constants/types';
 import callAPI from './../common/callApi';
 
@@ -31,68 +29,16 @@ export const addClass = newClass => dispatch => {
             });
         });
 };
-export const updateInfoClassById = newClass => dispatch => {
-    callAPI('/updateInfoClass', 'PUT', newClass)
+export const deleteClass = (_id, history) => dispatch => {
+    callAPI('/deleteClass', 'DELETE', {_id})
         .then(res => {
+            history.push('/classes');
             dispatch({
-                type: OPEN_NOTIFY
-            });
-            dispatch({
-                type: UPDATE_INFO_CLASS_BY_ID,
-                payload: res.data
-            });
-            dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
-            });
-        })
-        .catch(err => {
-            dispatch({
-                type: GET_ERRORS,
-                payload: err.response.data
-            });
-        })
-};
-export const updateAvatarClassById = (file, _id) => dispatch => {
-    const formData = new FormData();
-    formData.set('_id', _id);
-    formData.append('avatar', file);
-    callAPI('/updateAvatarClassById', 'POST', formData)
-        .then(res => {
-            dispatch({
-                type: OPEN_NOTIFY
-            });
-            dispatch({
-                type: UPDATE_AVATAR_CLASS_BY_ID,
-                payload: res.data
-            });
-            dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
-            });
-        })
-        .catch(err => {
-            dispatch({
-                type: GET_ERRORS,
-                payload: err.response.data
-            });
-        })
-};
-export const removeAvatarClass = _id => dispatch => {
-    callAPI('/removeAvatarClassById', 'DELETE', {_id})
-        .then(res => {
-            dispatch({
-                type: REMOVE_AVATAR_CLASS_BY_ID,
+                type: DELETE_CLASS,
                 payload: res.data
             });
             dispatch({
                 type: OPEN_NOTIFY
-            });
-        })
-        .catch(err => {
-            dispatch({
-                type: GET_ERRORS,
-                payload: err.response.data
             });
         });
 };

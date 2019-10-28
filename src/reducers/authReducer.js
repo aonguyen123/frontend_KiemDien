@@ -1,19 +1,22 @@
-import { SET_CURRENT_USER } from './../constants/types';
-import isEmpty from './../common/is-empty';
+import { LOG_IN, LOG_OUT } from './../constants/types';
 
 const initialState = {
-    isAuthenticated: false,
-    user: {}
+    status: '',
+    message: '',
+    isSuccess: null
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
-        case SET_CURRENT_USER:
+        case LOG_IN:
             return {
                 ...state,
-                isAuthenticated: !isEmpty(action.payload),
-                user: action.payload
+                status: action.payload.status,
+                message: action.payload.message,
+                isSuccess: action.payload.isSuccess
             };
+        case LOG_OUT:
+            return state;
         default:
             return state;
     }

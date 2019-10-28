@@ -26,7 +26,6 @@ const CardClassDetail = props => {
     const [value, setValue] = useState(classById)
     const [loadingButton, setLoadingButton] = useState(false);
     const [errDate, setErrDate] = useState(false);
-    const today = moment();
 
     useEffect(() => {
         if(errors)
@@ -118,9 +117,8 @@ const CardClassDetail = props => {
                                     format="dd/MM/yyyy"
                                     onChange={handleDateStartChange}
                                     fullWidth
-                                    minDate={today}
-                                    error={false}
-                                    helperText={''}
+                                    minDate={value.thoigianbatdau}
+                                    margin="dense"
                                 />
                             </Grid>
                             <Grid item md={6} xs={12}>
@@ -132,6 +130,7 @@ const CardClassDetail = props => {
                                     onChange={handleDateEndChange}
                                     fullWidth
                                     minDate={moment(value.thoigianbatdau).add(1, 'days')}
+                                    margin="dense"
                                     error={errDate}
                                     helperText={
                                         errDate ? 'Date should not be before minimal date' : null

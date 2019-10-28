@@ -10,12 +10,18 @@ import {
     CardClassAvatar
 } from './components';
 import { LoadingCenter, Notifies } from 'components';
+import { clearErrors } from './../../actions/clearErrors';
 import { getClassById } from './../../actions/classes';
+import { deleteClass } from './../../actions/actionClass';
 import {
     updateInfoClassById,
     updateAvatarClassById,
-    removeAvatarClass
-} from './../../actions/actionClass';
+    removeAvatarClass,
+    importDssvClassById,
+    addClassMemberById,
+    editClassMemberById,
+    deleteClassMemberById,
+} from './../../actions/actionClassDetail';
 import { closeNotify } from './../../actions/notify';
 import styles from './styles';
 
@@ -34,7 +40,13 @@ const ClassDetail = props => {
         actionClass,
         closeNotify,
         updateAvatarClassById,
-        removeAvatarClass
+        removeAvatarClass,
+        importDssvClassById,
+        addClassMemberById,
+        editClassMemberById,
+        clearErrors,
+        deleteClassMemberById,
+        deleteClass
     } = props;
 
     useEffect(() => {
@@ -56,11 +68,14 @@ const ClassDetail = props => {
         <div className={classes.root}>
             <Notifies
                 variant={actionClass.isSuccess ? 'success' : 'error'}
-                message={actionClass.message}
-                openNotify={showNotify}
+                message={actionClass.message}                
+                openNotify={actionClass.isSuccess === null ? false : showNotify}
                 setCloseNotify={setCloseNotify}
             />
-            <ToolbarClassDetal classById={classById} />
+            <ToolbarClassDetal 
+                classById={classById} 
+                deleteClass={deleteClass}
+            />
             <div className={classes.content}>
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={6} xl={8} xs={12}>
@@ -79,7 +94,15 @@ const ClassDetail = props => {
                         />
                     </Grid>
                     <Grid item lg={8} md={6} xl={8} xs={12}>
-                        <CardClassMember classById={classById} />
+                        <CardClassMember 
+                            classById={classById} 
+                            importDssvClassById={importDssvClassById}
+                            addClassMemberById={addClassMemberById}
+                            errors={errors}
+                            editClassMemberById={editClassMemberById}
+                            clearErrors={clearErrors}
+                            deleteClassMemberById={deleteClassMemberById}
+                        />
                     </Grid>
                     <Grid item lg={4} md={6} xl={4} xs={12}>
                         <CardManage userOfClass={userOfClass} />
@@ -100,5 +123,17 @@ const mapStateToProps = state => ({
 });
 export default connect(
     mapStateToProps,
-    { getClassById, updateInfoClassById, closeNotify, updateAvatarClassById, removeAvatarClass }
+    {
+        getClassById,
+        updateInfoClassById,
+        closeNotify,
+        updateAvatarClassById,
+        removeAvatarClass,
+        importDssvClassById,
+        addClassMemberById,
+        editClassMemberById,
+        clearErrors,
+        deleteClassMemberById,
+        deleteClass
+    }
 )(withStyles(styles)(ClassDetail));

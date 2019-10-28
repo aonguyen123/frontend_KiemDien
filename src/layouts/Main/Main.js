@@ -1,28 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import jwt_decode from 'jwt-decode';
 import { withStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { Sidebar, Topbar, Footer } from './components';
+import { getInfoAccount } from './../../actions/account';
 import { logout } from './../../actions/authentication';
-import { getCity } from './../../actions/city';
 import styles from './styles';
 
 const Main = props => {
-    const { children, user, logout, classes, history, citys, getCity } = props;
+    const {
+        children,
+        logout,
+        classes,
+        history,
+        getInfoAccount,
+        account,
+    } = props;
+
     useEffect(() => {
-        if(citys.length === 0)
-        {
-            getCity();    
+        if (localStorage.jwtToken) {
+            const decode = jwt_decode(localStorage.jwtToken);
+            const currentTime = Date.now() / 1000;
+            if (decode.exp < currentTime) {
+                logout(history);
+            }
         }
-        if(!localStorage.jwtToken)
-        {
+        if (!localStorage.jwtToken) {
             history.push('/sign-in');
         }
-    },[history, getCity, citys]);
+    });
+    useEffect(() => {
+        if (localStorage.jwtToken) {
+            const decode = jwt_decode(localStorage.jwtToken);
+            getInfoAccount(decode._id);
+        }
+    }, [getInfoAccount]);
+
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), {
         defaultMatches: true
@@ -46,19 +64,17 @@ const Main = props => {
                 [classes.shiftContent]: isDesktop
             })}
         >
-            <Topbar 
-                onSidebarOpen={handleSidebarOpen}
-                logout={logout}
-            />
+            <Topbar onSidebarOpen={handleSidebarOpen} logout={logout} />
             <Sidebar
                 onClose={handleSidebarClose}
                 open={shouldOpenSidebar}
                 variant={isDesktop ? 'persistent' : 'temporary'}
                 logout={logout}
+                account={account}
             />
             <main className={classes.content}>
                 {children}
-                { (Object.entries(user).length !== 0) ? <Footer /> : null }
+                <Footer />
             </main>
         </div>
     );
@@ -66,12 +82,12 @@ const Main = props => {
 
 Main.propTypes = {
     children: PropTypes.node,
-    user: PropTypes.object,
     logout: PropTypes.func
 };
 const mapStateToProps = state => ({
-    user: state.auth.user,
-    isAuth: state.auth.isAuthenticated,
-    citys: state.citys,
-})
-export default connect(mapStateToProps, { logout, getCity })(withRouter(withStyles(styles)(Main)));
+    account: state.account,
+});
+export default connect(
+    mapStateToProps,
+    { logout, getInfoAccount }
+)(withRouter(withStyles(styles)(Main)));
