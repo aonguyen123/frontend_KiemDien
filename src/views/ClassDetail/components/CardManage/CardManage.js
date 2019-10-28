@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/styles';
 import {
@@ -14,12 +14,30 @@ import {
     CardHeader
 } from '@material-ui/core';
 import { URI } from './../../../../constants/types';
+import ChangePersonDrawers from './../ChangePersonDrawers/ChangePersonDrawers';
 import styles from './styles';
 
 const CardManage = props => {
     const { classes, className, userOfClass } = props;
+    const [state, setState] = useState({ right: false });
+
+    const handleChangePerson = (side, open) => event => {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+            return;
+        }
+        setState({ ...state, [side]: open });
+    };
+
     return (
         <Card className={clsx(classes.root, className)}>
+            <ChangePersonDrawers 
+                handleChangePerson={handleChangePerson}
+                open={state.right}
+            />
             {Object.entries(userOfClass).length !== 0 ? (
                 <CardHeader
                     avatar={
@@ -156,6 +174,7 @@ const CardManage = props => {
                     variant="text"
                     className={classes.changeButton}
                     color="primary"
+                    onClick={handleChangePerson('right', true)}
                 >
                     Change person
                 </Button>

@@ -1,4 +1,4 @@
-export const URI = 'https://kiemdien.herokuapp.com/api/admin';
+export const URI = 'http://localhost:4000/api/admin';
 //https://kiemdien.herokuapp.com/api/admin
 //http://localhost:4000/api/admin
 
