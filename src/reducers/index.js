@@ -12,6 +12,7 @@ import notifyReducer from './notifyReducer';
 import accountReducer from './accountReducer';
 import actionAccountReducer from './actionAccountReducer';
 import loadingLocalReducer from './loadingLocalReducer';
+import assignesReducer from './assignesReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -25,6 +26,8 @@ export default combineReducers({
     actionClass: actionClassReducer,
     classById: getClassByIdReducer,
     
+    assignesClass: assignesReducer,
+
     isLoading: loadingReducer,
     loadingLocal: loadingLocalReducer,
     showNotify: notifyReducer,

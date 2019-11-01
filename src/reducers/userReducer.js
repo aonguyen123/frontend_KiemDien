@@ -1,8 +1,7 @@
-import { GET_USERS } from './../constants/types';
+import { GET_USERS, GET_USER_CONDITION_STATUS_TRUE } from './../constants/types';
 
 const initialState = {
-    users: [],
-    status: ''
+    users: []
 };
 
 export default function(state = initialState, action) {
@@ -11,9 +10,13 @@ export default function(state = initialState, action) {
         case GET_USERS:
             return {
                 ...state,
-                users: action.payload.users,
-                status: action.payload.status
+                users: action.payload.users
             }
+        case GET_USER_CONDITION_STATUS_TRUE:
+            return {
+                ...state,
+                users: action.payload
+            }    
         default:
             return state;
     }

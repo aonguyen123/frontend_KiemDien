@@ -18,7 +18,6 @@ const UserList = props => {
         users,
         actionUser,
         isLoading,
-        statusUsers,
         getUsers,
         createUser,
         deleteUsers,
@@ -62,7 +61,6 @@ const UserList = props => {
                 <UsersTable 
                     users={users} 
                     deleteUsers={deleteUsers}
-                    statusUsers={statusUsers}
                 />
             </div>
         </div>
@@ -70,7 +68,6 @@ const UserList = props => {
 };
 const mapStateToProps = state => ({
     users: state.users.users,
-    statusUsers: state.users.status,
     actionUser: state.actionUser,
     isLoading: state.isLoading.isLoading,
     showNotify: state.showNotify.isShow,

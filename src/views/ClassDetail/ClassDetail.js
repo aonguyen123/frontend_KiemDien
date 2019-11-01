@@ -11,6 +11,7 @@ import {
 } from './components';
 import { LoadingCenter, Notifies } from 'components';
 import { clearErrors } from './../../actions/clearErrors';
+import { getUserConditionStatusTrue } from './../../actions/users';
 import { getClassById } from './../../actions/classes';
 import { deleteClass } from './../../actions/actionClass';
 import {
@@ -21,6 +22,8 @@ import {
     addClassMemberById,
     editClassMemberById,
     deleteClassMemberById,
+    changeManagerPerson,
+    removeManagerPerson
 } from './../../actions/actionClassDetail';
 import { closeNotify } from './../../actions/notify';
 import styles from './styles';
@@ -46,8 +49,14 @@ const ClassDetail = props => {
         editClassMemberById,
         clearErrors,
         deleteClassMemberById,
-        deleteClass
+        deleteClass,
+        getUserConditionStatusTrue,
+        loadingLocal,
+        users,
+        changeManagerPerson,
+        removeManagerPerson
     } = props;
+    const idClass = classById._id;
 
     useEffect(() => {
         getClassById(match.params.id);
@@ -57,6 +66,10 @@ const ClassDetail = props => {
             history.push('/classes');
         }
     }, [errors, history]);
+    useEffect(() => {
+        getUserConditionStatusTrue();
+    }, [getUserConditionStatusTrue]);
+
     const setCloseNotify = () => {
         closeNotify();
     };
@@ -105,7 +118,14 @@ const ClassDetail = props => {
                         />
                     </Grid>
                     <Grid item lg={4} md={6} xl={4} xs={12}>
-                        <CardManage userOfClass={userOfClass} />
+                        <CardManage 
+                            userOfClass={userOfClass} 
+                            loadingLocal={loadingLocal}
+                            users={users}
+                            changeManagerPerson={changeManagerPerson}
+                            idClass={idClass}
+                            removeManagerPerson={removeManagerPerson}
+                        />
                     </Grid>
                 </Grid>
             </div>
@@ -118,8 +138,10 @@ const mapStateToProps = state => ({
     userOfClass: state.classById.user,
     actionClass: state.actionClass,
     isLoading: state.isLoading.isLoading,
+    loadingLocal: state.loadingLocal.loadingLocal,
     errors: state.errors,
-    showNotify: state.showNotify.isShow
+    showNotify: state.showNotify.isShow,
+    users: state.users.users,
 });
 export default connect(
     mapStateToProps,
@@ -134,6 +156,9 @@ export default connect(
         editClassMemberById,
         clearErrors,
         deleteClassMemberById,
-        deleteClass
+        deleteClass,
+        getUserConditionStatusTrue,
+        changeManagerPerson,
+        removeManagerPerson
     }
 )(withStyles(styles)(ClassDetail));

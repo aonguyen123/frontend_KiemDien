@@ -1,13 +1,17 @@
 import React from 'react';
+import { HashLoader } from 'react-spinners';
 import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import styles from './styles';
 
 const LoadingCenter = props => {
-    const { classes } = props;
+    const {classes} = props;
     return (
-        <div>
-            <CircularProgress className={classes.progress} color="secondary" />
+        <div className={classes.progress}>
+            <HashLoader
+                sizeUnit={'px'}
+                size={50}
+                color={'#36D7B7'}
+            />
         </div>
     );
 };

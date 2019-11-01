@@ -202,18 +202,7 @@ const CardClassMember = props => {
                                     <TableRow>
                                         <TableCell padding="checkbox">
                                             <Checkbox
-                                                checked={
-                                                    dssv
-                                                        ? selectedMember.length ===
-                                                          dssv.length
-                                                        : null
-                                                }
                                                 color="primary"
-                                                indeterminate={
-                                                    selectedMember.length > 0 &&
-                                                    selectedMember.length <
-                                                        dssv.length
-                                                }
                                                 onChange={handleSelectAll}
                                             />
                                         </TableCell>

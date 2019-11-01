@@ -49,13 +49,35 @@ const ProductCard = props => {
             <Divider />
             <CardActions>
                 <Grid container justify="space-between">
-                    <Grid className={classes.statsItem} item>
-                        <AccessTimeIcon className={classes.statsIcon} />
-                        <Typography display="inline" variant="body2">
-                            {`Created ${moment(lop.thoigiantao).fromNow()}`}
-                        </Typography>
+                    <Grid>
+                        <Grid className={classes.statsItem} item>
+                            <AccessTimeIcon className={classes.statsIcon} />
+                            <Typography display="inline" variant="body2">
+                                {`Created ${moment(lop.createdAt).fromNow()}`}
+                            </Typography>
+                        </Grid>
+                        <Grid className={classes.statsItem} item>
+                            <AccessTimeIcon className={classes.statsIcon} />
+                            <Typography display="inline" variant="body2">
+                                {`Updated ${moment(lop.updatedAt).fromNow()}`}
+                            </Typography>
+                        </Grid>
                     </Grid>
                     <Grid>
+                    <Grid className={classes.statsItem} item>
+                            <div className={classes.statusContainer}>
+                                <Typography display="inline" variant="body2">
+                                    <StatusBullet
+                                        className={classes.status}
+                                        color={statusColors[lop.status]}
+                                        size="sm"
+                                    />
+                                    {lop.status === true
+                                        ? 'Active'
+                                        : 'Inactive'}
+                                </Typography>
+                            </div>
+                        </Grid>
                         <Grid className={classes.statsItem} item>
                             <div className={classes.statusContainer}>
                                 <Typography display="inline" variant="body2">
@@ -67,20 +89,6 @@ const ProductCard = props => {
                                     {lop.managed === true
                                         ? 'Managed'
                                         : 'Not yet managed'}
-                                </Typography>
-                            </div>
-                        </Grid>
-                        <Grid className={classes.statsItem} item>
-                            <div className={classes.statusContainer}>
-                                <Typography display="inline" variant="body2">
-                                    <StatusBullet
-                                        className={classes.status}
-                                        color={statusColors[lop.status]}
-                                        size="sm"
-                                    />
-                                    {lop.status === true
-                                        ? 'Active'
-                                        : 'Inactive'}
                                 </Typography>
                             </div>
                         </Grid>

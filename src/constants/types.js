@@ -1,4 +1,4 @@
-export const URI = 'https://kiemdien.herokuapp.com/api/admin';
+export const URI = 'http://localhost:4000/api/admin';
 //https://kiemdien.herokuapp.com/api/admin
 //http://localhost:4000/api/admin
 
@@ -15,6 +15,8 @@ export const GET_CURRENT_ACCOUNT = 'GET_CURRENT_ACCOUNT';
 export const GET_USERS = 'GET_USERS';
 export const DELETE_USERS = 'DELETE_USERS';
 export const CREATE_USER = 'CREATE_USER';
+
+export const GET_USER_CONDITION_STATUS_TRUE = 'GET_USER_CONDITION_STATUS_TRUE';
 
 export const UPLOAD_PICTURE_ACCOUNT = 'UPLOAD_PICTURE_ACCOUNT';
 export const REMOVE_PICTURE_ACCOUNT = 'REMOVE_PICTURE_ACCOUNT';
@@ -33,6 +35,10 @@ export const IMPORT_DSSV_CLASS_BY_ID = 'IMPORT_DSSV_CLASS_BY_ID';
 export const ADD_CLASS_MEMBER_BY_ID = 'ADD_CLASS_MEMBER_BY_ID';
 export const EDIT_CLASS_MEMBER_BY_ID = 'EDIT_CLASS_MEMBER_BY_ID';
 export const DELETE_CLASS_MEMBER_BY_ID = 'DELETE_CLASS_MEMBER_BY_ID';
+export const CHANGE_MANAGER_PERSON = 'CHANGE_MANAGER_PERSON';
+export const REMOVE_MANAGER_PERSON = 'REMOVE_MANAGER_PERSON';
+
+export const GET_CLASS_ASSIGNES = 'GET_CLASS_ASSIGNES';
 
 export const FETCHING_DATA = 'FETCHING_DATA';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';

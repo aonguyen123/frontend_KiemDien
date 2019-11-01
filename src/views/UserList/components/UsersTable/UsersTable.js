@@ -30,7 +30,7 @@ const statusColors = {
 };
 
 const UsersTable = props => {
-    const { className, users, classes, deleteUsers, statusUsers } = props;
+    const { className, users, classes, deleteUsers } = props;
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
@@ -81,7 +81,7 @@ const UsersTable = props => {
             <CardContent className={classes.content}>
                 <PerfectScrollbar>
                     <div className={classes.inner}>
-                        {statusUsers === 'USERS_NOTFOUND' ? (
+                        {users.length === 0 ? (
                             <Typography
                                 variant="h5"
                                 style={{ textAlign: 'center' }}

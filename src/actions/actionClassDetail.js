@@ -8,7 +8,9 @@ import {
     IMPORT_DSSV_CLASS_BY_ID,
     ADD_CLASS_MEMBER_BY_ID,
     EDIT_CLASS_MEMBER_BY_ID,
-    DELETE_CLASS_MEMBER_BY_ID
+    DELETE_CLASS_MEMBER_BY_ID,
+    CHANGE_MANAGER_PERSON,
+    REMOVE_MANAGER_PERSON
 } from './../constants/types';
 import callAPI from './../common/callApi';
 
@@ -143,6 +145,39 @@ export const deleteClassMemberById = (idClass, members) => dispatch => {
         .then(res => {
             dispatch({
                 type: DELETE_CLASS_MEMBER_BY_ID,
+                payload: res.data
+            });
+            dispatch({
+                type: OPEN_NOTIFY
+            });
+        })
+};
+export const changeManagerPerson = (idUser, idClass) => dispatch => {
+    callAPI('/changeManagerPerson', 'POST', {idUser, idClass})
+        .then(res => {
+            dispatch({
+                type: CHANGE_MANAGER_PERSON,
+                payload: res.data
+            });
+            dispatch({
+                type: OPEN_NOTIFY
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+            dispatch({
+                type: OPEN_NOTIFY
+            })
+        });
+};
+export const removeManagerPerson = idClass => dispatch => {
+    callAPI('/removeManagerPerson', 'PUT', {idClass})
+        .then(res => {
+            dispatch({
+                type: REMOVE_MANAGER_PERSON,
                 payload: res.data
             });
             dispatch({

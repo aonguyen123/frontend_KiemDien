@@ -14,7 +14,8 @@ import {
     Settings as SettingsView,
     SignIn as SignInView,
     NotFound as NotFoundView,
-    ClassDetail as ClassDetailView
+    ClassDetail as ClassDetailView,
+    Assignes as AssignesView
 } from './views';
 
 const Routes = () => {
@@ -44,6 +45,12 @@ const Routes = () => {
                 exact
                 layout={MainLayout}
                 path="/classes/classDetail/:id"
+            />
+            <RouteWithLayout
+                component={AssignesView}
+                exact
+                layout={MainLayout}
+                path="/assignes"
             />
             <RouteWithLayout
                 component={TypographyView}

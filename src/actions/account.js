@@ -16,3 +16,12 @@ export const getInfoAccount = idAccount => dispatch => {
             });
         });
 };
+export const getInfoAccountSideBar = idAccount => dispatch => {
+    callAPI(`/getInfoAccount/?id=${idAccount}`, 'GET', null)
+        .then(res => {
+            dispatch({
+                type: GET_CURRENT_ACCOUNT,
+                payload: res.data
+            });
+        });
+};

@@ -24,8 +24,7 @@ const ClassList = props => {
         clearErrors,
         isLoading,
         showNotify,
-        closeNotify,
-        statusClassList
+        closeNotify
     } = props;
     const [rowsPerPage, setRowsPerPage] = useState(6);
     const [page, setPage] = useState(0);
@@ -61,7 +60,7 @@ const ClassList = props => {
                 errors={errors}
                 clearErrors={clearErrors}
             />
-            {statusClassList === 'CLASS_NOTFOUND' ? (
+            {classList.length === 0 ? (
                 <div className={classes.classNotfound}>
                     <Typography variant="h3" align="center">Class not found</Typography>
                 </div>
@@ -114,7 +113,6 @@ const ClassList = props => {
 
 const mapStateToProps = state => ({
     classList: state.classes.classes,
-    statusClassList: state.classes.status,
     actionClass: state.actionClass,
     errors: state.errors,
     isLoading: state.isLoading.isLoading,

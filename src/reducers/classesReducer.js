@@ -1,8 +1,7 @@
 import { GET_CLASSES } from './../constants/types';
 
 const initialState = {
-    classes: [],
-    status: ''
+    classes: []
 }
 
 export default function(state = initialState, action) {
@@ -11,8 +10,7 @@ export default function(state = initialState, action) {
         case GET_CLASSES:
             return {
                 ...state,
-                classes: action.payload.classes,
-                status: action.payload.status
+                classes: action.payload.classes
             }
         default:  
             return state;

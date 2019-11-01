@@ -8,3 +8,4 @@ export { default as SignIn } from './SignIn';
 export { default as Typography } from './Typography';
 export { default as UserList } from './UserList';
 export { default as ClassDetail } from './ClassDetail';
+export { default as Assignes } from './Assignes';

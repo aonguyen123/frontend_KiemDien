@@ -6,9 +6,8 @@ import { withStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
 import { Sidebar, Topbar, Footer } from './components';
-import { getInfoAccount } from './../../actions/account';
+import { getInfoAccountSideBar } from './../../actions/account';
 import { logout } from './../../actions/authentication';
 import styles from './styles';
 
@@ -18,7 +17,7 @@ const Main = props => {
         logout,
         classes,
         history,
-        getInfoAccount,
+        getInfoAccountSideBar,
         account,
     } = props;
 
@@ -37,9 +36,9 @@ const Main = props => {
     useEffect(() => {
         if (localStorage.jwtToken) {
             const decode = jwt_decode(localStorage.jwtToken);
-            getInfoAccount(decode._id);
+            getInfoAccountSideBar(decode._id);
         }
-    }, [getInfoAccount]);
+    }, [getInfoAccountSideBar]);
 
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), {
@@ -89,5 +88,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
     mapStateToProps,
-    { logout, getInfoAccount }
+    { logout, getInfoAccountSideBar }
 )(withRouter(withStyles(styles)(Main)));

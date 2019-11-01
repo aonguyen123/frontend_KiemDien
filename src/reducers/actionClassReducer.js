@@ -7,7 +7,9 @@ import {
     ADD_CLASS_MEMBER_BY_ID,
     EDIT_CLASS_MEMBER_BY_ID,
     DELETE_CLASS_MEMBER_BY_ID,
-    DELETE_CLASS
+    DELETE_CLASS,
+    CHANGE_MANAGER_PERSON,
+    REMOVE_MANAGER_PERSON
 } from './../constants/types';
 
 const initialState = {
@@ -75,6 +77,20 @@ export default function(state = initialState, action) {
                 isSuccess: action.payload.isSuccess
             } 
         case DELETE_CLASS:
+            return {
+                ...state,
+                status: action.payload.status,
+                message: action.payload.message,
+                isSuccess: action.payload.isSuccess
+            } 
+        case CHANGE_MANAGER_PERSON:
+            return {
+                ...state,
+                status: action.payload.status,
+                message: action.payload.message,
+                isSuccess: action.payload.isSuccess
+            } 
+        case REMOVE_MANAGER_PERSON:
             return {
                 ...state,
                 status: action.payload.status,

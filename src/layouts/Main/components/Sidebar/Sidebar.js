@@ -10,6 +10,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import { Profile, SidebarNav } from './components';
 import styles from './styles';
@@ -31,6 +32,11 @@ const Sidebar = props => {
             title: 'Classes',
             href: '/classes',
             icon: <ClassRoundedIcon />
+        },
+        {
+            title: 'Assignes',
+            href: '/assignes',
+            icon: <AssignmentIcon />
         },
         {
             title: 'Typography',

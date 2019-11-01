@@ -15,11 +15,22 @@ import {
 } from '@material-ui/core';
 import { URI } from './../../../../constants/types';
 import ChangePersonDrawers from './../ChangePersonDrawers/ChangePersonDrawers';
+import { LoadingButton } from 'components';
 import styles from './styles';
 
 const CardManage = props => {
-    const { classes, className, userOfClass } = props;
+    const {
+        classes,
+        className,
+        userOfClass,
+        loadingLocal,
+        users,
+        changeManagerPerson,
+        idClass,
+        removeManagerPerson
+    } = props;
     const [state, setState] = useState({ right: false });
+    const [loadingButton, setLoadingButton] = useState(false);
 
     const handleChangePerson = (side, open) => event => {
         if (
@@ -30,22 +41,30 @@ const CardManage = props => {
             return;
         }
         setState({ ...state, [side]: open });
-    };
+    };  
+    const handleClickRemovePerson = () => {
+        setLoadingButton(true);
+        removeManagerPerson(idClass);
+    }
 
     return (
         <Card className={clsx(classes.root, className)}>
-            <ChangePersonDrawers 
+            <ChangePersonDrawers
                 handleChangePerson={handleChangePerson}
                 open={state.right}
+                loadingLocal={loadingLocal}
+                users={users}
+                changeManagerPerson={changeManagerPerson}
+                idClass={idClass}
             />
             {Object.entries(userOfClass).length !== 0 ? (
                 <CardHeader
                     avatar={
                         <Avatar
                             src={
-                                userOfClass.avatar 
-                                ? `${URI}/getAvatar/${userOfClass.avatar}` 
-                                : `//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`
+                                userOfClass.avatar
+                                    ? `${URI}/getAvatar/${userOfClass.avatar}`
+                                    : `//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`
                             }
                         />
                     }
@@ -165,7 +184,9 @@ const CardManage = props => {
                 </CardContent>
             ) : (
                 <div className={classes.managerNotFound}>
-                    <Typography variant="body1" align="center">Manager not found</Typography>
+                    <Typography variant="body1" align="center">
+                        Manager not found
+                    </Typography>
                 </div>
             )}
             <Divider />
@@ -178,7 +199,13 @@ const CardManage = props => {
                 >
                     Change person
                 </Button>
-                <Button variant="text" color="secondary">
+                <Button 
+                    variant="text" 
+                    color="secondary"
+                    disabled={Object.entries(userOfClass).length === 0 || loadingButton}
+                    onClick={handleClickRemovePerson}
+                >
+                    {loadingButton && <LoadingButton />}
                     Remove person
                 </Button>
             </CardActions>

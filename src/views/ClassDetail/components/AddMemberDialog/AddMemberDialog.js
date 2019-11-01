@@ -38,7 +38,7 @@ const AddMemberDialog = props => {
         setLoadingButton(false);
     }, [errors]);
     const handleDateChangeDate = date => {
-        setNgaysinh(date);
+        setNgaysinh(moment(date,).format('DD/MM/YYYY'));
     };
     const handleChange = e => {
         setValue({
@@ -111,7 +111,7 @@ const AddMemberDialog = props => {
                                             format="dd/MM/yyyy"
                                             onChange={handleDateChangeDate}
                                             fullWidth
-                                            value={ngaysinh}
+                                            value={moment(ngaysinh, 'DD/MM/YYYY')}
                                             maxDate={today}
                                             margin="dense"
                                         />

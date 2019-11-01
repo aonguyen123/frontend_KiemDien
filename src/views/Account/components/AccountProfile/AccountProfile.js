@@ -122,7 +122,7 @@ const AccountProfile = props => {
                 <Button 
                     variant="text" 
                     onClick={handleRemoveAvatar}
-                    disabled={loadingButtonRemove}
+                    disabled={loadingButtonRemove || !account.avatar}
                 >
                     {loadingButtonRemove && <LoadingButton />}
                     Remove avatar
