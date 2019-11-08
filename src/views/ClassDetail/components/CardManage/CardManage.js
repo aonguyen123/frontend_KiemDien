@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
+import moment from 'moment';
 import { withStyles } from '@material-ui/styles';
 import {
     Card,
@@ -175,7 +176,7 @@ const CardManage = props => {
                                     variant="subtitle2"
                                     color="textSecondary"
                                 >
-                                    {userOfClass.ngaydangki}
+                                    {moment(userOfClass.createdAt).format('DD/MM/YYYY')}
                                 </Typography>
                             </div>
                         </ListItemText>

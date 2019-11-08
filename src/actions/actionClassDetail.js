@@ -140,8 +140,8 @@ export const editClassMemberById = (idClass, member) => dispatch => {
             })
         })
 };
-export const deleteClassMemberById = (idClass, members) => dispatch => {
-    callAPI('/deleteClassMemberById', 'DELETE', {idClass, members})
+export const deleteClassMemberById = (idClass, members, listMssv) => dispatch => {
+    callAPI('/deleteClassMemberById', 'DELETE', {idClass, members, listMssv})
         .then(res => {
             dispatch({
                 type: DELETE_CLASS_MEMBER_BY_ID,

@@ -1,55 +1,74 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
-
 import {
-    Budget,
+    TotalClasses,
     TotalUsers,
     TasksProgress,
-    TotalProfit,
+    TotalMember,
     LatestSales,
     UsersByDevice,
-    LatestProducts,
-    LatestOrders
+    LatestClasses,
+    LatestAssigned
 } from './components';
 import { closeNotify } from './../../actions/notify';
-import { Notifies } from 'components';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        padding: theme.spacing(4)
-    }
-}));
+import { getDataDashBoard } from './../../actions/dashboard';
+import { deleteClass } from './../../actions/actionClass';
+import { Notifies, LoadingCenter } from 'components';
+import styles from './styles';
 
 const Dashboard = props => {
-    const { auth, showNotify, closeNotify } = props;
-    const classes = useStyles();
+    const {
+        classes,
+        showNotify,
+        closeNotify,
+        classLatest,
+        getDataDashBoard,
+        isLoading,
+        deleteClass,
+        actionClass,
+        assignesLatest,
+        totalClass,
+        totalUser,
+        totalMember
+    } = props;
+
+    useEffect(() => {
+        getDataDashBoard();
+    }, [getDataDashBoard, actionClass]);
 
     const setCloseNotify = () => {
         closeNotify();
     };
 
+    if (isLoading) return <LoadingCenter />;
     return (
         <div className={classes.root}>
             <Notifies
-                variant={auth.isSuccess ? 'success' : 'error'}
-                message={auth.message}
-                openNotify={auth.isSuccess === null ? false : showNotify}
+                variant={actionClass.isSuccess ? 'success' : 'error'}
+                message={actionClass.message}
+                openNotify={showNotify}
                 setCloseNotify={setCloseNotify}
             />
             <Grid container spacing={4}>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
-                    <Budget />
+                    <TotalClasses 
+                        totalClass={totalClass}
+                    />
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
-                    <TotalUsers />
+                    <TotalUsers 
+                        totalUser={totalUser}
+                    />
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                     <TasksProgress />
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
-                    <TotalProfit />
+                    <TotalMember 
+                        totalMember={totalMember}
+                    />
                 </Grid>
                 <Grid item lg={8} md={12} xl={9} xs={12}>
                     <LatestSales />
@@ -58,17 +77,31 @@ const Dashboard = props => {
                     <UsersByDevice />
                 </Grid>
                 <Grid item lg={4} md={6} xl={3} xs={12}>
-                    <LatestProducts />
+                    <LatestClasses 
+                        classLatest={classLatest} 
+                        deleteClass={deleteClass}
+                    />
                 </Grid>
                 <Grid item lg={8} md={12} xl={9} xs={12}>
-                    <LatestOrders />
+                    <LatestAssigned 
+                        assignesLatest={assignesLatest}
+                    />
                 </Grid>
             </Grid>
         </div>
     );
 };
 const mapStateToProps = state => ({
-    auth: state.auth,
-    showNotify: state.showNotify.isShow
+    showNotify: state.showNotify.isShow,
+    classLatest: state.classes.classes,
+    isLoading: state.isLoading.isLoading,
+    actionClass: state.actionClass,
+    assignesLatest: state.assignesClass,
+    totalClass: state.totalClass,
+    totalUser: state.totalUser,
+    totalMember: state.totalMember
 });
-export default connect(mapStateToProps, { closeNotify })(Dashboard);
+export default connect(
+    mapStateToProps,
+    { closeNotify, getDataDashBoard, deleteClass }
+)(withStyles(styles)(Dashboard));

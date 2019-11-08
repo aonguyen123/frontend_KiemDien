@@ -20,7 +20,7 @@ const ChangePersonDrawers = props => {
         loadingLocal,
         users,
         changeManagerPerson,
-        idClass,
+        idClass
     } = props;
     const [rowsPerPage, setRowsPerPage] = useState(8);
     const [page, setPage] = useState(0);
@@ -41,7 +41,7 @@ const ChangePersonDrawers = props => {
         });
         changeManagerPerson(id, idClass);
     };
-    
+
     return (
         <div>
             <SwipeableDrawer
@@ -79,7 +79,11 @@ const ChangePersonDrawers = props => {
                                         control={
                                             <Avatar
                                                 className={classes.avatar}
-                                                src={`${URI}/getAvatar/${user.avatar}`}
+                                                src={
+                                                    user.avatar
+                                                        ? `${URI}/getAvatar/${user.avatar}`
+                                                        : `//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`
+                                                }
                                             />
                                         }
                                         label={
@@ -88,7 +92,12 @@ const ChangePersonDrawers = props => {
                                             </Typography>
                                         }
                                     />
-                                    { loading.load === user._id && <CircularProgress size={20} color='primary' /> }
+                                    {loading.load === user._id && (
+                                        <CircularProgress
+                                            size={20}
+                                            color="primary"
+                                        />
+                                    )}
                                 </div>
                             ))
                     )}

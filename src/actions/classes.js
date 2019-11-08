@@ -1,6 +1,5 @@
 import {
     GET_CLASSES,
-    GET_ERRORS,
     GET_CLASS_BY_ID,
     FETCHING_DATA,
     FETCH_DATA_SUCCESS    
@@ -21,27 +20,28 @@ export const getClasses = () => dispatch => {
         });
     });
 };
-export const getClassById = id => dispatch => {
+export const getClassById = (id, history) => dispatch => {
     dispatch({
         type: FETCHING_DATA
     });
-    callAPI(`/getClassById/${id}`, 'GET', null)
-        .then(res => {
-            dispatch({
-                type: GET_CLASS_BY_ID,
-                payload: res.data
-            });    
-            dispatch({
-                type: FETCH_DATA_SUCCESS
-            });
-        })
-        .catch(err => {
-            dispatch({
-                type: GET_ERRORS,
-                payload: err.response.data
-            });
-            dispatch({
-                type: FETCH_DATA_SUCCESS
-            });
+    getData(id, history, dispatch);
+};
+const getData = async (id, history, dispatch) => {
+    const dataClassDetail = await callAPI(`/getClassById/${id}`, 'GET', null)
+    .catch(err => {
+        if(err.response.data.status === 'ID_WRONG')
+        {
+            history.push('/internal-server-error');
+        }
+    });
+    if(dataClassDetail)
+    {
+        dispatch({
+            type: GET_CLASS_BY_ID,
+            payload: dataClassDetail.data
         });
+    }
+    dispatch({
+        type: FETCH_DATA_SUCCESS
+    });
 };

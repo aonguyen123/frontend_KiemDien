@@ -16,7 +16,7 @@ import {
     Typography,
     TablePagination
 } from '@material-ui/core';
-
+import moment from 'moment';
 import { getInitials } from 'helpers';
 import { ToolbarTable } from './components';
 import { StatusBullet } from 'components';
@@ -89,8 +89,8 @@ const UsersTable = props => {
                                 User not found
                             </Typography>
                         ) : (
-                            <Table>
-                                <TableHead>
+                            <Table size='small'>
+                                <TableHead style={{borderTop: '1px solid #e0e0e0'}}>
                                     <TableRow>
                                         <TableCell padding="checkbox">
                                             <Checkbox
@@ -210,7 +210,7 @@ const UsersTable = props => {
                                                     </div>
                                                 </TableCell>
                                                 <TableCell>
-                                                    {user.ngaydangki}
+                                                    {moment(user.createdAt).format('DD/MM/YYYY')}
                                                 </TableCell>
                                             </TableRow>
                                         ))}

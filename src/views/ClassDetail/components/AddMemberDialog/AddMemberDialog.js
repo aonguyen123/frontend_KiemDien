@@ -30,7 +30,7 @@ const AddMemberDialog = props => {
         ten: '',
         gioitinh: 'male'
     });
-    const [ngaysinh, setNgaysinh] = useState(new Date());
+    const [ngaysinh, setNgaysinh] = useState(moment(new Date()).format('DD/MM/YYYY'));
     const [loadingButton, setLoadingButton] = useState(false);
     const today = moment();
 
@@ -38,7 +38,7 @@ const AddMemberDialog = props => {
         setLoadingButton(false);
     }, [errors]);
     const handleDateChangeDate = date => {
-        setNgaysinh(moment(date,).format('DD/MM/YYYY'));
+        setNgaysinh(moment(date).format('DD/MM/YYYY'));
     };
     const handleChange = e => {
         setValue({

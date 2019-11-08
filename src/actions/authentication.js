@@ -1,4 +1,4 @@
-import { GET_ERRORS, LOG_IN, LOG_OUT, OPEN_NOTIFY } from './../constants/types';
+import { GET_ERRORS, LOG_IN, LOG_OUT } from './../constants/types';
 import setAuthToken from './../common/setAuthToken';
 import callAPI from './../common/callApi';
 
@@ -9,11 +9,7 @@ export const login = (account, history) => dispatch => {
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
             dispatch({
-                type: LOG_IN,
-                payload: res.data
-            });
-            dispatch({
-                type: OPEN_NOTIFY
+                type: LOG_IN
             });
             history.push('/');
         })

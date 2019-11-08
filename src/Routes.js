@@ -14,8 +14,11 @@ import {
     Settings as SettingsView,
     SignIn as SignInView,
     NotFound as NotFoundView,
+    InternalServerError as InternalServerErrorView,
     ClassDetail as ClassDetailView,
-    Assignes as AssignesView
+    Assignes as AssignesView,
+    Presences as PresencesView,
+    PresencesDetail as PresencesDetailView
 } from './views';
 
 const Routes = () => {
@@ -53,6 +56,18 @@ const Routes = () => {
                 path="/assignes"
             />
             <RouteWithLayout
+                component={PresencesView}
+                exact
+                layout={MainLayout}
+                path="/presences"
+            />
+            <RouteWithLayout
+                component={PresencesDetailView}
+                exact
+                layout={MainLayout}
+                path="/presences/presencesDetail/:id"
+            />
+            <RouteWithLayout
                 component={TypographyView}
                 exact
                 layout={MainLayout}
@@ -81,6 +96,12 @@ const Routes = () => {
                 exact
                 layout={MinimalLayout}
                 path="/sign-in"
+            />
+            <RouteWithLayout
+                component={InternalServerErrorView}
+                exact
+                layout={MinimalLayout}
+                path="/internal-server-error"
             />
             <RouteWithLayout
                 component={NotFoundView}

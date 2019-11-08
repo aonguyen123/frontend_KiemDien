@@ -11,6 +11,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import PlaylistAddCheck from '@material-ui/icons/PlaylistAddCheck';
 
 import { Profile, SidebarNav } from './components';
 import styles from './styles';
@@ -37,6 +38,11 @@ const Sidebar = props => {
             title: 'Assignes',
             href: '/assignes',
             icon: <AssignmentIcon />
+        },
+        {
+            title: 'Presences',
+            href: '/presences',
+            icon: <PlaylistAddCheck />
         },
         {
             title: 'Typography',

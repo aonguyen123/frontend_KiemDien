@@ -1,4 +1,4 @@
-import { GET_CLASSES } from './../constants/types';
+import { GET_CLASSES, GET_CLASS_LATEST } from './../constants/types';
 
 const initialState = {
     classes: []
@@ -11,6 +11,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 classes: action.payload.classes
+            }
+        case GET_CLASS_LATEST:
+            return {
+                ...state,
+                classes: action.payload
             }
         default:  
             return state;

@@ -75,7 +75,11 @@ const DrawClassAssignes = props => {
                                         control={
                                             <Avatar
                                                 className={classes.avatar}
-                                                src={`${URI}/getAvatar/${user.avatar}`}
+                                                src={
+                                                    user.avatar
+                                                        ? `${URI}/getAvatar/${user.avatar}`
+                                                        : `//www.gravatar.com/avatar/f8aef9003205946523250a062b54bbb6?s=200&r=pg&d=mm`
+                                                }
                                             />
                                         }
                                         label={

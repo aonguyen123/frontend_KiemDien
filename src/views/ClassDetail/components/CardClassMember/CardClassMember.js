@@ -62,6 +62,7 @@ const CardClassMember = props => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
     const [selectedMember, setSelectedMember] = useState([]);
+    const [selectedMssv, setSelectedMssv] = useState([]);
     const [loadingButton, setLoadingButton] = useState(false);
     const [open, setOpen] = useState(false);
     let [fileDssv] = useState('');
@@ -83,34 +84,51 @@ const CardClassMember = props => {
     };
     const handleSelectAll = event => {
         let selectedMember;
+        let selectedMssv;
         if (event.target.checked) {
             selectedMember = dssv.map(sv => sv._id);
+            selectedMssv = dssv.map(sv => sv.maSV);
         } else {
             selectedMember = [];
+            selectedMssv = [];
         }
         setSelectedMember(selectedMember);
+        setSelectedMssv(selectedMssv);
     };
-    const handleSelectOne = (event, id) => {
+    const handleSelectOne = (event, id, maSV) => {
         const selectedIndex = selectedMember.indexOf(id);
+        const selectedIndexMssv = selectedMssv.indexOf(maSV);
         let newSelectedMember = [];
-
+        let newSelectedMssv = [];
         if (selectedIndex === -1) {
             newSelectedMember = newSelectedMember.concat(selectedMember, id);
-        } else if (selectedIndex === 0) {
+            newSelectedMssv = newSelectedMssv.concat(selectedMssv, maSV);
+        } else if (selectedIndex === 0 && selectedIndexMssv === 0) {
             newSelectedMember = newSelectedMember.concat(
                 selectedMember.slice(1)
             );
-        } else if (selectedIndex === selectedMember.length - 1) {
+            newSelectedMssv = newSelectedMssv.concat(
+                selectedMssv.slice(1)
+            );
+        } else if (selectedIndex === selectedMember.length - 1 && selectedIndexMssv === selectedMssv.length -1) {
             newSelectedMember = newSelectedMember.concat(
                 selectedMember.slice(0, -1)
             );
-        } else if (selectedIndex > 0) {
+            newSelectedMssv = newSelectedMssv.concat(
+                selectedMssv.slice(0, -1)
+            );
+        } else if (selectedIndex > 0 && selectedIndexMssv > 0) {
             newSelectedMember = newSelectedMember.concat(
                 selectedMember.slice(0, selectedIndex),
                 selectedMember.slice(selectedIndex + 1)
             );
+            newSelectedMssv = newSelectedMssv.concat(
+                selectedMssv.slice(0, selectedIndexMssv),
+                selectedMssv.slice(selectedIndexMssv + 1)
+            );
         }
         setSelectedMember(newSelectedMember);
+        setSelectedMssv(newSelectedMssv);
 
         setMember(getMember(dssv, newSelectedMember[0]));
     };
@@ -140,6 +158,7 @@ const CardClassMember = props => {
             {(selectedMember.length > 0) 
                 ? <TableToolBar 
                     selectedMember={selectedMember} 
+                    selectedMssv={selectedMssv}
                     member={member}
                     idClass={_id}
                     errors={errors}
@@ -244,7 +263,8 @@ const CardClassMember = props => {
                                                               onChange={event =>
                                                                   handleSelectOne(
                                                                       event,
-                                                                      sv._id
+                                                                      sv._id,
+                                                                      sv.maSV
                                                                   )
                                                               }
                                                               value="true"

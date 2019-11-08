@@ -15,6 +15,7 @@ import styles from './styles';
 const TableToolBar = props => {
     const {
         selectedMember,
+        selectedMssv,
         classes,
         member,
         idClass,
@@ -39,7 +40,7 @@ const TableToolBar = props => {
         setOpenConfirm(params);
     };
     const handleClickDelete = () => {
-        deleteClassMemberById(idClass, selectedMember);
+        deleteClassMemberById(idClass, selectedMember, selectedMssv);
     };
     return (
         <React.Fragment>

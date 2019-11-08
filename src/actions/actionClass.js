@@ -32,7 +32,7 @@ export const addClass = newClass => dispatch => {
 export const deleteClass = (_id, history) => dispatch => {
     callAPI('/deleteClass', 'DELETE', {_id})
         .then(res => {
-            history.push('/classes');
+            history && history.push('/classes');
             dispatch({
                 type: DELETE_CLASS,
                 payload: res.data

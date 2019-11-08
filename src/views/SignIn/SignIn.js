@@ -16,12 +16,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { login } from './../../actions/authentication';
-import { closeNotify } from './../../actions/notify';
-import { LoadingButton, Notifies } from 'components';
+import { LoadingButton } from 'components';
 import styles from './styles';
 
 const SignIn = props => {
-    const { errors, history, login, classes, auth, showNotify, closeNotify } = props;
+    const { errors, history, login, classes } = props;
     const [value, setValue] = useState({
         email: '',
         password: ''
@@ -48,19 +47,10 @@ const SignIn = props => {
         e.preventDefault();
         setLoadingButton(true);
         login(value, history);
-    }
-    const setCloseNotify = () => {
-        closeNotify();
-    };
+    } 
 
     return (
         <Container component="main" maxWidth="xs">
-            <Notifies
-                variant={auth.isSuccess ? 'success' : 'error'}
-                message={auth.message}
-                openNotify={auth.isSuccess === null ? false : showNotify}
-                setCloseNotify={setCloseNotify}
-            />
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -145,8 +135,6 @@ SignIn.propTypes = {
     login: PropTypes.func
 }
 const mapStateToProps = state => ({
-    auth: state.auth,
     errors: state.errors,
-    showNotify: state.showNotify.isShow
 });
-export default connect(mapStateToProps, { login, closeNotify } )(withRouter(withStyles(styles)(SignIn)));
+export default connect(mapStateToProps, { login } )(withRouter(withStyles(styles)(SignIn)));

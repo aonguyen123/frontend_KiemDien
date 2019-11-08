@@ -59,13 +59,8 @@ const ClassDetail = props => {
     const idClass = classById._id;
 
     useEffect(() => {
-        getClassById(match.params.id);
-    }, [getClassById, match.params.id, actionClass]);
-    useEffect(() => {
-        if (errors.message === 'CLASS_NOT_FOUND') {
-            history.push('/classes');
-        }
-    }, [errors, history]);
+        getClassById(match.params.id, history);
+    }, [getClassById, match.params.id, history, actionClass]);
     useEffect(() => {
         getUserConditionStatusTrue();
     }, [getUserConditionStatusTrue]);

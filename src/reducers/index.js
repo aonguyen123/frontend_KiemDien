@@ -13,6 +13,12 @@ import accountReducer from './accountReducer';
 import actionAccountReducer from './actionAccountReducer';
 import loadingLocalReducer from './loadingLocalReducer';
 import assignesReducer from './assignesReducer';
+import statisticalTotalClassReducer from './statisticalTotalClassReducer';
+import statisticalTotalUserReducer from './statisticalTotalUserReducer';
+import statisticalTotalMemberReducer from './statisticalTotalMemberReducer';
+import presencesReducer from './presencesReducer';
+import presenceDetailReducer from './presenceDetailReducer';
+import actionPresenceDetailReducer from './actionPresenceDetail';
 
 export default combineReducers({
     auth: authReducer,
@@ -35,5 +41,14 @@ export default combineReducers({
     account: accountReducer,
     actionAccount: actionAccountReducer,
 
-    citys: cityReducer
+    citys: cityReducer,
+
+    totalClass: statisticalTotalClassReducer,
+    totalUser: statisticalTotalUserReducer,
+    totalMember: statisticalTotalMemberReducer,
+
+    presencesClass: presencesReducer,
+
+    presenceDetailClass: presenceDetailReducer,
+    actionPresenceDetail: actionPresenceDetailReducer
 });
