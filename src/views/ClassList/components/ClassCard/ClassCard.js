@@ -45,9 +45,6 @@ const ProductCard = props => {
                 <Typography align="center" variant="body1">
                     {lop.mota}
                 </Typography>
-                <Typography align="center" variant="body1">
-                    {moment(lop.createdAt).format('MM')}
-                </Typography>
             </CardContent>
             <Divider />
             <CardActions>
