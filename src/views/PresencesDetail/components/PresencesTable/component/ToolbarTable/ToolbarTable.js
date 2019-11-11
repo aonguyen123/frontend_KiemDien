@@ -6,8 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import { ConfirmDialog } from 'components';
 
+import DialogEdit from './../DialogEdit/DialogEdit';
 import styles from './styles';
 
 const ToolbarTable = props => {
@@ -19,6 +21,7 @@ const ToolbarTable = props => {
         idClass
     } = props;
     const [openConfirm, setOpenConfirm] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleOpenConfirm = () => {
         setOpenConfirm(true);
@@ -29,6 +32,13 @@ const ToolbarTable = props => {
     const handleClickDelete = () => {
         deletePresenceMember(idClass, selectedMember, selectedMssv);
     };
+    const handleClickEdit = () => {
+        setOpen(true);
+    };
+    const handleCloseDialog = params => {
+        setOpen(params);
+    };
+
     return (
         <React.Fragment>
             <ConfirmDialog
@@ -36,6 +46,10 @@ const ToolbarTable = props => {
                 closeDialog={closeConfirm}
                 deleteConfirm={handleClickDelete}
                 title="Delete member"
+            />
+            <DialogEdit 
+                open={open}
+                handleCloseDialog={handleCloseDialog}
             />
             <Toolbar
                 className={clsx(classes.root, {
@@ -58,6 +72,16 @@ const ToolbarTable = props => {
                     >
                         All member
                     </Typography>
+                )}
+                {selectedMember.length === 1 && (
+                    <Tooltip title="Edit">
+                        <IconButton
+                            aria-label="edit"
+                            onClick={handleClickEdit}
+                        >
+                            <EditIcon color="primary" />
+                        </IconButton>
+                    </Tooltip>
                 )}
                 {selectedMember.length > 0 && (
                     <Tooltip title="Delete">

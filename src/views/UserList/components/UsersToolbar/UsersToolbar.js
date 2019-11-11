@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/styles';
@@ -9,9 +9,9 @@ import DialogAddUser from './../DialogAddUser/DialogAddUser';
 import styles from './styles';
 
 const UsersToolbar = props => {
-    const { className, classes, createUser, errors, clearErrors } = props;  
+    const { className, classes, createUser, errors, clearErrors, searchTask } = props;  
     const [open, setOpen] = React.useState(false);
-    //let [keyword] = React.useState('');
+    let [keyword] = useState('');
 
     const handleOpenDialog = () => {
         setOpen(true);
@@ -19,10 +19,10 @@ const UsersToolbar = props => {
     const handleCloseDialog = params => {
         setOpen(params);
     }
-    // const handleChange = event => {
-    //     keyword = event.target.value;
-    //     searchUser(keyword);
-    // }
+    const handleChange = event => {
+        keyword = event.target.value;
+        searchTask(keyword);
+    }
     return (
         <div className={clsx(classes.root, className)}>
             <DialogAddUser 
@@ -42,7 +42,7 @@ const UsersToolbar = props => {
                 <SearchInput
                     className={classes.searchInput}
                     placeholder="Search email user"
-                    //onChange={handleChange}
+                    onChange={handleChange}
                 />
             </div>
         </div>

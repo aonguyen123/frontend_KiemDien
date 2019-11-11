@@ -28,12 +28,15 @@ const CardManage = props => {
         users,
         changeManagerPerson,
         idClass,
-        removeManagerPerson
+        removeManagerPerson,
+        searchTaskDraw,
+        clearnTaskDraw
     } = props;
     const [state, setState] = useState({ right: false });
     const [loadingButton, setLoadingButton] = useState(false);
 
     const handleChangePerson = (side, open) => event => {
+        clearnTaskDraw();
         if (
             event &&
             event.type === 'keydown' &&
@@ -57,6 +60,7 @@ const CardManage = props => {
                 users={users}
                 changeManagerPerson={changeManagerPerson}
                 idClass={idClass}
+                searchTaskDraw={searchTaskDraw}
             />
             {Object.entries(userOfClass).length !== 0 ? (
                 <CardHeader

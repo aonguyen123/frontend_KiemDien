@@ -3,7 +3,14 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import { AppBar, Toolbar, Badge, Hidden, IconButton, Typography } from '@material-ui/core';
+import {
+    AppBar,
+    Toolbar,
+    Badge,
+    Hidden,
+    IconButton,
+    Tooltip
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
@@ -16,7 +23,7 @@ const Topbar = props => {
     const [notifications] = useState([]);
     const handleClick = () => {
         logout(props.history);
-    }
+    };
     return (
         <AppBar className={clsx(classes.root, className)}>
             <Toolbar>
@@ -34,15 +41,15 @@ const Topbar = props => {
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
-                    <IconButton
-                        className={classes.signOutButton}
-                        color="inherit"
-                        onClick={handleClick}
-                    >
-                        <InputIcon />
-                        &nbsp;
-                        <Typography variant="button"><span style={{color: '#fff'}}>sign out</span></Typography>
-                    </IconButton>
+                    <Tooltip title='Sign out'>
+                        <IconButton
+                            className={classes.signOutButton}
+                            color="inherit"
+                            onClick={handleClick}
+                        >
+                            <InputIcon />
+                        </IconButton>
+                    </Tooltip>
                 </Hidden>
                 <Hidden lgUp>
                     <IconButton color="inherit">

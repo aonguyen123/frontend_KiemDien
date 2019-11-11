@@ -7,6 +7,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { ClassCard, ClassesToolbar } from './components';
 import { getClasses } from './../../actions/classes';
 import { addClass } from './../../actions/actionClass';
+import { searchTask, clearnTask } from './../../actions/actionTask';
 import { clearErrors } from './../../actions/clearErrors';
 import { closeNotify } from './../../actions/notify';
 import styles from './styles';
@@ -16,7 +17,6 @@ const ClassList = props => {
     const {
         classes,
         getClasses,
-        classList,
         match,
         actionClass,
         addClass,
@@ -24,14 +24,19 @@ const ClassList = props => {
         clearErrors,
         isLoading,
         showNotify,
-        closeNotify
+        closeNotify,
+        searchTask,
+        search,
+        clearnTask
     } = props;
+    let { classList } = props;
     const [rowsPerPage, setRowsPerPage] = useState(6);
     const [page, setPage] = useState(0);
 
     useEffect(() => {
         getClasses();
-    }, [getClasses, actionClass]);
+        clearnTask();
+    }, [getClasses, actionClass, clearnTask]);
     
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -43,6 +48,7 @@ const ClassList = props => {
     const setCloseNotify = () => {
         closeNotify();
     };
+    classList = classList.filter(lop => lop.tenlop.toLowerCase().indexOf(search.toLowerCase()) !== -1);
 
     if (isLoading) return <LoadingCenter />;
     return (
@@ -59,10 +65,11 @@ const ClassList = props => {
                 actionClass={actionClass}
                 errors={errors}
                 clearErrors={clearErrors}
+                searchTask={searchTask}
             />
             {classList.length === 0 ? (
                 <div className={classes.classNotfound}>
-                    <Typography variant="h3" align="center">Class not found</Typography>
+                    <Typography variant="h5" align="center">Class not found</Typography>
                 </div>
             ) : (
                 <div className={classes.content}>
@@ -116,9 +123,10 @@ const mapStateToProps = state => ({
     actionClass: state.actionClass,
     errors: state.errors,
     isLoading: state.isLoading.isLoading,
-    showNotify: state.showNotify.isShow
+    showNotify: state.showNotify.isShow,
+    search: state.task.search
 });
 export default connect(
     mapStateToProps,
-    { getClasses, addClass, clearErrors, closeNotify }
+    { getClasses, addClass, clearErrors, closeNotify, searchTask, clearnTask }
 )(withStyles(styles)(ClassList));

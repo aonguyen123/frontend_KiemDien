@@ -14,7 +14,8 @@ import {
     TableHead,
     TableRow,
     Typography,
-    TablePagination
+    TablePagination,
+    Divider
 } from '@material-ui/core';
 import moment from 'moment';
 import { getInitials } from 'helpers';
@@ -78,6 +79,7 @@ const UsersTable = props => {
                 selectedUsers={selectedUsers}
                 deleteUsers={deleteUsers}
             />
+            <Divider />
             <CardContent className={classes.content}>
                 <PerfectScrollbar>
                     <div className={classes.inner}>
@@ -90,7 +92,7 @@ const UsersTable = props => {
                             </Typography>
                         ) : (
                             <Table size='small'>
-                                <TableHead style={{borderTop: '1px solid #e0e0e0'}}>
+                                <TableHead>
                                     <TableRow>
                                         <TableCell padding="checkbox">
                                             <Checkbox

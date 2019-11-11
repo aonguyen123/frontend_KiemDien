@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { UsersToolbar, UsersTable } from './components';
 import { getUsers } from './../../actions/users';
 import { createUser, deleteUsers } from './../../actions/actionUser';
+import { searchTask, clearnTask } from './../../actions/actionTask';
 import { clearErrors } from './../../actions/clearErrors';
 import { closeNotify } from './../../actions/notify';
 import { LoadingCenter } from 'components';
@@ -15,7 +16,6 @@ const UserList = props => {
     const {
         classes,
         errors,
-        users,
         actionUser,
         isLoading,
         getUsers,
@@ -23,26 +23,23 @@ const UserList = props => {
         deleteUsers,
         showNotify,
         closeNotify,
-        clearErrors
+        clearErrors,
+        searchTask,
+        search,
+        clearnTask
     } = props;
-    
+    let { users } = props;
+
     useEffect(() => {
         getUsers();
-    }, [getUsers, actionUser]);
+        clearnTask();
+    }, [getUsers, actionUser, clearnTask]);
 
     const setCloseNotify = () => {
         closeNotify();
     };
-    // const search = keyword => {
-    //     const keywordLowerCase = keyword.toLowerCase();
-    //     let {users} = this.props;
-    //     users = users.filter(el =>
-    //         el.email.toLowerCase().includes(keywordLowerCase)
-    //     );
-    //     this.setState({
-    //         users
-    //     })
-    // };
+    users = users.filter(user => user.email.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+
     if(isLoading) return <LoadingCenter />
     return (
         <div className={classes.root}>
@@ -56,6 +53,7 @@ const UserList = props => {
                 createUser={createUser}
                 errors={errors}
                 clearErrors={clearErrors}
+                searchTask={searchTask}
             />
             <div className={classes.content}>
                 <UsersTable 
@@ -71,9 +69,10 @@ const mapStateToProps = state => ({
     actionUser: state.actionUser,
     isLoading: state.isLoading.isLoading,
     showNotify: state.showNotify.isShow,
-    errors: state.errors
+    errors: state.errors,
+    search: state.task.search
 });
 export default connect(
     mapStateToProps,
-    { getUsers, deleteUsers, createUser, clearErrors, closeNotify }
+    { getUsers, deleteUsers, createUser, clearErrors, closeNotify, searchTask, clearnTask }
 )(withStyles(styles)(UserList));

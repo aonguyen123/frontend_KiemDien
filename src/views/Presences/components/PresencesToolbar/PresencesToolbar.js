@@ -11,9 +11,9 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { SearchInput } from 'components';
 import styles from './styles';
 
-const options = ['All class', 'Active class', 'Inactive class'];
+const options = ['All class', 'Not check class', 'Checked class'];
 const PresencesToolbar = props => {
-    const { className, classes } = props;
+    const { className, classes, searchTask, filterTask } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -22,10 +22,14 @@ const PresencesToolbar = props => {
     };
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
+        filterTask(index);
         setAnchorEl(null);
     };
     const handleClose = event => {
         setAnchorEl(null);
+    };
+    const handleChange = event => {
+        searchTask(event.target.value);
     };
 
     return (
@@ -34,6 +38,7 @@ const PresencesToolbar = props => {
                 <SearchInput
                     className={classes.searchInput}
                     placeholder="Search class"
+                    onChange={handleChange}
                 />
             </div>
             <div className={classes.row}>

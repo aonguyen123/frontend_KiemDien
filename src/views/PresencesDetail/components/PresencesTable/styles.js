@@ -4,7 +4,7 @@ const styles = theme => ({
         padding: 0
     },
     inner: {
-        minWidth: '1050px'
+        minWidth: 1050
     },
     nameContainer: {
         display: 'flex',

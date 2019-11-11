@@ -20,7 +20,8 @@ const DrawClassAssignes = props => {
         loadingLocal,
         users,
         idClass,
-        changeManagerPerson
+        changeManagerPerson,
+        searchTaskDraw
     } = props;
     const [rowsPerPage, setRowsPerPage] = useState(8);
     const [page, setPage] = useState(0);
@@ -40,6 +41,9 @@ const DrawClassAssignes = props => {
         });
         changeManagerPerson(id, idClass);
     };
+    const handleChange = event => {
+        searchTaskDraw(event.target.value);
+    };
 
     return (
         <div>
@@ -50,11 +54,19 @@ const DrawClassAssignes = props => {
             >
                 <div className={classes.list}>
                     <div className={classes.search}>
-                        <SearchInput placeholder="Search person" />
+                        <SearchInput 
+                            placeholder="Search person" 
+                            onChange={handleChange}
+                        />
                     </div>
                     <div className={classes.drawHeader}>
                         <Typography variant="h5">Change manager</Typography>
                     </div>
+                    {
+                        users.length === 0
+                        &&
+                        <Typography variant='body1' align='center'>Users not found</Typography>
+                    }
                     {loadingLocal ? (
                         <LoadingLocal size={30} />
                     ) : (

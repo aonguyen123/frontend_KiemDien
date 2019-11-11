@@ -8,19 +8,33 @@ import { SearchInput } from 'components';
 import styles from './styles';
 
 const ProductsToolbar = props => {
-    const { className, classes, addClass, getClasses, actionClass, errors, clearErrors } = props;
+    const {
+        className,
+        classes,
+        addClass,
+        getClasses,
+        actionClass,
+        errors,
+        clearErrors,
+        searchTask
+    } = props;
     const [open, setOpen] = useState(false);
+
     const handleOpenDialog = () => {
         setOpen(true);
-    }
+    };
     const handleCloseDialog = params => {
         setOpen(params);
+    };
+    const handleChange = event => {
+        searchTask(event.target.value);
     }
+
     return (
         <div className={clsx(classes.root, className)}>
-            <DialogAddClass 
-                open={open} 
-                handleCloseDialog={handleCloseDialog} 
+            <DialogAddClass
+                open={open}
+                handleCloseDialog={handleCloseDialog}
                 addClass={addClass}
                 getClasses={getClasses}
                 actionClass={actionClass}
@@ -29,7 +43,11 @@ const ProductsToolbar = props => {
             />
             <div className={classes.row}>
                 <span className={classes.spacer} />
-                <Button color="primary" variant="contained" onClick={handleOpenDialog}>
+                <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={handleOpenDialog}
+                >
                     Add Class
                 </Button>
             </div>
@@ -37,6 +55,7 @@ const ProductsToolbar = props => {
                 <SearchInput
                     className={classes.searchInput}
                     placeholder="Search class"
+                    onChange={handleChange}
                 />
             </div>
         </div>

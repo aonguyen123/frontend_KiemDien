@@ -13,14 +13,20 @@ import {
     TableHead,
     TableRow,
     Typography,
-    TablePagination
+    TablePagination,
+    Divider
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ToolbarTable from './component/ToolbarTable/ToolbarTable';
 import styles from './styles';
 
 const PresencesTable = props => {
-    const { className, classes, presenceDetailClass, deletePresenceMember } = props;
+    const {
+        className,
+        classes,
+        presenceDetailClass,
+        deletePresenceMember
+    } = props;
     const [selectedMember, setSelectedMember] = useState([]);
     const [selectedMssv, setSelectedMssv] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -53,16 +59,15 @@ const PresencesTable = props => {
             newSelectedMember = newSelectedMember.concat(
                 selectedMember.slice(1)
             );
-            newSelectedMssv = newSelectedMssv.concat(
-                selectedMssv.slice(1)
-            );
-        } else if (selectedIndex === selectedMember.length - 1 && selectedIndexMssv === selectedMssv.length -1) {
+            newSelectedMssv = newSelectedMssv.concat(selectedMssv.slice(1));
+        } else if (
+            selectedIndex === selectedMember.length - 1 &&
+            selectedIndexMssv === selectedMssv.length - 1
+        ) {
             newSelectedMember = newSelectedMember.concat(
                 selectedMember.slice(0, -1)
             );
-            newSelectedMssv = newSelectedMssv.concat(
-                selectedMssv.slice(0, -1)
-            );
+            newSelectedMssv = newSelectedMssv.concat(selectedMssv.slice(0, -1));
         } else if (selectedIndex > 0 && selectedIndexMssv > 0) {
             newSelectedMember = newSelectedMember.concat(
                 selectedMember.slice(0, selectedIndex),
@@ -92,11 +97,12 @@ const PresencesTable = props => {
                 idClass={idClass}
                 deletePresenceMember={deletePresenceMember}
             />
+            <Divider />
             <CardContent className={classes.content}>
                 <PerfectScrollbar>
                     <div className={classes.inner}>
                         <Table size="small">
-                            <TableHead style={{borderTop: '1px solid #e0e0e0'}}>
+                            <TableHead>
                                 <TableRow>
                                     <TableCell
                                         rowSpan={2}
@@ -107,13 +113,13 @@ const PresencesTable = props => {
                                             checked={
                                                 classById.dssv &&
                                                 selectedMember.length ===
-                                                classById.dssv.length
+                                                    classById.dssv.length
                                             }
                                             color="primary"
                                             indeterminate={
                                                 selectedMember.length > 0 &&
                                                 selectedMember.length <
-                                                classById.dssv.length
+                                                    classById.dssv.length
                                             }
                                             onChange={handleSelectAll}
                                         />
@@ -129,7 +135,13 @@ const PresencesTable = props => {
                                         rowSpan={2}
                                         className={classes.borderTable}
                                     >
-                                        Name
+                                        {checkDateList ? (
+                                            <div style={{ width: '150px' }}>
+                                                Name
+                                            </div>
+                                        ) : (
+                                            'Name'
+                                        )}
                                     </TableCell>
                                     <TableCell
                                         rowSpan={2}
@@ -177,107 +189,146 @@ const PresencesTable = props => {
                             </TableHead>
                             <TableBody>
                                 {classById.dssv &&
-                                    classById.dssv.slice(
-                                        page * rowsPerPage,
-                                        page * rowsPerPage + rowsPerPage
-                                    )
-                                    .map(sv => (
-                                        <TableRow
-                                            key={sv._id}
-                                            className={classes.tableRow}
-                                            hover
-                                            selected={
-                                                selectedMember.indexOf(
-                                                    sv._id
-                                                ) !== -1
-                                            }
-                                        >
-                                            <TableCell
-                                                padding="checkbox"
-                                                className={classes.borderTable}
+                                    classById.dssv
+                                        .slice(
+                                            page * rowsPerPage,
+                                            page * rowsPerPage + rowsPerPage
+                                        )
+                                        .map(sv => (
+                                            <TableRow
+                                                key={sv._id}
+                                                className={classes.tableRow}
+                                                hover
+                                                selected={
+                                                    selectedMember.indexOf(
+                                                        sv._id
+                                                    ) !== -1
+                                                }
                                             >
-                                                <Checkbox
-                                                    checked={
-                                                        selectedMember.indexOf(
-                                                            sv._id
-                                                        ) !== -1
+                                                <TableCell
+                                                    padding="checkbox"
+                                                    className={
+                                                        classes.borderTable
                                                     }
-                                                    color="primary"
-                                                    onChange={event =>
-                                                        handleSelectOne(event, sv._id, sv.maSV)
+                                                >
+                                                    <Checkbox
+                                                        checked={
+                                                            selectedMember.indexOf(
+                                                                sv._id
+                                                            ) !== -1
+                                                        }
+                                                        color="primary"
+                                                        onChange={event =>
+                                                            handleSelectOne(
+                                                                event,
+                                                                sv._id,
+                                                                sv.maSV
+                                                            )
+                                                        }
+                                                        value="true"
+                                                    />
+                                                </TableCell>
+                                                <TableCell
+                                                    align="center"
+                                                    className={
+                                                        classes.borderTable
                                                     }
-                                                    value="true"
-                                                />
-                                            </TableCell>
-                                            <TableCell
-                                                align="center"
-                                                className={classes.borderTable}
-                                            >
-                                                <Typography variant="body1">
-                                                    {sv.maSV}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell
-                                                className={classes.borderTable}
-                                            >
-                                                {sv.tenSV}
-                                            </TableCell>
-                                            <TableCell
-                                                align="center"
-                                                className={classes.borderTable}
-                                            >
-                                                {sv.ngaysinh}
-                                            </TableCell>
-                                            <TableCell
-                                                align="center"
-                                                className={classes.borderTable}
-                                            >
-                                                {sv.gioitinh}
-                                            </TableCell>
-                                            {checkDateList && checkDateList.dateList.map(
-                                                date => {
-                                                    if (
-                                                        !sv.checkDate.some(
-                                                            x => x === date.date
-                                                        )
-                                                    ) {
-                                                        return (
-                                                            <TableCell
-                                                                key={date._id}
-                                                                align="center"
-                                                                className={
-                                                                    classes.borderTable
-                                                                }
-                                                            ></TableCell>
-                                                        );
+                                                >
+                                                    <Typography variant="body1">
+                                                        {sv.maSV}
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell
+                                                    className={
+                                                        classes.borderTable
                                                     }
-                                                    return sv.checkDate.map(
-                                                        (kd, index) => {
+                                                >
+                                                    {sv.tenSV}
+                                                </TableCell>
+                                                <TableCell
+                                                    align="center"
+                                                    className={
+                                                        classes.borderTable
+                                                    }
+                                                >
+                                                    {sv.ngaysinh}
+                                                </TableCell>
+                                                <TableCell
+                                                    align="center"
+                                                    className={
+                                                        classes.borderTable
+                                                    }
+                                                >
+                                                    {sv.gioitinh}
+                                                </TableCell>
+                                                {checkDateList &&
+                                                    checkDateList.dateList.map(
+                                                        date => {
                                                             if (
-                                                                date.date === kd
+                                                                !sv.checkDate.some(
+                                                                    x =>
+                                                                        x.date ===
+                                                                        date.date
+                                                                )
                                                             ) {
-                                                                //console.log(kd)
                                                                 return (
                                                                     <TableCell
                                                                         key={
-                                                                            index
+                                                                            date._id
                                                                         }
                                                                         align="center"
                                                                         className={
                                                                             classes.borderTable
                                                                         }
-                                                                    >
-                                                                        <CheckIcon />
-                                                                    </TableCell>
+                                                                    ></TableCell>
                                                                 );
                                                             }
-                                                            return null;
+                                                            return sv.checkDate.map(
+                                                                (kd, index) => {
+                                                                    if (
+                                                                        date.date ===
+                                                                            kd.date &&
+                                                                        kd.status
+                                                                    ) {
+                                                                        return (
+                                                                            <TableCell
+                                                                                key={
+                                                                                    index
+                                                                                }
+                                                                                align="center"
+                                                                                className={
+                                                                                    classes.borderTable
+                                                                                }
+                                                                            >
+                                                                                <CheckIcon />
+                                                                            </TableCell>
+                                                                        );
+                                                                    } else if (
+                                                                        date.date ===
+                                                                            kd.date &&
+                                                                        !kd.status
+                                                                    ) {
+                                                                        return (
+                                                                            <TableCell
+                                                                                key={
+                                                                                    index
+                                                                                }
+                                                                                align="center"
+                                                                                className={
+                                                                                    classes.borderTable
+                                                                                }
+                                                                            >
+                                                                                P
+                                                                            </TableCell>
+                                                                        );
+                                                                    }
+                                                                    return null;
+                                                                }
+                                                            );
                                                         }
-                                                    );
-                                                }
-                                            )}
-                                        </TableRow>
-                                    ))}
+                                                    )}
+                                            </TableRow>
+                                        ))}
                             </TableBody>
                         </Table>
                     </div>

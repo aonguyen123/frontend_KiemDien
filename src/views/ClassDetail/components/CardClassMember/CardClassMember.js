@@ -225,10 +225,12 @@ const CardClassMember = props => {
                                                 onChange={handleSelectAll}
                                             />
                                         </TableCell>
-                                        <TableCell>Name</TableCell>
-                                        <TableCell>MSSV</TableCell>
-                                        <TableCell>Gender</TableCell>
-                                        <TableCell>BirthDay</TableCell>
+                                        <TableCell>
+                                            <div style={{width: '150px'}}>Name</div>
+                                        </TableCell>
+                                        <TableCell align='center'>MSSV</TableCell>
+                                        <TableCell align='center'>Gender</TableCell>
+                                        <TableCell align='center'>BirthDay</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -287,13 +289,13 @@ const CardClassMember = props => {
                                                               </Typography>
                                                           </div>
                                                       </TableCell>
-                                                      <TableCell>
+                                                      <TableCell align='center'>
                                                           {sv.maSV}
                                                       </TableCell>
-                                                      <TableCell>
+                                                      <TableCell align='center'>
                                                           {sv.gioitinh}
                                                       </TableCell>
-                                                      <TableCell>
+                                                      <TableCell align='center'>
                                                           {sv.ngaysinh}
                                                       </TableCell>
                                                   </TableRow>

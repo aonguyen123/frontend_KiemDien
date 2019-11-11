@@ -28,12 +28,15 @@ const CardClassAssignes = props => {
         loadingLocal,
         changeManagerPerson,
         users,
-        removeManagerPerson
+        removeManagerPerson,
+        searchTaskDraw,
+        clearnTaskDraw
     } = props;
     const [state, setState] = useState({ right: false });
     const [loadingButton, setLoadingButton] = useState(false);
 
     const handleChangePerson = (side, open) => event => {
+        clearnTaskDraw();
         if (
             event.type === 'keydown' &&
             (event.key === 'Tab' || event.key === 'Shift')
@@ -56,6 +59,7 @@ const CardClassAssignes = props => {
                 loadingLocal={loadingLocal}
                 users={users}
                 idClass={lop._id}
+                searchTaskDraw={searchTaskDraw}
             />
             <CardHeader
                 avatar={

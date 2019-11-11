@@ -14,6 +14,7 @@ import { clearErrors } from './../../actions/clearErrors';
 import { getUserConditionStatusTrue } from './../../actions/users';
 import { getClassById } from './../../actions/classes';
 import { deleteClass } from './../../actions/actionClass';
+import { searchTaskDraw, clearnTaskDraw } from './../../actions/actionTask';
 import {
     updateInfoClassById,
     updateAvatarClassById,
@@ -52,10 +53,14 @@ const ClassDetail = props => {
         deleteClass,
         getUserConditionStatusTrue,
         loadingLocal,
-        users,
         changeManagerPerson,
-        removeManagerPerson
+        removeManagerPerson,
+        searchTaskDraw,
+        clearnTaskDraw,
+        searchDraw
     } = props;
+    let { users } = props;
+
     const idClass = classById._id;
 
     useEffect(() => {
@@ -68,6 +73,8 @@ const ClassDetail = props => {
     const setCloseNotify = () => {
         closeNotify();
     };
+
+    users = users.filter(user => user.name.toLowerCase().indexOf(searchDraw.toLowerCase()) !== -1);
 
     if (isLoading) {
         return <LoadingCenter />;
@@ -120,6 +127,8 @@ const ClassDetail = props => {
                             changeManagerPerson={changeManagerPerson}
                             idClass={idClass}
                             removeManagerPerson={removeManagerPerson}
+                            searchTaskDraw={searchTaskDraw}
+                            clearnTaskDraw={clearnTaskDraw}
                         />
                     </Grid>
                 </Grid>
@@ -137,6 +146,7 @@ const mapStateToProps = state => ({
     errors: state.errors,
     showNotify: state.showNotify.isShow,
     users: state.users.users,
+    searchDraw: state.taskDraw.search
 });
 export default connect(
     mapStateToProps,
@@ -154,6 +164,8 @@ export default connect(
         deleteClass,
         getUserConditionStatusTrue,
         changeManagerPerson,
-        removeManagerPerson
+        removeManagerPerson,
+        searchTaskDraw,
+        clearnTaskDraw
     }
 )(withStyles(styles)(ClassDetail));

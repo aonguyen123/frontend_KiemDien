@@ -12,8 +12,9 @@ import { SearchInput } from 'components';
 import styles from './styles';
 
 const options = ['All class', 'Class not managed', 'Managed class'];
+
 const ProductsToolbar = props => {
-    const { className, classes } = props;
+    const { className, classes, searchTask, filterTask } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -23,9 +24,13 @@ const ProductsToolbar = props => {
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
         setAnchorEl(null);
+        filterTask(index);
     };
     const handleClose = event => {
         setAnchorEl(null);
+    };
+    const handleChange = event => {
+        searchTask(event.target.value);
     };
 
     return (
@@ -34,6 +39,7 @@ const ProductsToolbar = props => {
                 <SearchInput
                     className={classes.searchInput}
                     placeholder="Search class"
+                    onChange={handleChange}
                 />
             </div>
             <div className={classes.row}>

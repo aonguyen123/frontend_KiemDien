@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
+import { Grid } from '@material-ui/core';
 import { getPresencesDetail } from './../../actions/presencesDetail';
 import { deletePresenceMember } from './../../actions/actionPresenceDetail';
 import { closeNotify } from './../../actions/notify';
@@ -43,10 +44,14 @@ const PresencesDetail = props => {
                 presenceDetailClass={presenceDetailClass} 
             />
             <div className={classes.content}>
-                <PresencesTable 
-                    presenceDetailClass={presenceDetailClass} 
-                    deletePresenceMember={deletePresenceMember}
-                />
+                <Grid container>
+                    <Grid item lg={12} md={12} xl={12} xs={12}> 
+                        <PresencesTable 
+                            presenceDetailClass={presenceDetailClass} 
+                            deletePresenceMember={deletePresenceMember}
+                        />
+                    </Grid>
+                </Grid>
             </div>
         </div>
     );
