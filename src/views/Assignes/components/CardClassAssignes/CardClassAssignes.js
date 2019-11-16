@@ -105,7 +105,7 @@ const CardClassAssignes = props => {
                     underline="none"
                     variant="button"
                 >
-                    Clearn more
+                    Learn more
                 </Link>
             </CardContent>
             <Divider />
