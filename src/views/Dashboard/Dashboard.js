@@ -109,7 +109,7 @@ const mapStateToProps = state => ({
     totalUser: state.totalUser,
     totalMember: state.totalMember,
     filterStatistical: state.task.index,
-    presencesData: state.presencesClass
+    presencesData: state.statisticalPresences
 });
 export default connect(
     mapStateToProps,

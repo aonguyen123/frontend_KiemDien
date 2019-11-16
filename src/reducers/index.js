@@ -21,6 +21,7 @@ import presenceDetailReducer from './presenceDetailReducer';
 import actionPresenceDetailReducer from './actionPresenceDetail';
 import taskReducer from './taskReducer';
 import taskDrawReducer from './taskDrawReducer';
+import statisticalPresencesReducer from './statisticalPresences';
 
 export default combineReducers({
     auth: authReducer,
@@ -55,5 +56,6 @@ export default combineReducers({
     actionPresenceDetail: actionPresenceDetailReducer,
 
     task: taskReducer,
-    taskDraw: taskDrawReducer
+    taskDraw: taskDrawReducer,
+    statisticalPresences: statisticalPresencesReducer
 });
