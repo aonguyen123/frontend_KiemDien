@@ -13,6 +13,7 @@ import {
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import moment from 'moment';
 import { StatusBullet } from 'components';
+import { truncateString } from 'common';
 import { URI } from './../../../../constants/types';
 import styles from './styles';
 
@@ -37,13 +38,13 @@ const ProductCard = props => {
                     />
                 </div>
                 <Typography align="center" gutterBottom variant="h4">
-                    {lop.tenlop}
+                    {truncateString(lop.tenlop, 30, true)}
                 </Typography>
                 <Typography align="center" variant="h6">
                     {lop.malop}
                 </Typography>
                 <Typography align="center" variant="body1">
-                    {lop.mota}
+                    {truncateString(lop.mota, 45, true)}
                 </Typography>
             </CardContent>
             <Divider />

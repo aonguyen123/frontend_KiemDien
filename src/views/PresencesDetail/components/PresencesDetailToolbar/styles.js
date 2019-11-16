@@ -1,13 +1,5 @@
 const styles = theme => ({
     root: {},
-    row: {
-        height: '42px',
-        display: 'flex',
-        alignItems: 'center',
-        '& > *': {
-            marginRight: theme.spacing(0.5)
-        }
-    },
     title: {
         marginTop: theme.spacing(1)
     },

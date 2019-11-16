@@ -5,7 +5,7 @@ import {
     CLEARN_ERRORS,
     OPEN_NOTIFY
 } from './../constants/types';
-import callAPI from './../common/callApi';
+import { callAPI } from 'common';
 
 export const deleteUsers = idUsers => dispatch => {
     callAPI('/deleteUsers', 'DELETE', { idUsers }).then(res => {

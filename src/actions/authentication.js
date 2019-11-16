@@ -1,6 +1,5 @@
 import { GET_ERRORS, LOG_IN, LOG_OUT } from './../constants/types';
-import setAuthToken from './../common/setAuthToken';
-import callAPI from './../common/callApi';
+import { callAPI, setAuthToken } from 'common';
 
 export const login = (account, history) => dispatch => {
     callAPI('/login', 'POST', {account})

@@ -1,5 +1,5 @@
 import { GET_CLASS_PRESENCES, FETCHING_DATA, FETCH_DATA_SUCCESS } from './../constants/types';
-import callAPI from './../common/callApi';
+import { callAPI } from 'common';
 
 export const getClassPresences = () => dispatch => {
     dispatch({

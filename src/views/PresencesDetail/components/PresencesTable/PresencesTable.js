@@ -318,7 +318,7 @@ const PresencesTable = props => {
                                                                                     classes.borderTable
                                                                                 }
                                                                             >
-                                                                                P
+                                                                                <Typography variant='h5'>P</Typography>
                                                                             </TableCell>
                                                                         );
                                                                     }

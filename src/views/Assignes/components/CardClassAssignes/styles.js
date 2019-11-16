@@ -8,6 +8,9 @@ const styles = theme => ({
     },
     info: {
         padding: theme.spacing(2)
+    },
+    margin: {
+        margin: theme.spacing(1)
     }
 });
 export default styles;

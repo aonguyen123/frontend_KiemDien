@@ -10,14 +10,18 @@ import {
     CardContent,
     Divider,
     CardActions,
-    Button,
+    Tooltip,
     Grid,
-    Link
+    Link,
+    Fab
 } from '@material-ui/core';
 import moment from 'moment';
 import { URI } from './../../../../constants/types';
 import DrawClassAssignes from './../DrawClassAssignes/DrawClassAssignes';
 import { LoadingButton } from 'components';
+import ChangeIcon from '@material-ui/icons/Cached';
+import RemoveIcon from '@material-ui/icons/Remove';
+import { truncateString } from 'common';
 import styles from './styles';
 
 const CardClassAssignes = props => {
@@ -48,7 +52,7 @@ const CardClassAssignes = props => {
     const handleClickRemovePerson = () => {
         setLoadingButton(true);
         removeManagerPerson(lop._id);
-    }
+    };
 
     return (
         <Card className={clsx(classes.root, className)}>
@@ -91,9 +95,18 @@ const CardClassAssignes = props => {
             <CardContent>
                 <div className={classes.content}>
                     <Typography variant="body1" color="textSecondary">
-                        {lop.mota}
+                        {truncateString(lop.mota, 45, true)}
                     </Typography>
                 </div>
+                <Link
+                    color="textPrimary"
+                    component={RouterLink}
+                    to={`/classes/classDetail/${lop._id}`}
+                    underline="none"
+                    variant="button"
+                >
+                    Clearn more
+                </Link>
             </CardContent>
             <Divider />
             <div className={classes.info}>
@@ -129,37 +142,34 @@ const CardClassAssignes = props => {
                 </Grid>
             </div>
             <CardActions>
-                <Grid container justify="space-between" alignItems="center">
+                <Grid container justify="flex-start" alignItems="center">
                     <Grid item>
-                        <Button
-                            variant="text"
-                            color="primary"
-                            onClick={handleChangePerson('right', true)}
-                        >
-                            Change
-                        </Button>
+                        <Tooltip title="Change person" placement="top">
+                            <Fab
+                                size="small"
+                                color="primary"
+                                aria-label="add"
+                                className={classes.margin}
+                                onClick={handleChangePerson('right', true)}
+                            >
+                                <ChangeIcon />
+                            </Fab>
+                        </Tooltip>
                     </Grid>
                     <Grid item>
-                        <Link
-                            color="primary"
-                            component={RouterLink}
-                            to={`/classes/classDetail/${lop._id}`}
-                            underline="none"
-                            variant="button"
-                        >
-                            Clearn more
-                        </Link>
-                    </Grid>
-                    <Grid item>
-                        <Button
-                            variant="text"
-                            color="secondary"
-                            disabled={!lop.managed || loadingButton}
-                            onClick={handleClickRemovePerson}
-                        >
-                            {loadingButton && <LoadingButton />}
-                            Remove
-                        </Button>
+                        <Tooltip title="Remove person" placement="top">
+                            <Fab
+                                size="small"
+                                color="secondary"
+                                aria-label="add"
+                                className={classes.margin}
+                                disabled={!lop.managed || loadingButton}
+                                onClick={handleClickRemovePerson}
+                            >
+                                {loadingButton && <LoadingButton />}
+                                <RemoveIcon />
+                            </Fab>
+                        </Tooltip>
                     </Grid>
                 </Grid>
             </CardActions>

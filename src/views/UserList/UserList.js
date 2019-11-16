@@ -38,9 +38,12 @@ const UserList = props => {
     const setCloseNotify = () => {
         closeNotify();
     };
-    users = users.filter(user => user.email.toLowerCase().indexOf(search.toLowerCase()) !== -1);
 
-    if(isLoading) return <LoadingCenter />
+    users = users.filter(
+        user => user.email.toLowerCase().indexOf(search.toLowerCase()) !== -1
+    );
+
+    if (isLoading) return <LoadingCenter />;
     return (
         <div className={classes.root}>
             <Notifies
@@ -56,13 +59,13 @@ const UserList = props => {
                 searchTask={searchTask}
             />
             <div className={classes.content}>
-                <UsersTable 
-                    users={users} 
+                <UsersTable
+                    users={users}
                     deleteUsers={deleteUsers}
                 />
             </div>
         </div>
-    );    
+    );
 };
 const mapStateToProps = state => ({
     users: state.users.users,
@@ -74,5 +77,13 @@ const mapStateToProps = state => ({
 });
 export default connect(
     mapStateToProps,
-    { getUsers, deleteUsers, createUser, clearErrors, closeNotify, searchTask, clearnTask }
+    {
+        getUsers,
+        deleteUsers,
+        createUser,
+        clearErrors,
+        closeNotify,
+        searchTask,
+        clearnTask
+    }
 )(withStyles(styles)(UserList));

@@ -2,7 +2,7 @@ import {
     UPLOAD_PICTURE_ACCOUNT, GET_ERRORS, UPDATE_INFO_ACCOUNT, REMOVE_PICTURE_ACCOUNT, UPDATE_PASSWORD_ACCOUNT,
     CLEARN_ERRORS, OPEN_NOTIFY
 } from './../constants/types';
-import callAPI from './../common/callApi';
+import { callAPI } from 'common';
 
 export const updateInfoAccount = account => dispatch => {
     callAPI('/updateInfoAccount', 'PUT', {account})

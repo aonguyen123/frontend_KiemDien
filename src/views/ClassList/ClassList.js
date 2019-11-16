@@ -67,6 +67,12 @@ const ClassList = props => {
                 clearErrors={clearErrors}
                 searchTask={searchTask}
             />
+            <Typography variant="body2">
+                {`${classList.length} Records found. Page ${page + 1} of ${
+                    Math.ceil(classList.length / rowsPerPage)
+                }`}
+            </Typography>
+
             {classList.length === 0 ? (
                 <div className={classes.classNotfound}>
                     <Typography variant="h5" align="center">Class not found</Typography>

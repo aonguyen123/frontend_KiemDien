@@ -4,7 +4,7 @@ import {
     FETCHING_DATA,
     FETCH_DATA_SUCCESS    
 } from './../constants/types';
-import callAPI from './../common/callApi';
+import { callAPI } from 'common';
 
 export const getClasses = () => dispatch => {    
     dispatch({

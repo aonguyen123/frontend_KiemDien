@@ -2,29 +2,29 @@ import palette from 'theme/palette';
 
 export const data = {
     labels: [
-        '1 Aug',
-        '2 Aug',
-        '3 Aug',
-        '4 Aug',
-        '5 Aug',
-        '6 Aug',
-        '7 Aug',
-        '8 Aug',
-        '9 Aug',
-        '10 Aug',
-        '11 Aug',
-        '12 Aug'
+        'Mon',
+        'Tue',
+        'Wed',
+        'Thu',
+        'Fri',
+        'Sat',
+        'Sun'
     ],
     datasets: [
         {
-            label: 'This year',
+            label: 'Present',
             backgroundColor: palette.primary.main,
-            data: [0, 5, 19, 27, 29, 19, 20, 12, 12, 11, 1, 49]
+            data: [10, 5, 19, 27, 29, 19, 20]
         },
         {
-            label: 'Last year',
+            label: 'Absent',
             backgroundColor: palette.neutral,
-            data: [11, 20, 12, 29, 30, 25, 13, 5, 30, 11, 2, 21]
+            data: [11, 20, 12, 29, 30, 25, 13]
+        },
+        {
+            label: 'Reason',
+            backgroundColor: palette.warning.main,
+            data: [11, 20, 12, 29, 30, 25, 13]
         }
     ]
 };

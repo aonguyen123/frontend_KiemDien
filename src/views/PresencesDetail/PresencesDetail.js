@@ -20,7 +20,7 @@ const PresencesDetail = props => {
         showNotify,
         deletePresenceMember,
         actionPresenceDetail,
-        closeNotify
+        closeNotify,
     } = props;
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const PresencesDetail = props => {
                 setCloseNotify={setCloseNotify}
             />
             <PresencesDetailToolbar 
-                presenceDetailClass={presenceDetailClass} 
+                presenceDetailClass={presenceDetailClass}
             />
             <div className={classes.content}>
                 <Grid container>

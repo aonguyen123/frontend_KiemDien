@@ -1,4 +1,4 @@
-export const URI = 'https://kiemdien.herokuapp.com/api/admin';
+export const URI = 'http://localhost:4000/api/admin';
 //https://kiemdien.herokuapp.com/api/admin
 //http://localhost:4000/api/admin
 
@@ -65,3 +65,5 @@ export const SEARCH_TASK_DRAW = 'SEARCH_TASK_DRAW';
 export const FILTER_TASK = 'FILTER_TASK';
 export const CLEARN_TASK = 'CLEARN_TASK';
 export const CLEARN_TASK_DRAW = 'CLEARN_TASK_DRAW';
+
+export const PRESENCES_STATISTICAL = 'PRESENCES_STATISTICAL';

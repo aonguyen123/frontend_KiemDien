@@ -1,5 +1,5 @@
 import { DELETE_PRESENCES_MEMBER, OPEN_NOTIFY } from './../constants/types';
-import callAPI from './../common/callApi';
+import { callAPI } from 'common';
 
 export const deletePresenceMember = (idClass, members, listMssv) => dispatch => {
     dataDelete(idClass, members, listMssv, dispatch);

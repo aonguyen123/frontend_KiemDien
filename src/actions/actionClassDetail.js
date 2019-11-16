@@ -12,7 +12,7 @@ import {
     CHANGE_MANAGER_PERSON,
     REMOVE_MANAGER_PERSON
 } from './../constants/types';
-import callAPI from './../common/callApi';
+import { callAPI } from 'common';
 
 export const importDssvClassById = (dssv, _id) => dispatch => {
     const formData = new FormData();

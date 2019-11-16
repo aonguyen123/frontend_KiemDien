@@ -1,4 +1,10 @@
-import { SEARCH_TASK, FILTER_TASK, CLEARN_TASK, SEARCH_TASK_DRAW, CLEARN_TASK_DRAW } from './../constants/types';
+import {
+    SEARCH_TASK,
+    FILTER_TASK,
+    CLEARN_TASK,
+    SEARCH_TASK_DRAW,
+    CLEARN_TASK_DRAW
+} from './../constants/types';
 
 export const searchTask = keyword => dispatch => {
     dispatch({

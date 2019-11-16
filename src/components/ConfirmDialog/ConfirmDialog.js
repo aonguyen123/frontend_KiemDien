@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
+import React, { useState, forwardRef } from 'react';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Paper,
+    Slide
+} from '@material-ui/core';
 import Draggable from 'react-draggable';
 import { LoadingButton } from 'components';
 
-function PaperComponent(props) {
+const PaperComponent = props => {
     return (
         <Draggable cancel={'[class*="MuiDialogContent-root"]'}>
             <Paper {...props} />
         </Draggable>
     );
 }
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="down" ref={ref} {...props} />;
+});
 
 const ConfirmDialog = props => {
     const { open, closeDialog, title, deleteConfirm } = props;
@@ -34,6 +40,7 @@ const ConfirmDialog = props => {
                 open={open}
                 onClose={handleClose}
                 PaperComponent={PaperComponent}
+                TransitionComponent={Transition}
                 aria-labelledby="draggable-dialog-title"
             >
                 <DialogTitle
@@ -48,8 +55,8 @@ const ConfirmDialog = props => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button 
-                        color="secondary" 
+                    <Button
+                        color="secondary"
                         disabled={loadingButton}
                         onClick={handleClick}
                     >

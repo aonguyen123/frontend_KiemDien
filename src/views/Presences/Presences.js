@@ -57,9 +57,7 @@ const Presences = props => {
             />
             <Typography variant="body2">
                 {`${presencesClass.length} Records found. Page ${page + 1} of ${
-                    rowsPerPage > presencesClass.length
-                        ? 1
-                        : Math.round(presencesClass.length / rowsPerPage)
+                    Math.ceil(presencesClass.length / rowsPerPage)
                 }`}
             </Typography>
             {presencesClass.length === 0 ? (

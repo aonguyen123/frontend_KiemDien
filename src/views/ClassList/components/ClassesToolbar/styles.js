@@ -4,7 +4,8 @@ const styles = theme => ({
         height: '42px',
         display: 'flex',
         alignItems: 'center',
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(2)
     },
     spacer: {
         flexGrow: 1

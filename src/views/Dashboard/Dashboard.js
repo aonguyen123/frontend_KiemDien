@@ -8,11 +8,12 @@ import {
     TasksProgress,
     TotalMember,
     LatestSales,
-    UsersByDevice,
+    MemberByPresence,
     LatestClasses,
     LatestAssigned
 } from './components';
 import { closeNotify } from './../../actions/notify';
+import { filterTask } from './../../actions/actionTask';
 import { getDataDashBoard } from './../../actions/dashboard';
 import { deleteClass } from './../../actions/actionClass';
 import { Notifies, LoadingCenter } from 'components';
@@ -31,7 +32,10 @@ const Dashboard = props => {
         assignesLatest,
         totalClass,
         totalUser,
-        totalMember
+        totalMember,
+        filterTask,
+        filterStatistical,
+        presencesData
     } = props;
 
     useEffect(() => {
@@ -74,7 +78,11 @@ const Dashboard = props => {
                     <LatestSales />
                 </Grid>
                 <Grid item lg={4} md={6} xl={3} xs={12}>
-                    <UsersByDevice />
+                    <MemberByPresence 
+                        filterTask={filterTask}
+                        filterStatistical={filterStatistical}
+                        presencesData={presencesData}
+                    />
                 </Grid>
                 <Grid item lg={4} md={6} xl={3} xs={12}>
                     <LatestClasses 
@@ -99,9 +107,11 @@ const mapStateToProps = state => ({
     assignesLatest: state.assignesClass,
     totalClass: state.totalClass,
     totalUser: state.totalUser,
-    totalMember: state.totalMember
+    totalMember: state.totalMember,
+    filterStatistical: state.task.index,
+    presencesData: state.presencesClass
 });
 export default connect(
     mapStateToProps,
-    { closeNotify, getDataDashBoard, deleteClass }
+    { closeNotify, getDataDashBoard, deleteClass, filterTask }
 )(withStyles(styles)(Dashboard));

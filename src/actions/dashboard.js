@@ -5,9 +5,10 @@ import {
     GET_ASSIGNES_LATEST,
     STATISTICAL_TOTAL_CLASS,
     STATISTICAL_TOTAL_USER,
-    STATISTICAL_TOTAL_MEMBER
+    STATISTICAL_TOTAL_MEMBER,
+    PRESENCES_STATISTICAL
 } from './../constants/types';
-import callAPI from './../common/callApi';
+import { callAPI } from 'common';
 
 export const getDataDashBoard = () => dispatch => {
     dispatch({
@@ -41,6 +42,11 @@ const getData = async dispatch => {
     dispatch({
         type: STATISTICAL_TOTAL_MEMBER,
         payload: dataTotalMember.data
+    });
+    const dataPresences = await callAPI('/getPresences', 'GET', null);
+    dispatch({
+        type: PRESENCES_STATISTICAL,
+        payload: dataPresences.data
     });
     dispatch({
         type: FETCH_DATA_SUCCESS

@@ -6,7 +6,7 @@ import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 // import TextFieldsIcon from '@material-ui/icons/TextFields';
-// import ImageIcon from '@material-ui/icons/Image';
+import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
@@ -49,11 +49,11 @@ const Sidebar = props => {
         //     href: '/typography',
         //     icon: <TextFieldsIcon />
         // },
-        // {
-        //     title: 'Icons',
-        //     href: '/icons',
-        //     icon: <ImageIcon />
-        // },
+        {
+            title: 'Icons',
+            href: '/icons',
+            icon: <ImageIcon />
+        },
         {
             title: 'Account',
             href: '/account',

@@ -5,7 +5,7 @@ import {
     OPEN_NOTIFY,
     DELETE_CLASS
 } from './../constants/types';
-import callAPI from './../common/callApi';
+import { callAPI } from 'common';
 
 export const addClass = newClass => dispatch => {
     callAPI('/createClass', 'POST', { newClass })

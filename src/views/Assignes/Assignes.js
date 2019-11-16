@@ -86,7 +86,16 @@ const Assignes = props => {
                 openNotify={actionClass.isSuccess === null ? false : showNotify}
                 setCloseNotify={setCloseNotify}
             />
-            <AssignesToolbar searchTask={searchTask} filterTask={filterTask} />
+            <AssignesToolbar 
+                searchTask={searchTask} 
+                filterTask={filterTask} 
+            />
+            <Typography variant="body2">
+                {`${assignesClass.length} Records found. Page ${page + 1} of ${
+                    Math.ceil(assignesClass.length / rowsPerPage)
+                }`}
+            </Typography>
+
             <div className={classes.content}>
                 {
                     assignesClass.length === 0 
