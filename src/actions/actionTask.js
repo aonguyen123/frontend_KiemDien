@@ -1,6 +1,7 @@
 import {
     SEARCH_TASK,
     FILTER_TASK,
+    DATE_FILTER,
     CLEARN_TASK,
     SEARCH_TASK_DRAW,
     CLEARN_TASK_DRAW
@@ -34,5 +35,14 @@ export const clearnTask = () => dispatch => {
     dispatch({
         type: CLEARN_TASK,
         payload: ''
+    });
+};
+export const getDateFilter = (date, index) => dispatch => {
+    dispatch({
+        type: DATE_FILTER,
+        payload: {
+            date,
+            index
+        }
     });
 };

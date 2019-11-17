@@ -10,10 +10,7 @@ export const getPresencesDetail = (id, history) => dispatch => {
 const getData = async (id, history, dispatch) => {
     const dataPresencesDetail = await callAPI(`/getPresencesDetail/?id=${id}`, 'GET', null)
     .catch(err => {
-        if(err.response.data.status === 'ID_WRONG')
-        {
-            history.push('/internal-server-error');    
-        }
+        history.push('/internal-server-error');    
     });
     if(dataPresencesDetail)
     {

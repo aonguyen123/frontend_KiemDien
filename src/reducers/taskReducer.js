@@ -1,8 +1,9 @@
-import { SEARCH_TASK, FILTER_TASK, CLEARN_TASK } from './../constants/types';
+import { SEARCH_TASK, FILTER_TASK, CLEARN_TASK, DATE_FILTER } from './../constants/types';
 
 const initialState = {
     search: '',
-    index: ''
+    index: '',
+    dateFilter: ''
 }
 export default function(state = initialState, action) {
     switch(action.type)
@@ -17,11 +18,18 @@ export default function(state = initialState, action) {
                 ...state,
                 index: action.payload
             }
+        case DATE_FILTER:
+            return {
+                ...state,
+                dateFilter: action.payload.date,
+                index: action.payload.index
+            }    
         case CLEARN_TASK:
             return {
                 ...state,
                 search: action.payload,
-                index: action.payload
+                index: action.payload,
+                dateFilter: action.payload
             }
         default:
             return state;

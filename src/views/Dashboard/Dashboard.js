@@ -13,7 +13,7 @@ import {
     LatestAssigned
 } from './components';
 import { closeNotify } from './../../actions/notify';
-import { filterTask } from './../../actions/actionTask';
+import { filterTask, getDateFilter, clearnTask } from './../../actions/actionTask';
 import { getDataDashBoard } from './../../actions/dashboard';
 import { deleteClass } from './../../actions/actionClass';
 import { Notifies, LoadingCenter } from 'components';
@@ -34,13 +34,17 @@ const Dashboard = props => {
         totalUser,
         totalMember,
         filterTask,
-        filterStatistical,
-        presencesData
+        DataByPresences_Statistical,
+        dateFilter,
+        indexFilter,
+        getDateFilter,
+        clearnTask
     } = props;
 
     useEffect(() => {
+        clearnTask();
         getDataDashBoard();
-    }, [getDataDashBoard, actionClass]);
+    }, [clearnTask, getDataDashBoard, actionClass]);
 
     const setCloseNotify = () => {
         closeNotify();
@@ -80,8 +84,10 @@ const Dashboard = props => {
                 <Grid item lg={4} md={6} xl={3} xs={12}>
                     <MemberByPresence 
                         filterTask={filterTask}
-                        filterStatistical={filterStatistical}
-                        presencesData={presencesData}
+                        getDateFilter={getDateFilter}
+                        DataByPresences_Statistical={DataByPresences_Statistical}
+                        dateFilter={dateFilter}
+                        indexFilter={indexFilter}
                     />
                 </Grid>
                 <Grid item lg={4} md={6} xl={3} xs={12}>
@@ -108,10 +114,11 @@ const mapStateToProps = state => ({
     totalClass: state.totalClass,
     totalUser: state.totalUser,
     totalMember: state.totalMember,
-    filterStatistical: state.task.index,
-    presencesData: state.statisticalPresences
+    DataByPresences_Statistical: state.statisticalClassesPresences,
+    dateFilter: state.task.dateFilter,
+    indexFilter: state.task.index
 });
 export default connect(
     mapStateToProps,
-    { closeNotify, getDataDashBoard, deleteClass, filterTask }
+    { closeNotify, getDataDashBoard, deleteClass, filterTask, getDateFilter, clearnTask }
 )(withStyles(styles)(Dashboard));

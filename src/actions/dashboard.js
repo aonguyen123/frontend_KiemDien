@@ -6,7 +6,7 @@ import {
     STATISTICAL_TOTAL_CLASS,
     STATISTICAL_TOTAL_USER,
     STATISTICAL_TOTAL_MEMBER,
-    PRESENCES_STATISTICAL
+    CLASSES_PRESENCE_STATISTICAL
 } from './../constants/types';
 import { callAPI } from 'common';
 
@@ -43,10 +43,10 @@ const getData = async dispatch => {
         type: STATISTICAL_TOTAL_MEMBER,
         payload: dataTotalMember.data
     });
-    const dataPresences = await callAPI('/getPresences', 'GET', null);
+    const dataClass = await callAPI('/getClassesStatisticalByPresences', 'GET', null);
     dispatch({
-        type: PRESENCES_STATISTICAL,
-        payload: dataPresences.data
+        type: CLASSES_PRESENCE_STATISTICAL,
+        payload: dataClass.data
     });
     dispatch({
         type: FETCH_DATA_SUCCESS

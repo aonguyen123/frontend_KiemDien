@@ -14,22 +14,29 @@ import {
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { DialogStatistical } from './components';
-import { devices, options, fillData } from './chart';
+import { options, fillData } from './chart';
 import styles from './styles';
 
-const optionsSelect = ['By week', 'By month', 'By year'];
+const optionsSelect = ['By month', 'By week', 'By year'];
 const MemberByPresence = props => {
     const {
         className,
         classes,
         filterTask,
-        filterStatistical,
-        presencesData,
+        DataByPresences_Statistical,
+        getDateFilter,
+        dateFilter,
+        indexFilter,
         ...rest
     } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [open, setOpen] = useState(false);
+    const { data, statusPresences } = fillData(
+        DataByPresences_Statistical,
+        dateFilter,
+        indexFilter
+    );
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -39,7 +46,6 @@ const MemberByPresence = props => {
     };
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
-        filterTask(index);
         setOpen(true);
         setAnchorEl(null);
     };
@@ -52,7 +58,8 @@ const MemberByPresence = props => {
             <DialogStatistical
                 open={open}
                 handleCloseDialog={handleCloseDialog}
-                filterStatistical={filterStatistical}
+                index={selectedIndex}
+                getDateFilter={getDateFilter}
             />
             <CardHeader
                 action={
@@ -62,7 +69,7 @@ const MemberByPresence = props => {
                         variant="text"
                         className={classes.paperButton}
                     >
-                        <Typography variant="h5">
+                        <Typography variant="h6" align='center'>
                             {optionsSelect[selectedIndex]}
                         </Typography>
                         <ArrowDropDownIcon />
@@ -71,29 +78,39 @@ const MemberByPresence = props => {
                 title="Members by presence"
             />
             <Divider />
-            <CardContent>
-                <div className={classes.chartContainer}>
-                    <Pie data={fillData(presencesData, filterStatistical)} options={options} />
-                </div>
-                <div className={classes.stats}>
-                    {devices.map(device => (
-                        <div className={classes.device} key={device.title}>
-                            <span className={classes.deviceIcon}>
-                                {device.icon}
-                            </span>
-                            <Typography variant="body1">
-                                {device.title}
-                            </Typography>
-                            <Typography
-                                style={{ color: device.color }}
-                                variant="h2"
-                            >
-                                {device.value}%
-                            </Typography>
-                        </div>
-                    ))}
-                </div>
-            </CardContent>
+            {data !== null ? (
+                <CardContent>
+                    <div className={classes.chartContainer}>
+                        <Pie data={data} options={options} />
+                    </div>
+                    <div className={classes.stats}>
+                        {statusPresences.map(status => (
+                            <div className={classes.device} key={status.title}>
+                                <span className={classes.deviceIcon}>
+                                    {status.icon}
+                                </span>
+                                <Typography variant="body1">
+                                    {status.title}
+                                </Typography>
+                                <Typography
+                                    style={{ color: status.color }}
+                                    variant="h2"
+                                >
+                                    {status.value}%
+                                </Typography>
+                            </div>
+                        ))}
+                    </div>
+                </CardContent>
+            ) : (
+                <Typography
+                    style={{ marginTop: '50%' }}
+                    variant="h5"
+                    align="center"
+                >
+                    Data not found
+                </Typography>
+            )}
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}

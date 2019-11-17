@@ -8,35 +8,41 @@ import {
     Divider,
     Grid,
     Button,
-    IconButton
+    IconButton,
+    Typography
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import clsx from 'clsx';
 import DateFnsUtils from '@date-io/date-fns';
-import startOfWeek from 'date-fns/startOfWeek';
-import isSameDay from 'date-fns/isSameDay';
-import endOfWeek from 'date-fns/endOfWeek';
 import format from 'date-fns/format';
-import isWithinInterval from 'date-fns/isWithinInterval';
+import moment from 'moment';
 import isValid from 'date-fns/isValid';
 import styles from './styles';
 
 const DialogStatistical = props => {
-    const { open, handleCloseDialog, classes, filterStatistical } = props;
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const { open, handleCloseDialog, classes, index, getDateFilter } = props;
+    const [selectedDate, setSelectedDate] = useState(
+        moment(new Date()).startOf('isoWeek')
+    );
 
     const handleClose = () => {
         handleCloseDialog(false);
-        setSelectedDate(new Date());
+        if (index === 1) {
+            setSelectedDate(moment(new Date()).startOf('isoWeek'));
+        } else {
+            setSelectedDate(new Date());
+        }
     };
     const handleClick = event => {
         event.preventDefault();
-        //console.log(selectedDate);
-    }
+        getDateFilter(selectedDate, index);
+        handleCloseDialog(false);
+        setSelectedDate(moment(new Date()).startOf('isoWeek'));
+    };
     const handleDateChange = date => {
-        if (filterStatistical === 0) {
-            setSelectedDate(startOfWeek(date));
+        if (index === 1) {
+            setSelectedDate(moment(date).startOf('isoWeek'));
         } else {
             setSelectedDate(date);
         }
@@ -45,11 +51,17 @@ const DialogStatistical = props => {
         let dateClone = date;
         let selectedDateClone = selectedDate;
 
-        const start = startOfWeek(selectedDateClone);
-        const end = endOfWeek(selectedDateClone);
-        const dayIsBetween = isWithinInterval(dateClone, { start, end });
-        const isFirstDay = isSameDay(dateClone, start);
-        const isLastDay = isSameDay(dateClone, end);
+        const start = moment(selectedDateClone).startOf('isoWeek');
+        const end = moment(selectedDateClone).endOf('isoWeek');
+        const dayIsBetween = moment(dateClone).isBetween(
+            start,
+            end,
+            null,
+            '[]'
+        );
+
+        const isFirstDay = moment(dateClone).isSame(start, 'isoWeek');
+        const isLastDay = moment(dateClone).isSame(end, 'isoWeek');
 
         const wrapperClassName = clsx({
             [classes.highlight]: dayIsBetween,
@@ -74,7 +86,7 @@ const DialogStatistical = props => {
         let dateClone = date;
 
         return dateClone && isValid(dateClone)
-            ? `Week of ${format(startOfWeek(dateClone), 'MMM do')}`
+            ? `Week of ${moment(dateClone).format('MMM Do')}`
             : invalidLabel;
     };
 
@@ -89,19 +101,19 @@ const DialogStatistical = props => {
                     <form autoComplete="off" noValidate>
                         <CardHeader
                             title={
-                                filterStatistical === 0
+                                index === 1
                                     ? 'Statistical by week'
-                                    : filterStatistical === 1
+                                    : index === 0
                                     ? 'Statistical by month'
                                     : 'Statistical by year'
                             }
                         />
                         <Divider />
                         <CardContent>
-                            <Grid container spacing={1}>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <Grid container spacing={1}>
                                     <Grid item md={12} xs={12}>
-                                        {filterStatistical === 0 ? (
+                                        {index === 1 ? (
                                             <DatePicker
                                                 inputVariant="outlined"
                                                 label="Choose week"
@@ -113,9 +125,10 @@ const DialogStatistical = props => {
                                                 labelFunc={
                                                     formatWeekSelectLabel
                                                 }
+                                                orientation="landscape"
                                                 disableFuture
                                             />
-                                        ) : filterStatistical === 1 ? (
+                                        ) : index === 0 ? (
                                             <DatePicker
                                                 inputVariant="outlined"
                                                 openTo="month"
@@ -124,20 +137,57 @@ const DialogStatistical = props => {
                                                 value={selectedDate}
                                                 onChange={handleDateChange}
                                                 disableFuture
+                                                orientation="landscape"
                                             />
                                         ) : (
                                             <DatePicker
                                                 inputVariant="outlined"
                                                 views={['year']}
-                                                label='Choose year'
+                                                label="Choose year"
                                                 value={selectedDate}
                                                 onChange={handleDateChange}
                                                 disableFuture
                                             />
                                         )}
                                     </Grid>
-                                </MuiPickersUtilsProvider>
-                            </Grid>
+                                    {index === 1 ? (
+                                        <Grid item md={12} xs={12}>
+                                            <Typography variant="body2">
+                                                From{' '}
+                                                {
+                                                    <span
+                                                        style={{
+                                                            fontWeight: 'bold',
+                                                            fontSize: '25'
+                                                        }}
+                                                    >
+                                                        {moment(selectedDate)
+                                                            .startOf('isoWeek')
+                                                            .format(
+                                                                'DD/MM/YYYY'
+                                                            )}
+                                                    </span>
+                                                }
+                                                {'  '}to{' '}
+                                                {
+                                                    <span
+                                                        style={{
+                                                            fontWeight: 'bold',
+                                                            fontSize: '25'
+                                                        }}
+                                                    >
+                                                        {moment(selectedDate)
+                                                            .endOf('isoWeek')
+                                                            .format(
+                                                                'DD/MM/YYYY'
+                                                            )}
+                                                    </span>
+                                                }
+                                            </Typography>
+                                        </Grid>
+                                    ) : null}
+                                </Grid>
+                            </MuiPickersUtilsProvider>
                         </CardContent>
                         <Divider />
                         <CardActions>
@@ -147,8 +197,8 @@ const DialogStatistical = props => {
                                 justify="flex-end"
                                 alignItems="flex-end"
                             >
-                                <Button 
-                                    type="submit" 
+                                <Button
+                                    type="submit"
                                     color="primary"
                                     onClick={handleClick}
                                 >
