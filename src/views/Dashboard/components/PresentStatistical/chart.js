@@ -134,7 +134,9 @@ export const fillData = (dataPresences, chooseWeek) => {
                         label: 'Present',
                         backgroundColor: 'rgba(241, 91, 193, 0.27)',
                         data: [Mon, Tue, Wed, Thu, Fri, Sat, Sun],
-                        fill: 'origin'
+                        fill: 'origin',
+                        borderColor: 'rgba(217, 48, 138, 1)',
+                        pointBorderWidth: 4
                     }
                 ]
             };
@@ -277,6 +279,9 @@ export const fillData = (dataPresences, chooseWeek) => {
 export const options = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+     
+    },
     legend: { display: false },
     lineTension: 0,
     tooltips: {
@@ -289,8 +294,7 @@ export const options = {
         titleFontColor: palette.text.primary,
         bodyFontColor: palette.text.secondary,
         footerFontColor: palette.text.secondary
-    },
-
+    },    
     layout: { padding: 0 },
     scales: {
         xAxes: [

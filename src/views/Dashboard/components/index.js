@@ -2,7 +2,7 @@ export { default as TotalClasses } from './TotalClasses';
 export { default as LatestAssigned } from './LatestAssigned';
 export { default as LatestClasses } from './LatestClasses';
 export { default as PresentStatistical } from './PresentStatistical';
-export { default as TasksProgress } from './TasksProgress';
+export { default as PresentMember } from './PresentMember';
 export { default as TotalMember } from './TotalMember';
 export { default as TotalUsers } from './TotalUsers';
 export { default as MemberByPresence } from './MemberByPresence';

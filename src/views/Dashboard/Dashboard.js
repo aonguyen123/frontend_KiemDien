@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import {
     TotalClasses,
     TotalUsers,
-    TasksProgress,
+    PresentMember,
     TotalMember,
     PresentStatistical,
     MemberByPresence,
@@ -79,7 +79,9 @@ const Dashboard = props => {
                     <TotalUsers totalUser={totalUser} />
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
-                    <TasksProgress />
+                    <PresentMember 
+                        DataByPresences={DataByPresences_Statistical}
+                    />
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                     <TotalMember totalMember={totalMember} />

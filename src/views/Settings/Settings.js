@@ -3,15 +3,22 @@ import { withStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 
-import { Notifications, Password } from './components';
+import { Password } from './components';
 import { updatePassword } from './../../actions/actionAccount';
 import { closeNotify } from './../../actions/notify';
 import { Notifies } from 'components';
 import styles from './styles';
 
-
 const Settings = props => {
-    const { classes, updatePassword, actionAccount, showNotify, closeNotify, errors, account } = props;
+    const {
+        classes,
+        updatePassword,
+        actionAccount,
+        showNotify,
+        closeNotify,
+        errors,
+        account
+    } = props;
 
     const setCloseNotify = () => {
         closeNotify();
@@ -27,9 +34,9 @@ const Settings = props => {
                 setCloseNotify={setCloseNotify}
             />
             <Grid container spacing={4}>
-                <Grid item md={7} xs={12}>
+                {/* <Grid item md={7} xs={12}>
                     <Notifications />
-                </Grid>
+                </Grid> */}
                 <Grid item md={5} xs={12}>
                     <Password
                         updatePassword={updatePassword}
