@@ -17,9 +17,6 @@ const styles = theme => ({
     },
     deviceIcon: {
         color: theme.palette.icon
-    },
-    paperButton: {
-        textTransform: 'none'
     }
 });
 export default styles;

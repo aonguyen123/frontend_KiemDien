@@ -68,10 +68,9 @@ const MemberByPresence = props => {
                         onClick={handleClick}
                         variant="text"
                         className={classes.paperButton}
+                        size='small'
                     >
-                        <Typography variant="h6" align='center'>
-                            {optionsSelect[selectedIndex]}
-                        </Typography>
+                        {optionsSelect[selectedIndex]}
                         <ArrowDropDownIcon />
                     </Button>
                 }
@@ -104,8 +103,7 @@ const MemberByPresence = props => {
                 </CardContent>
             ) : (
                 <Typography
-                    style={{ marginTop: '50%' }}
-                    variant="h5"
+                    variant="h6"
                     align="center"
                 >
                     Data not found

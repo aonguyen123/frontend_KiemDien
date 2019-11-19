@@ -7,13 +7,19 @@ import {
     TotalUsers,
     TasksProgress,
     TotalMember,
-    LatestSales,
+    PresentStatistical,
     MemberByPresence,
     LatestClasses,
-    LatestAssigned
+    LatestAssigned,
+    TopDashBoard
 } from './components';
 import { closeNotify } from './../../actions/notify';
-import { filterTask, getDateFilter, clearnTask } from './../../actions/actionTask';
+import {
+    filterTask,
+    getDateFilter,
+    clearnTask,
+    getIndexChooseWeek
+} from './../../actions/actionTask';
 import { getDataDashBoard } from './../../actions/dashboard';
 import { deleteClass } from './../../actions/actionClass';
 import { Notifies, LoadingCenter } from 'components';
@@ -22,6 +28,7 @@ import styles from './styles';
 const Dashboard = props => {
     const {
         classes,
+        account,
         showNotify,
         closeNotify,
         classLatest,
@@ -38,6 +45,8 @@ const Dashboard = props => {
         dateFilter,
         indexFilter,
         getDateFilter,
+        getIndexChooseWeek,
+        chooseWeek,
         clearnTask
     } = props;
 
@@ -60,52 +69,56 @@ const Dashboard = props => {
                 setCloseNotify={setCloseNotify}
             />
             <Grid container spacing={4}>
-                <Grid item lg={3} sm={6} xl={3} xs={12}>
-                    <TotalClasses 
-                        totalClass={totalClass}
-                    />
+                <Grid item lg={12} xs={12}>
+                    <TopDashBoard account={account}/>
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
-                    <TotalUsers 
-                        totalUser={totalUser}
-                    />
+                    <TotalClasses totalClass={totalClass} />
+                </Grid>
+                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                    <TotalUsers totalUser={totalUser} />
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                     <TasksProgress />
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
-                    <TotalMember 
-                        totalMember={totalMember}
-                    />
+                    <TotalMember totalMember={totalMember} />
                 </Grid>
                 <Grid item lg={8} md={12} xl={9} xs={12}>
-                    <LatestSales />
+                    <PresentStatistical
+                        DataByPresences_Statistical={
+                            DataByPresences_Statistical
+                        }
+                        getIndexChooseWeek={getIndexChooseWeek}
+                        chooseWeek={chooseWeek}
+                    />
                 </Grid>
                 <Grid item lg={4} md={6} xl={3} xs={12}>
-                    <MemberByPresence 
+                    <MemberByPresence
                         filterTask={filterTask}
                         getDateFilter={getDateFilter}
-                        DataByPresences_Statistical={DataByPresences_Statistical}
+                        DataByPresences_Statistical={
+                            DataByPresences_Statistical
+                        }
                         dateFilter={dateFilter}
                         indexFilter={indexFilter}
                     />
                 </Grid>
                 <Grid item lg={4} md={6} xl={3} xs={12}>
-                    <LatestClasses 
-                        classLatest={classLatest} 
+                    <LatestClasses
+                        classLatest={classLatest}
                         deleteClass={deleteClass}
                     />
                 </Grid>
                 <Grid item lg={8} md={12} xl={9} xs={12}>
-                    <LatestAssigned 
-                        assignesLatest={assignesLatest}
-                    />
+                    <LatestAssigned assignesLatest={assignesLatest} />
                 </Grid>
             </Grid>
         </div>
     );
 };
 const mapStateToProps = state => ({
+    account: state.account,
     showNotify: state.showNotify.isShow,
     classLatest: state.classes.classes,
     isLoading: state.isLoading.isLoading,
@@ -116,9 +129,18 @@ const mapStateToProps = state => ({
     totalMember: state.totalMember,
     DataByPresences_Statistical: state.statisticalClassesPresences,
     dateFilter: state.task.dateFilter,
-    indexFilter: state.task.index
+    indexFilter: state.task.index,
+    chooseWeek: state.task
 });
 export default connect(
     mapStateToProps,
-    { closeNotify, getDataDashBoard, deleteClass, filterTask, getDateFilter, clearnTask }
+    {
+        closeNotify,
+        getDataDashBoard,
+        deleteClass,
+        filterTask,
+        getDateFilter,
+        clearnTask,
+        getIndexChooseWeek
+    }
 )(withStyles(styles)(Dashboard));

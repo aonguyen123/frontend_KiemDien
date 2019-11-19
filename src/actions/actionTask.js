@@ -4,7 +4,8 @@ import {
     DATE_FILTER,
     CLEARN_TASK,
     SEARCH_TASK_DRAW,
-    CLEARN_TASK_DRAW
+    CLEARN_TASK_DRAW,
+    GET_INDEX_CHOOSE_WEEK
 } from './../constants/types';
 
 export const searchTask = keyword => dispatch => {
@@ -43,6 +44,15 @@ export const getDateFilter = (date, index) => dispatch => {
         payload: {
             date,
             index
+        }
+    });
+};
+export const getIndexChooseWeek = (index, date = new Date()) => dispatch => {
+    dispatch({
+        type: GET_INDEX_CHOOSE_WEEK,
+        payload: {
+            index,
+            date 
         }
     });
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -6,13 +6,11 @@ import { withStyles } from '@material-ui/styles';
 import {
     AppBar,
     Toolbar,
-    Badge,
     Hidden,
     IconButton,
     Tooltip
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 
 import styles from './styles';
@@ -20,7 +18,6 @@ import styles from './styles';
 const Topbar = props => {
     const { className, onSidebarOpen, logout, classes } = props;
 
-    const [notifications] = useState([]);
     const handleClick = () => {
         logout(props.history);
     };
@@ -32,15 +29,6 @@ const Topbar = props => {
                 </RouterLink>
                 <div className={classes.flexGrow} />
                 <Hidden mdDown>
-                    <IconButton color="inherit">
-                        <Badge
-                            badgeContent={notifications.length}
-                            color="primary"
-                            variant="dot"
-                        >
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
                     <Tooltip title='Sign out'>
                         <IconButton
                             className={classes.signOutButton}
@@ -52,15 +40,6 @@ const Topbar = props => {
                     </Tooltip>
                 </Hidden>
                 <Hidden lgUp>
-                    <IconButton color="inherit">
-                        <Badge
-                            badgeContent={notifications.length}
-                            color="primary"
-                            variant="dot"
-                        >
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
                     <IconButton color="inherit" onClick={onSidebarOpen}>
                         <MenuIcon />
                     </IconButton>

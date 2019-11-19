@@ -86,7 +86,7 @@ export const fillData = (dataPresences, date, index) => {
                                 palette.error.main,
                                 palette.warning.main
                             ],
-                            borderWidth: 5,
+                            borderWidth: 2,
                             borderColor: palette.white,
                             hoverBorderColor: palette.white
                         }
@@ -213,7 +213,7 @@ export const fillData = (dataPresences, date, index) => {
                             palette.error.main,
                             palette.warning.main
                         ],
-                        borderWidth: 5,
+                        borderWidth: 2,
                         borderColor: palette.white,
                         hoverBorderColor: palette.white
                     }
@@ -332,7 +332,7 @@ export const fillData = (dataPresences, date, index) => {
                             palette.error.main,
                             palette.warning.main
                         ],
-                        borderWidth: 5,
+                        borderWidth: 2,
                         borderColor: palette.white,
                         hoverBorderColor: palette.white
                     }
@@ -455,7 +455,7 @@ export const fillData = (dataPresences, date, index) => {
                             palette.error.main,
                             palette.warning.main
                         ],
-                        borderWidth: 5,
+                        borderWidth: 2,
                         borderColor: palette.white,
                         hoverBorderColor: palette.white
                     }

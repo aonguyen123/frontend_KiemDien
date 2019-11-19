@@ -153,36 +153,9 @@ const DialogStatistical = props => {
                                     {index === 1 ? (
                                         <Grid item md={12} xs={12}>
                                             <Typography variant="body2">
-                                                From{' '}
-                                                {
-                                                    <span
-                                                        style={{
-                                                            fontWeight: 'bold',
-                                                            fontSize: '25'
-                                                        }}
-                                                    >
-                                                        {moment(selectedDate)
-                                                            .startOf('isoWeek')
-                                                            .format(
-                                                                'DD/MM/YYYY'
-                                                            )}
-                                                    </span>
-                                                }
-                                                {'  '}to{' '}
-                                                {
-                                                    <span
-                                                        style={{
-                                                            fontWeight: 'bold',
-                                                            fontSize: '25'
-                                                        }}
-                                                    >
-                                                        {moment(selectedDate)
-                                                            .endOf('isoWeek')
-                                                            .format(
-                                                                'DD/MM/YYYY'
-                                                            )}
-                                                    </span>
-                                                }
+                                                {moment(selectedDate).startOf('isoWeek').format('DD/MM/YYYY')}
+                                                {'  '}---{' '}
+                                                {moment(selectedDate).endOf('isoWeek').format('DD/MM/YYYY')}
                                             </Typography>
                                         </Grid>
                                     ) : null}
