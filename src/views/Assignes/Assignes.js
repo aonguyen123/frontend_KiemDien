@@ -53,6 +53,9 @@ const Assignes = props => {
     useEffect(() => {
         getUserConditionStatusTrue();
     }, [getUserConditionStatusTrue]);
+    useEffect(() => {
+        setPage(0);
+    }, [search, indexFilter]);
 
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -129,7 +132,7 @@ const Assignes = props => {
                     count={assignesClass.length}
                     onChangePage={handlePageChange}
                     onChangeRowsPerPage={handleRowsPerPageChange}
-                    page={page}
+                    page={(search || indexFilter) ? 0 : page}
                     rowsPerPage={rowsPerPage}
                     rowsPerPageOptions={[]}
                     backIconButtonProps={{

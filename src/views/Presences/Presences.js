@@ -29,6 +29,9 @@ const Presences = props => {
         getClassPresences();
         clearnTask();
     }, [getClassPresences, clearnTask]);
+    useEffect(() => {
+        setPage(0);
+    }, [search, indexFilter]);
 
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -88,7 +91,7 @@ const Presences = props => {
                     count={presencesClass.length}
                     onChangePage={handlePageChange}
                     onChangeRowsPerPage={handleRowsPerPageChange}
-                    page={page}
+                    page={(search || indexFilter) ? 0 : page}
                     rowsPerPage={rowsPerPage}
                     rowsPerPageOptions={[]}
                     backIconButtonProps={{

@@ -62,6 +62,7 @@ const UserList = props => {
                 <UsersTable
                     users={users}
                     deleteUsers={deleteUsers}
+                    search={search}
                 />
             </div>
         </div>

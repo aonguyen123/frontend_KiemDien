@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { withStyles } from '@material-ui/styles';
@@ -31,10 +31,14 @@ const statusColors = {
 };
 
 const UsersTable = props => {
-    const { className, users, classes, deleteUsers } = props;
+    const { className, users, classes, deleteUsers, search } = props;
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
+
+    useEffect(() => {
+        setPage(0);
+    }, [search]);
 
     const handleSelectAll = event => {
         let selectedUsers;
@@ -228,7 +232,7 @@ const UsersTable = props => {
                     count={users.length}
                     onChangePage={handlePageChange}
                     onChangeRowsPerPage={handleRowsPerPageChange}
-                    page={page}
+                    page={search ? 0 : page}
                     rowsPerPage={rowsPerPage}
                     rowsPerPageOptions={[]}
                     backIconButtonProps={{

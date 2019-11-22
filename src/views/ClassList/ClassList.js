@@ -37,6 +37,9 @@ const ClassList = props => {
         getClasses();
         clearnTask();
     }, [getClasses, actionClass, clearnTask]);
+    useEffect(() => {
+        setPage(0);
+    }, [search]);
     
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -108,7 +111,7 @@ const ClassList = props => {
                     count={classList.length}
                     onChangePage={handlePageChange}
                     onChangeRowsPerPage={handleRowsPerPageChange}
-                    page={page}
+                    page={search ? 0 : page}
                     rowsPerPage={rowsPerPage}
                     rowsPerPageOptions={[]}
                     backIconButtonProps={{
