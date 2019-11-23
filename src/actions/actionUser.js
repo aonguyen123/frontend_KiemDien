@@ -2,7 +2,6 @@ import {
     DELETE_USERS,
     CREATE_USER,
     GET_ERRORS,
-    CLEARN_ERRORS,
     OPEN_NOTIFY
 } from './../constants/types';
 import { callAPI } from 'common';
@@ -27,10 +26,6 @@ export const createUser = user => dispatch => {
             });
             dispatch({
                 type: OPEN_NOTIFY
-            });
-            dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
             });
         })
         .catch(err => {

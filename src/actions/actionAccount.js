@@ -14,10 +14,6 @@ export const updateInfoAccount = account => dispatch => {
             dispatch({
                 type: OPEN_NOTIFY
             });
-            dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
-            });
         })
         .catch(err => {
             dispatch({

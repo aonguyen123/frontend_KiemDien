@@ -4,13 +4,18 @@ import {
     FETCH_DATA_SUCCESS,
     GET_USER_CONDITION_STATUS_TRUE,
     LOADING_LOCAL,
-    LOADING_LOCAL_SUCCESS
+    LOADING_LOCAL_SUCCESS,
+    CLEARN_ERRORS
 } from './../constants/types';
 import callAPI from './../common/callApi';
 
 export const getUsers = () => dispatch => {
     dispatch({
         type: FETCHING_DATA
+    });
+    dispatch({
+        type: CLEARN_ERRORS,
+        payload: {}
     });
     callAPI('/getUsers', 'GET', null).then(res => {
         dispatch({

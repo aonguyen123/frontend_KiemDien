@@ -26,4 +26,4 @@ export const logout = history => dispatch => {
         type: LOG_OUT
     });
     history.push('/sign-in');
-}
+};

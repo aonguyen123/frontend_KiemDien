@@ -1,9 +1,13 @@
-import { GET_CLASS_PRESENCES, FETCHING_DATA, FETCH_DATA_SUCCESS } from './../constants/types';
+import { GET_CLASS_PRESENCES, FETCHING_DATA, FETCH_DATA_SUCCESS, CLEARN_ERRORS } from './../constants/types';
 import { callAPI } from 'common';
 
 export const getClassPresences = () => dispatch => {
     dispatch({
         type: FETCHING_DATA
+    });
+    dispatch({
+        type: CLEARN_ERRORS,
+        payload: {}
     });
     getData(dispatch);
 };

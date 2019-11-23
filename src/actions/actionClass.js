@@ -1,6 +1,5 @@
 import {
     GET_ERRORS,
-    CLEARN_ERRORS,
     ADD_ClASS,
     OPEN_NOTIFY,
     DELETE_CLASS
@@ -16,10 +15,6 @@ export const addClass = newClass => dispatch => {
             dispatch({
                 type: ADD_ClASS,
                 payload: res.data
-            });
-            dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
             });
         })
         .catch(err => {

@@ -1,6 +1,5 @@
 import {
     GET_ERRORS,
-    CLEARN_ERRORS,
     OPEN_NOTIFY,
     UPDATE_INFO_CLASS_BY_ID,
     UPDATE_AVATAR_CLASS_BY_ID,
@@ -84,10 +83,6 @@ export const updateInfoClassById = newClass => dispatch => {
             dispatch({
                 type: OPEN_NOTIFY
             });
-            dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
-            });
         })
         .catch(err => {
             dispatch({
@@ -106,10 +101,6 @@ export const addClassMemberById = (_id, newMember) => dispatch => {
             dispatch({
                 type: OPEN_NOTIFY
             });
-            dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
-            });
         })
         .catch(err => {
             dispatch({
@@ -127,10 +118,6 @@ export const editClassMemberById = (idClass, member) => dispatch => {
             })
             dispatch({
                 type: OPEN_NOTIFY
-            });
-            dispatch({
-                type: CLEARN_ERRORS,
-                payload: {}
             });
         })
         .catch(err => {
