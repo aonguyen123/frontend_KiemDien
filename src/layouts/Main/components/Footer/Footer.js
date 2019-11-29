@@ -13,7 +13,7 @@ const Footer = props => {
             <Typography variant="body1">
                 &copy;{' '}
                 <Link component="a" href="https://aonguyen.now.sh/" target="_blank">
-                    Tran Vi Lap
+                    Nguyen Duc Ao
                 </Link>
                 . {new Date().getFullYear()}
             </Typography>
