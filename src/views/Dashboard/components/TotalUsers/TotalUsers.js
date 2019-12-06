@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { withStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 import styles from './styles';
 
@@ -57,7 +58,13 @@ const TotalUsers = props => {
                     </Grid>
                 </Grid>
                 <div className={classes.difference}>
-                    <ArrowUpwardIcon className={handling(totalUser) ? classes.differenceIcon : classes.differenceIconError} />
+                    {handling(totalUser) ? (
+                        <ArrowUpwardIcon
+                            className={classes.differenceIcon}
+                        />
+                    ) : (
+                        <ArrowDownwardIcon className={classes.differenceIconError} />
+                    )}
                     <Typography
                         className={handling(totalUser) ? classes.differenceValue : classes.differenceValueError}
                         variant="body2"
